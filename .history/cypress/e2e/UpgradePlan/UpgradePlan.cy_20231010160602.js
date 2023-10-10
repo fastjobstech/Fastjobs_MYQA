@@ -38,7 +38,7 @@ describe("Upgrade Plan", () => {
         UpgradePlan.CheckoutWithInvalidDetails()
     })
 
-    it("2PCP Checkout | Verify able to Upgrage plan with valid Card details", () => {
+    it.only("2PCP Checkout | Verify able to Upgrage plan with valid Card details", () => {
         UpgradePlan.ClickUpgradePlanLink()
         UpgradePlan.SelectPackage()
         UpgradePlan.ClickCheckoutButton()
