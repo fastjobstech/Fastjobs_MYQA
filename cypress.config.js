@@ -6,7 +6,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: "https://employer-test.fastjobs.my/",
+    baseUrl: "https://employer-dev.fastjobs.my/",
     experimentalSessionAndOrigin: true
   },
   env: {
