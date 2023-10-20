@@ -10,15 +10,15 @@ describe('Login', () => {
         cy.visit("/")
     })
 
-    it("Verify successfully login to the Employer page", () => {
+    it("Successfully login to the Employer page", () => {
         LoginPage.loginEmployer(Cypress.env("login_username"), Cypress.env("login_password"));
     })
 
-    it("Verify unable to login with empty form", () => {
+    it("Unable to login with empty form", () => {
         LoginPage.loginEmployerWithEmptyfields()
     })
 
-    it("Verify nable to login with invalid details", () => {
+    it("Unable to login with invalid", () => {
         LoginPage.loginEmployerWithInvalidCreds("testemail", "123123")
     })
 })
