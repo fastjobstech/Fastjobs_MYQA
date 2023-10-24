@@ -32,7 +32,7 @@ describe("Job posting", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.FillOptionalFields()
-        JobPostPage.SelectPackage(2)
+        JobPostPage.SelectPackage()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()

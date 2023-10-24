@@ -1,13 +1,7 @@
 class JobPostPage {
     elements = {
-        // Elements not related inside of Posting job form
         ManageJobsNavlink: () => cy.get('.container > .row > .col-sm-12 > .nav > :nth-child(2) > a'),
         ManageJobsPostNewJobBtn: () => cy.get('.pull-right > .btn'),
-
-        // EDIT JOB
-        EditJobBtn: () => cy.get('.btn-edit'),
-        // Copy elements
-        CopyJobBtn: () => cy.get('.btn-copy'),
 
         //Expire elements
         ExpireJobBtn: () => cy.get('.btn-expire'),
@@ -66,10 +60,7 @@ class JobPostPage {
 
         //Rating modal
         RatingModal: () => cy.get('#ratingModal'),
-        
-        //Duplicate Notification elements
-        DuplicateNotification: () => cy.get('#duplicate-detection'),
-        DuplicateMsg: () => cy.get('.panel-body > :nth-child(1) > .col-xs-12'),
+        // CloseModal: () => 
     }
     // List of Functions
     GoToPostNewJobForm = () => {
@@ -97,34 +88,6 @@ class JobPostPage {
     ExpireTheJob = () => {
         this.elements.ExpireJobBtn().click()
         this.elements.ConfirmExpireJob().click()
-    }
-
-    SelectPackage = (packageType) => {
-        this.elements.PackageType(packageType).click()
-    }
-
-    EditTheJob = () => {
-        this.elements.EditJobBtn().click()
-    }
-
-    CopyTheJob = () => {
-        this.elements.CopyJobBtn().click()
-    }
-
-    VerifyDuplicateNotification = () => {
-        const DuplicateMsg = [
-            "Oops, this job looks like a copy of an existing active job!",
-            "If you would like to proceed, we suggest modifying at least one of these fields to continue:",
-            "Job title",
-            "Description",
-            "Location/Sub-location",
-            "Job Type"
-        ]
-        this.elements.DuplicateNotification().should("be.visible")
-        this.elements.DuplicateMsg().should("be.visible")
-        DuplicateMsg.forEach((errText) => {
-            this.elements.DuplicateMsg().contains(errText)
-        })
     }
 
     CheckELements = () => {
@@ -163,19 +126,15 @@ class JobPostPage {
         })
     }
 
-    FillPostNewJobForm = (newJobInfo) => {
+    FillPostNewJobForm = () => {
         const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
+            jobTitle: "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
             applyByEmail: "kimjay.luta@fastco.asia",
             applyByCallSms: "911911978"
         }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
+        this.elements.JobTitle().type(JobInfo.jobTitle)
+        this.elements.JobDescription()
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
@@ -185,14 +144,8 @@ class JobPostPage {
         this.elements.JobCategoryTwo().select(10)
         this.elements.JobTypePartTime().click()
         this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
+        this.elements.ApplyByEmail().type(JobInfo.applyByEmail)
+        this.elements.ApplyByCallSms().type(JobInfo.applyByCallSms)
     }
 
     FillOptionalFields = () => {
@@ -210,7 +163,10 @@ class JobPostPage {
         this.elements.JobSkills().select(1)
         this.elements.JobLanguage().select(1)
     }
-    
+
+    SelectPackage = (packageType) => {
+        this.elements.PackageType(packageType).click()
+    }
 }
 
 module.exports = new JobPostPage() 

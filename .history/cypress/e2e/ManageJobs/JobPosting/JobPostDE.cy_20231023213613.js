@@ -30,18 +30,18 @@ describe("Job posting", () => {
 
     it("Verify able to Post a new job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.FillOptionalFields()
-        JobPostPage.SelectPackage(2)
+        JobPostPage.SelectPackage()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to Post a feature job with valid job details", () => {
+    it.only("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -53,51 +53,11 @@ describe("Job posting", () => {
 
     it("Verify able to Post a job without filling up the optional details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
+        JobPostPage.FillPostNewJobForm()
+        JobPostPage.SelectPackage()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
-        JobPostPage.ExpireTheJob()
-    })
-
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifySuccessMsg()
-
-        // Copy the same job
-        JobPostPage.CopyTheJob()
-        JobPostPage.ClickPostNewJobBtn()
-
-        //Verify the notification
-        JobPostPage.VerifyDuplicateNotification()
-        JobPostPage.ClickCancelButton()
-        JobPostPage.ExpireTheJob()
-    })
-
-    it("Verify able to edit the active job", () => {
-        const jobInfo = {
-            jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
-        }
-        // Post A Job
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifySuccessMsg()
-
-        // Edit the Job
-        JobPostPage.EditTheJob()
-        JobPostPage.FillPostNewJobForm(jobInfo)
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.VerifySuccessMsg()
-
-        // Expire
         JobPostPage.ExpireTheJob()
     })
 })

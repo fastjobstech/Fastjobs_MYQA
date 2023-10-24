@@ -4,8 +4,6 @@ class JobPostPage {
         ManageJobsNavlink: () => cy.get('.container > .row > .col-sm-12 > .nav > :nth-child(2) > a'),
         ManageJobsPostNewJobBtn: () => cy.get('.pull-right > .btn'),
 
-        // EDIT JOB
-        EditJobBtn: () => cy.get('.btn-edit'),
         // Copy elements
         CopyJobBtn: () => cy.get('.btn-copy'),
 
@@ -74,7 +72,7 @@ class JobPostPage {
     // List of Functions
     GoToPostNewJobForm = () => {
         this.elements.ManageJobsNavlink().click()
-        this.elements.ManageJobsPostNewJobBtn().click()
+        // this.elements.ManageJobsPostNewJobBtn().click()
     }
 
     ClickCancelButton = () => {
@@ -101,10 +99,6 @@ class JobPostPage {
 
     SelectPackage = (packageType) => {
         this.elements.PackageType(packageType).click()
-    }
-
-    EditTheJob = () => {
-        this.elements.EditJobBtn().click()
     }
 
     CopyTheJob = () => {
@@ -163,19 +157,15 @@ class JobPostPage {
         })
     }
 
-    FillPostNewJobForm = (newJobInfo) => {
+    FillPostNewJobForm = () => {
         const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
+            jobTitle: "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
             applyByEmail: "kimjay.luta@fastco.asia",
             applyByCallSms: "911911978"
         }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
+        this.elements.JobTitle().type(JobInfo.jobTitle)
+        this.elements.JobDescription()
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
@@ -185,14 +175,8 @@ class JobPostPage {
         this.elements.JobCategoryTwo().select(10)
         this.elements.JobTypePartTime().click()
         this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
+        this.elements.ApplyByEmail().type(JobInfo.applyByEmail)
+        this.elements.ApplyByCallSms().type(JobInfo.applyByCallSms)
     }
 
     FillOptionalFields = () => {
@@ -210,6 +194,7 @@ class JobPostPage {
         this.elements.JobSkills().select(1)
         this.elements.JobLanguage().select(1)
     }
+
     
 }
 

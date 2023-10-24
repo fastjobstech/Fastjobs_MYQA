@@ -30,9 +30,9 @@ describe("Job posting", () => {
 
     it("Verify able to Post a new job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.FillOptionalFields()
-        JobPostPage.SelectPackage(2)
+        JobPostPage.SelectPackage()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
@@ -41,7 +41,7 @@ describe("Job posting", () => {
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -53,7 +53,7 @@ describe("Job posting", () => {
 
     it("Verify able to Post a job without filling up the optional details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -61,7 +61,7 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
@@ -79,7 +79,7 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -95,6 +95,7 @@ describe("Job posting", () => {
         JobPostPage.EditTheJob()
         JobPostPage.FillPostNewJobForm(jobInfo)
         JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
 
         // Expire

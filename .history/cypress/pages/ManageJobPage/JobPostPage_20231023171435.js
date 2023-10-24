@@ -1,13 +1,7 @@
 class JobPostPage {
     elements = {
-        // Elements not related inside of Posting job form
         ManageJobsNavlink: () => cy.get('.container > .row > .col-sm-12 > .nav > :nth-child(2) > a'),
         ManageJobsPostNewJobBtn: () => cy.get('.pull-right > .btn'),
-
-        // EDIT JOB
-        EditJobBtn: () => cy.get('.btn-edit'),
-        // Copy elements
-        CopyJobBtn: () => cy.get('.btn-copy'),
 
         //Expire elements
         ExpireJobBtn: () => cy.get('.btn-expire'),
@@ -15,38 +9,23 @@ class JobPostPage {
         
         //Job form elements
         JobTitle: () => cy.get('#jobTitleInput'),
-
         SalaryFlag: () => cy.get('#salflag-dt > .btn'),
-        SalaryFlagDropdown: () => cy.get(':nth-child(2) > .dropdown-sal-flag'),
         Salary: () => cy.get('#maxsals'),
         SalaryPeriod: () => cy.get('#jobSalPeriodDp > .btn'),
-        SalaryPeriodDropdown: () => cy.get(':nth-child(4) > .dropdown-sal-period'),
-        
         JobDescription: () => cy.get('div.rx-editor-container'),
-        
         Location: () => cy.get('#jobRegion'),
         SubLocation: () => cy.get('#jobCity'),
         WorkingPlace: () => cy.get('#c9jobs-building'),
-        WorkingPlaceSelect: () => cy.get('#ui-id-2'),
-        
         JobCategory: () => cy.get('#c9jobs-category'),
         JobCategoryTwo: () => cy.get('#c9jobs-category2'),
-        
         JobTypePartTime: () => cy.get(':nth-child(1) > .checkbox-box'),
         JobTypeFullTime: () => cy.get(':nth-child(2) > .checkbox-box'),
         JobTypeContracts: () => cy.get(':nth-child(3) > .checkbox-box'),
-        
         Timing: () => cy.get('#c9jobs-timingc'),
         FilterApplicants: () => cy.get('#c9jobs-appfilterflag'),
-        
         ApplyByEmail: () => cy.get('#c9jobs-appdirecteml'),
         ApplyByCallSms: () => cy.get('#c9jobs-appdirectmobn'),
         AppyByWhatsapp: () => cy.get('#c9jobs-appwhatsapp'),
-
-        //Preferences
-        EducLevel: () => cy.get('#c9jobs-edulvlc'),
-        JobSkills: () => cy.get(':nth-child(2) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control'),
-        JobLanguage: () => cy.get(':nth-child(3) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control'),
 
         //Cancel & Submit buttons
         CancelBtn: () => cy.get('#btnCancelJobPost'),
@@ -59,17 +38,14 @@ class JobPostPage {
         NewJobFormRequiredErrMsg: () => cy.get('.help-block'),
 
         //Package
-        PackageType: (packageType) => cy.get(`:nth-child(${packageType}) > .col-xs-2 > .control > .control__indicator`),
+        NormalPosting7Days: () => cy.get(':nth-child(2) > .col-xs-2 > .control > .control__indicator'),
 
         //Success message
         SuccessMsg: () => cy.get('.iziToast-body'),
 
         //Rating modal
         RatingModal: () => cy.get('#ratingModal'),
-        
-        //Duplicate Notification elements
-        DuplicateNotification: () => cy.get('#duplicate-detection'),
-        DuplicateMsg: () => cy.get('.panel-body > :nth-child(1) > .col-xs-12'),
+        // CloseModal: () => 
     }
     // List of Functions
     GoToPostNewJobForm = () => {
@@ -97,34 +73,6 @@ class JobPostPage {
     ExpireTheJob = () => {
         this.elements.ExpireJobBtn().click()
         this.elements.ConfirmExpireJob().click()
-    }
-
-    SelectPackage = (packageType) => {
-        this.elements.PackageType(packageType).click()
-    }
-
-    EditTheJob = () => {
-        this.elements.EditJobBtn().click()
-    }
-
-    CopyTheJob = () => {
-        this.elements.CopyJobBtn().click()
-    }
-
-    VerifyDuplicateNotification = () => {
-        const DuplicateMsg = [
-            "Oops, this job looks like a copy of an existing active job!",
-            "If you would like to proceed, we suggest modifying at least one of these fields to continue:",
-            "Job title",
-            "Description",
-            "Location/Sub-location",
-            "Job Type"
-        ]
-        this.elements.DuplicateNotification().should("be.visible")
-        this.elements.DuplicateMsg().should("be.visible")
-        DuplicateMsg.forEach((errText) => {
-            this.elements.DuplicateMsg().contains(errText)
-        })
     }
 
     CheckELements = () => {
@@ -163,19 +111,15 @@ class JobPostPage {
         })
     }
 
-    FillPostNewJobForm = (newJobInfo) => {
+    FillPostNewJobForm = () => {
         const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
+            jobTitle: "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
             applyByEmail: "kimjay.luta@fastco.asia",
             applyByCallSms: "911911978"
         }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
+        this.elements.JobTitle().type(JobInfo.jobTitle)
+        this.elements.JobDescription()
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
@@ -185,32 +129,28 @@ class JobPostPage {
         this.elements.JobCategoryTwo().select(10)
         this.elements.JobTypePartTime().click()
         this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
+        this.elements.ApplyByEmail().type(JobInfo.applyByEmail)
+        this.elements.ApplyByCallSms().type(JobInfo.applyByCallSms)
+        this.elements.NormalPosting7Days().click()
     }
 
     FillOptionalFields = () => {
         this.elements.SalaryFlag().click()
-        this.elements.SalaryFlagDropdown().click()
+        cy.get(':nth-child(2) > .dropdown-sal-flag').click()
         this.elements.Salary().type("100")
         this.elements.SalaryPeriod().click()
-        this.elements.SalaryPeriodDropdown().click()
+        cy.get(':nth-child(4) > .dropdown-sal-period').click()
 
-        this.elements.WorkingPlace().type("Test")
-        this.elements.WorkingPlaceSelect().click()
+        cy.get('#c9jobs-building').type("Test")
+        cy.get('#ui-id-2').click()
         this.elements.Timing().select(1)
 
-        this.elements.EducLevel().select(5)
-        this.elements.JobSkills().select(1)
-        this.elements.JobLanguage().select(1)
+        cy.get('#c9jobs-edulvlc').select(5)
+        cy.get(':nth-child(2) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control')
+            .select(1)
+        cy.get(':nth-child(3) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control')
+            .select(1)
     }
-    
 }
 
 module.exports = new JobPostPage() 

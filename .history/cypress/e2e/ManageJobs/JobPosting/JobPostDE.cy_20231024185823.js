@@ -30,9 +30,9 @@ describe("Job posting", () => {
 
     it("Verify able to Post a new job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.FillOptionalFields()
-        JobPostPage.SelectPackage(2)
+        JobPostPage.SelectPackage()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
@@ -41,7 +41,7 @@ describe("Job posting", () => {
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -53,7 +53,7 @@ describe("Job posting", () => {
 
     it("Verify able to Post a job without filling up the optional details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillPostNewJobForm()
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()

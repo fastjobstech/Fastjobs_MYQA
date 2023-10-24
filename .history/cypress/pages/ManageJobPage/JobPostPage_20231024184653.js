@@ -170,12 +170,8 @@ class JobPostPage {
             applyByEmail: "kimjay.luta@fastco.asia",
             applyByCallSms: "911911978"
         }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
+        this.elements.JobTitle().type(JobInfo.jobTitle)
+        this.elements.JobDescription()
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
@@ -185,14 +181,8 @@ class JobPostPage {
         this.elements.JobCategoryTwo().select(10)
         this.elements.JobTypePartTime().click()
         this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
+        this.elements.ApplyByEmail().type(JobInfo.applyByEmail)
+        this.elements.ApplyByCallSms().type(JobInfo.applyByCallSms)
     }
 
     FillOptionalFields = () => {
