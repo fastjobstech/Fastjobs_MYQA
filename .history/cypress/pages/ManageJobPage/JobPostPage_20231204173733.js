@@ -247,8 +247,8 @@ class JobPostPage {
         this.elements.OutletModal().should("be.visible")
         this.elements.OutletSelectionOne().should("be.visible")
         this.elements.OutletSelectionTwo().should("be.visible")
-        this.elements.OutletConfirmButton().should("be.visible")
         this.elements.OutletCloseIcon().click()
+
 
         this.elements.JobCategory().should("be.visible")
         this.elements.JobCategoryTwo().should("be.visible")
@@ -261,72 +261,6 @@ class JobPostPage {
         this.elements.ApplyByCallSms().should("be.visible")
         this.elements.AppyByWhatsapp().should("be.visible")
         this.elements.PostNewJobBtn().should("be.visible")
-    }
-
-    FillOutletPostjobForm = (newJobInfo) => {
-        const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-            jobDesc: "This is a automated testing, DO NOT APPLY!",
-            applyByEmail: "kimjay.luta@fastco.asia",
-            applyByCallSms: "911911978"
-        }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
-            .find('.rtf-content[contenteditable="true"]')
-            .type(JobInfo.jobDesc, {force: true})
-
-        //Outlet selection
-        this.elements.OutletField().click()
-        this.elements.OutletSelectionOne().click()
-        this.elements.OutletSelectionTwo().click()
-        this.elements.OutletConfirmButton().click()
-
-        this.elements.JobCategory().select(5)
-        this.elements.JobCategoryTwo().select(10)
-        this.elements.JobTypePartTime().click()
-        this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
-    }
-
-    EditletPostjobForm = (newJobInfo) => {
-        const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-            jobDesc: "This is a automated testing, DO NOT APPLY!",
-            applyByEmail: "kimjay.luta@fastco.asia",
-            applyByCallSms: "911911978"
-        }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
-            .find('.rtf-content[contenteditable="true"]')
-            .type(JobInfo.jobDesc, {force: true})
-
-        this.elements.JobCategory().select(5)
-        this.elements.JobCategoryTwo().select(10)
-        this.elements.JobTypePartTime().click()
-        this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
     }
     
 }

@@ -76,8 +76,7 @@ class JobPostPage {
         OutletModal: () => cy.get('#outletsModal'),
         OutletSelectionOne: () => cy.get(':nth-child(2) > .panel-body > .block-grid-xs-1 > .block-grid-item > .control > .control__indicator'),
         OutletSelectionTwo: () => cy.get(':nth-child(3) > .panel-body > .block-grid-xs-1 > .block-grid-item > .control > .control__indicator'),
-        OutletConfirmButton: () => cy.get('#btnSelectOutlet'),
-        OutletCloseIcon: () => cy.get('[aria-hidden="true"] > .fa')
+        OutletConfirmButton: () => cy.get('#btnSelectOutlet')
     }
     // List of Functions
     GoToPostNewJobForm = () => {
@@ -156,6 +155,14 @@ class JobPostPage {
         this.elements.PostNewJobBtn().should("be.visible")
     }
 
+    VerifyOutletElements = () => {
+        this.elements.OutletField().should("be.visible");
+        this.elements.OutletField().click();
+        this.elements.OutletModal().should("be.visible");
+        this.elements.OutletSelectionOne().should("be.visible");
+        this.elements.OutletSelectionTwo().should("be.visible");
+    }
+
     VerifyRequiredErrMsg = () => {
         const RequiredText = [
             "Please enter Job Title",
@@ -218,115 +225,6 @@ class JobPostPage {
         this.elements.EducLevel().select(5)
         this.elements.JobSkills().select(1)
         this.elements.JobLanguage().select(1)
-    }
-
-    //Outlet functions
-    VerifyOutletRequiredErrMsg = () => {
-        const RequiredText = [
-            "Please enter Job Title",
-            "Please enter Description",
-            "Please select at least one outlet.",
-            "Please enter Job Category",
-            "Please enter Job Type",
-            "Please enter your preferred mode of application."
-        ]
-        cy.get('.help-block').should("be.visible")
-        RequiredText.forEach((errText) => {
-            cy.get('.help-block').contains(errText)
-        })
-    }
-
-    VerifyOutletElements = () => {
-        this.elements.JobTitle().should("be.visible")
-        this.elements.Salary().should("be.visible")
-        this.elements.JobDescription().should("be.visible")
-
-        //Outlet
-        this.elements.OutletField().should("be.visible")
-        this.elements.OutletField().click()
-        this.elements.OutletModal().should("be.visible")
-        this.elements.OutletSelectionOne().should("be.visible")
-        this.elements.OutletSelectionTwo().should("be.visible")
-        this.elements.OutletConfirmButton().should("be.visible")
-        this.elements.OutletCloseIcon().click()
-
-        this.elements.JobCategory().should("be.visible")
-        this.elements.JobCategoryTwo().should("be.visible")
-        this.elements.JobTypePartTime().should("be.visible")
-        this.elements.JobTypeFullTime().should("be.visible")
-        this.elements.JobTypeContracts().should("be.visible")
-        this.elements.Timing().should("be.visible")
-        this.elements.FilterApplicants().should("be.visible")
-        this.elements.ApplyByEmail().should("be.visible")
-        this.elements.ApplyByCallSms().should("be.visible")
-        this.elements.AppyByWhatsapp().should("be.visible")
-        this.elements.PostNewJobBtn().should("be.visible")
-    }
-
-    FillOutletPostjobForm = (newJobInfo) => {
-        const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-            jobDesc: "This is a automated testing, DO NOT APPLY!",
-            applyByEmail: "kimjay.luta@fastco.asia",
-            applyByCallSms: "911911978"
-        }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
-            .find('.rtf-content[contenteditable="true"]')
-            .type(JobInfo.jobDesc, {force: true})
-
-        //Outlet selection
-        this.elements.OutletField().click()
-        this.elements.OutletSelectionOne().click()
-        this.elements.OutletSelectionTwo().click()
-        this.elements.OutletConfirmButton().click()
-
-        this.elements.JobCategory().select(5)
-        this.elements.JobCategoryTwo().select(10)
-        this.elements.JobTypePartTime().click()
-        this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
-    }
-
-    EditletPostjobForm = (newJobInfo) => {
-        const JobInfo = {
-            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-            jobDesc: "This is a automated testing, DO NOT APPLY!",
-            applyByEmail: "kimjay.luta@fastco.asia",
-            applyByCallSms: "911911978"
-        }
-        this.elements
-            .JobTitle()
-            .clear()
-            .type(JobInfo.jobTitle)
-        this.elements
-            .JobDescription()
-            .find('.rtf-content[contenteditable="true"]')
-            .type(JobInfo.jobDesc, {force: true})
-
-        this.elements.JobCategory().select(5)
-        this.elements.JobCategoryTwo().select(10)
-        this.elements.JobTypePartTime().click()
-        this.elements.JobTypeFullTime().click()
-        this.elements
-            .ApplyByEmail()
-            .clear()
-            .type(JobInfo.applyByEmail)
-        this.elements
-            .ApplyByCallSms()
-            .clear()
-            .type(JobInfo.applyByCallSms)
     }
     
 }
