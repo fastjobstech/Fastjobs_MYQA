@@ -25,5 +25,4 @@ module.exports = defineConfig({
     SG_DE_Username: "kimjayfastcoqa@gmail.com",
     SG_DE_Password: "Password1234"
   },
-  chromeWebSecurity: false
 });
