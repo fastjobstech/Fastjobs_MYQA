@@ -10,7 +10,7 @@ describe("Job posting", () => {
     beforeEach(() => {
         cy.visit("/");
         LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        JobPostPage.SendJobPostingFeedback();
+        // JobPostPage.SendJobPostingFeedback();
     });
 
     it("Verify the Job form elements are visible", () => {

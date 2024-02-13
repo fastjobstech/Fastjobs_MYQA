@@ -1,5 +1,5 @@
 import LoginPage from "../../../../pages/MY/UserPages/LoginPage"
-import JobPostPage from "../../../pages/ManageJobPage/JobPostPage"
+import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage"
 
 describe("Job posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
@@ -9,12 +9,12 @@ describe("Job posting", () => {
 
     beforeEach(() => {
         cy.visit("/")
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'))
+        LoginPage.loginEmployer(Cypress.env('outlet_username'), Cypress.env('outlet_password'));
     });
 
     it("Verify the Job form elements are visible", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.CheckELements()
+        JobPostPage.VerifyOutletElements()
     })
 
     it("Verify Cancel button redirects back to Active job list", () => {
@@ -25,13 +25,12 @@ describe("Job posting", () => {
     it("Verify Required error message when Job form is submitted empty", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.VerifyRequiredErrMsg()
+        JobPostPage.VerifyOutletRequiredErrMsg()
     })
 
     it("Verify able to Post a new job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.FillOptionalFields()
+        JobPostPage.FillOutletPostjobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -41,7 +40,7 @@ describe("Job posting", () => {
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillOutletPostjobForm("")
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -50,20 +49,9 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-
-    it("Verify able to Post a job without filling up the optional details", () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifySuccessMsg()
-        JobPostPage.ExpireTheJob()
-    })
-
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillOutletPostjobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -85,7 +73,7 @@ describe("Job posting", () => {
         }
         // Post A Job
         JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillOutletPostjobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
@@ -93,7 +81,7 @@ describe("Job posting", () => {
 
         // Edit the Job
         JobPostPage.EditTheJob()
-        JobPostPage.FillPostNewJobForm(jobInfo)
+        JobPostPage.EditletPostjobForm(jobInfo)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.VerifySuccessMsg()
 

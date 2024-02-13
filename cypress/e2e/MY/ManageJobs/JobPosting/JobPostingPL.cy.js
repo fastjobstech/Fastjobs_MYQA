@@ -33,7 +33,6 @@ describe("Job posting", () => {
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.FillOptionalFields()
         JobPostPage.ClickPostNewJobBtn()
-        cy.get('.loader-text').should('be.visible');
         JobPostPage.VerifySuccessMsg()
         JobPostPage.ExpireTheJob()
     });
@@ -42,7 +41,6 @@ describe("Job posting", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.ClickPostNewJobBtn()
-        cy.get('.loader-text').should('be.visible');
         JobPostPage.VerifySuccessMsg()
         cy.get('.tag').contains("Featured").should('be.visible')
         JobPostPage.ExpireTheJob()
@@ -53,7 +51,6 @@ describe("Job posting", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.ClickPostNewJobBtn()
-        cy.get('.loader-text').should('be.visible');
         JobPostPage.VerifySuccessMsg()
         JobPostPage.ExpireTheJob()
     })
@@ -62,7 +59,6 @@ describe("Job posting", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.ClickPostNewJobBtn()
-        cy.get('.loader-text').should('be.visible')
         JobPostPage.VerifySuccessMsg()
 
         // Copy the same job

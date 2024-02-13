@@ -1,16 +1,15 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage"
-import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage"
+import LoginPage from "../../../pages/UserPages/LoginPage"
+import JobPostPage from "../../../pages/ManageJobPage/JobPostPage"
 
 describe("Job posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
-    })
+    });
 
     beforeEach(() => {
-        cy.visit("/");
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        JobPostPage.SendJobPostingFeedback();
+        cy.visit("/")
+        LoginPage.loginEmployer(Cypress.env('ra_username'), Cypress.env('ra_password'))
     });
 
     it("Verify the Job form elements are visible", () => {
@@ -30,16 +29,15 @@ describe("Job posting", () => {
     })
 
     it("Verify able to Post a new job with valid job details", () => {
-        JobPostPage.GoToPostNewJobForm();
-        JobPostPage.FillPostNewJobForm("");
-        JobPostPage.FillOptionalFields();
-        JobPostPage.SelectPackage(2);
-        JobPostPage.ClickPostNewJobBtn();
-        JobPostPage.ConfirmSubmit();
-        JobPostPage.VerifySuccessMsg();
-        JobPostPage.ExpireTheJob();
-        // JobPostPage.SendJobPostingFeedback();
-    });
+        JobPostPage.GoToPostNewJobForm()
+        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillOptionalFields()
+        JobPostPage.SelectPackage(2)
+        JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifySuccessMsg()
+        JobPostPage.ExpireTheJob()
+    })
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
@@ -48,6 +46,7 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()
+        cy.get('.tag').contains("Featured").should('be.visible')
         JobPostPage.ExpireTheJob()
     })
 
