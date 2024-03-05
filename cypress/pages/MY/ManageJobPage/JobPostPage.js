@@ -6,6 +6,7 @@ class JobPostPage {
 
         // EDIT JOB
         EditJobBtn: () => cy.get('.btn-edit'),
+        
         // Copy elements
         CopyJobBtn: () => cy.get('.btn-copy'),
 

@@ -1,43 +1,36 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage"
-import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage"
+import LoginPage from "../../../../pages/SG/User/LoginPage"
+import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage"
 
-describe("Job posting", () => {
+
+describe("SG Job Posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
-    })
+    });
 
     beforeEach(() => {
-        cy.visit("/");
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        // JobPostPage.SendJobPostingFeedback();
+        cy.visit(Cypress.env("employerSG"));
+        LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'));
     });
 
     it("Verify the Job form elements are visible", () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.CheckELements()
-    })
+        SGJobPostPage.GotoPostNewJobForm();
+        SGJobPostPage.VerifyJobPostFormElements();
+    });
 
     it("Verify Cancel button redirects back to Active job list", () => {
-        JobPostPage.GoToPostNewJobForm();
-        JobPostPage.ClickCancelButton();
-    })
+        SGJobPostPage.GotoPostNewJobForm();
+        SGJobPostPage.ClickCancelButton();
+    });
 
     it("Verify Required error message when Job form is submitted empty", () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.VerifyRequiredErrMsg()
-    })
-
-    it("Verify able to Post a new job with valid job details", () => {
-        JobPostPage.GoToPostNewJobForm();
-        JobPostPage.FillPostNewJobForm("");
-        JobPostPage.FillOptionalFields();
-        JobPostPage.SelectPackage(2);
-        JobPostPage.ClickPostNewJobBtn();
-        JobPostPage.ConfirmSubmit();
-        JobPostPage.ExpireTheJob();
-        JobPostPage.SendJobPostingFeedback();
+        SGJobPostPage.GotoPostNewJobForm();
+        SGJobPostPage.ClickPostNewJobBtn();
+        SGJobPostPage.VerifyRequiredErrMsg();
+    });
+    /////
+    it.only("Verify able to Post a new job with valid job details", () => {
+        SGJobPostPage.GotoPostNewJobForm();
     });
 
     it("Verify able to Post a feature job with valid job details", () => {
@@ -99,4 +92,4 @@ describe("Job posting", () => {
         // Expire
         JobPostPage.ExpireTheJob()
     })
-})
+});
