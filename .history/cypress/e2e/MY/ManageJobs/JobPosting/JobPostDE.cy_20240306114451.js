@@ -10,6 +10,7 @@ describe("Job posting", () => {
     beforeEach(() => {
         cy.visit("/");
         LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
+        // JobPostPage.SendJobPostingFeedback();
     });
 
     it("Verify the Job form elements are visible", () => {
@@ -36,6 +37,7 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn();
         JobPostPage.ConfirmSubmit();
         JobPostPage.ExpireTheJob();
+        JobPostPage.SendJobPostingFeedback();
     });
 
     it("Verify able to Post a feature job with valid job details", () => {
@@ -45,6 +47,7 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.ExpireTheJob()
+        JobPostPage.SendJobPostingFeedback();
     })
 
     it("Verify able to Post a job without filling up the optional details", () => {
@@ -53,6 +56,7 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
+        JobPostPage.SendJobPostingFeedback();
         JobPostPage.ExpireTheJob()
     })
 
@@ -74,7 +78,7 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -91,7 +95,6 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
 
         // Expire
-        cy.wait(5000)
         JobPostPage.ExpireTheJob()
     })
 })

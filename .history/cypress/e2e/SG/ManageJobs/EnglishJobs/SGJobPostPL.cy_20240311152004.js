@@ -1,5 +1,5 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage"
-import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage"
+import LoginPage from "../../../../pages/SG/User/LoginPage";
+import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
 describe("Job posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
@@ -8,9 +8,9 @@ describe("Job posting", () => {
     })
 
     beforeEach(() => {
-        cy.visit("/");
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-    });
+        cy.visit("/")
+        LoginPage.loginEmployer(Cypress.env('pl_username'), Cypress.env('pl_password'))
+    })
 
     it("Verify the Job form elements are visible", () => {
         JobPostPage.GoToPostNewJobForm()
@@ -18,8 +18,8 @@ describe("Job posting", () => {
     })
 
     it("Verify Cancel button redirects back to Active job list", () => {
-        JobPostPage.GoToPostNewJobForm();
-        JobPostPage.ClickCancelButton();
+        JobPostPage.GoToPostNewJobForm()
+        JobPostPage.ClickCancelButton()
     })
 
     it("Verify Required error message when Job form is submitted empty", () => {
@@ -29,42 +29,39 @@ describe("Job posting", () => {
     })
 
     it("Verify able to Post a new job with valid job details", () => {
-        JobPostPage.GoToPostNewJobForm();
-        JobPostPage.FillPostNewJobForm("");
-        JobPostPage.FillOptionalFields();
-        JobPostPage.SelectPackage(2);
-        JobPostPage.ClickPostNewJobBtn();
-        JobPostPage.ConfirmSubmit();
-        JobPostPage.ExpireTheJob();
+        JobPostPage.GoToPostNewJobForm()
+        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.FillOptionalFields()
+        JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.VerifySuccessMsg()
+        JobPostPage.ExpireTheJob()
     });
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifySuccessMsg()
+        cy.get('.tag').contains("Featured").should('be.visible')
         JobPostPage.ExpireTheJob()
-    })
+    });
+
 
     it("Verify able to Post a job without filling up the optional details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifySuccessMsg()
         JobPostPage.ExpireTheJob()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifySuccessMsg()
 
         // Copy the same job
-        cy.wait(5000)
         JobPostPage.CopyTheJob()
         JobPostPage.ClickPostNewJobBtn()
 
@@ -81,17 +78,17 @@ describe("Job posting", () => {
         // Post A Job
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
+        
+        JobPostPage.VerifySuccessMsg()
 
         // Edit the Job
         JobPostPage.EditTheJob()
         JobPostPage.FillPostNewJobForm(jobInfo)
         JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.VerifySuccessMsg()
 
         // Expire
-        cy.wait(5000)
         JobPostPage.ExpireTheJob()
     })
 })

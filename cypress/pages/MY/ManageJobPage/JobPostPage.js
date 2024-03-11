@@ -105,6 +105,7 @@ class JobPostPage {
     }
     
     ExpireTheJob = () => {
+        cy.wait(5000)
         this.elements.ExpireJobBtn().click()
         this.elements.ConfirmExpireJob().click()
     }
@@ -114,6 +115,7 @@ class JobPostPage {
     }
 
     EditTheJob = () => {
+        cy.wait(5000)
         this.elements.EditJobBtn().click()
     }
 
@@ -343,7 +345,7 @@ class JobPostPage {
               cy.get('#ratingModal > .modal-dialog > .modal-content > .modal-header > .modal-close').click();
             } else {
               // If the modal is not visible, log a message in the console
-              cy.log('The rating modal is not currently visible.');
+              cy.log('The rating modal is currently not visible.');
             }
         });
     }

@@ -6,6 +6,7 @@ class JobPostPage {
 
         // EDIT JOB
         EditJobBtn: () => cy.get('.btn-edit'),
+        
         // Copy elements
         CopyJobBtn: () => cy.get('.btn-copy'),
 
@@ -104,6 +105,7 @@ class JobPostPage {
     }
     
     ExpireTheJob = () => {
+        cy.wait(5000)
         this.elements.ExpireJobBtn().click()
         this.elements.ConfirmExpireJob().click()
     }
@@ -113,6 +115,7 @@ class JobPostPage {
     }
 
     EditTheJob = () => {
+        cy.wait(5000)
         this.elements.EditJobBtn().click()
     }
 
@@ -330,14 +333,23 @@ class JobPostPage {
     }
 
     SendJobPostingFeedback = () => {
-        cy.get('#ratingModal').should('be.visible').then((modal) => {
-            //Steps to Send feedback
-            cy.log('Rating modal is visible!');
-            
+        // cy.get('#ratingModal').should('be.visible').then((modal) => {
+        //     cy.get('#ratingModal > .modal-dialog > .modal-content > .modal-header > .modal-close').click();
+        // });
+        // cy.get('#ratingModal').should('not.visible');
+        // cy.log('Rating modal is not visible, ending the test case');
+        cy.wait(1000);
+        cy.get('#ratingModal').then(($modal) => {
+            if ($modal.is(':visible')) {
+              // If the modal is visible, close it
+              cy.get('#ratingModal > .modal-dialog > .modal-content > .modal-header > .modal-close').click();
+            } else {
+              // If the modal is not visible, log a message in the console
+              cy.log('The rating modal is currently not visible.');
+            }
         });
-        cy.get('#ratingModal').should('not.exist');
-        cy.log('Rating modal is not visible, ending the test case');
     }
+    
     
 }
 

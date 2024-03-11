@@ -21,9 +21,9 @@ module.exports = defineConfig({
     ra_password: "Password123",
     outlet_username: "kim.jayluta@fastco.asia",
     outlet_password: "Password123",
-    employerSG: "https://employer-test.fastjobs.sg",
+    employerSG: "https://employer-qa.fastjobs.sg",
     SG_DE_Username: "kimjayfastcoqa@gmail.com",
-    SG_DE_Password: "Password1234"
+    SG_DE_Password: "Password1234",
   },
   chromeWebSecurity: false
 });

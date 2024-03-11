@@ -6,6 +6,7 @@ class JobPostPage {
 
         // EDIT JOB
         EditJobBtn: () => cy.get('.btn-edit'),
+        
         // Copy elements
         CopyJobBtn: () => cy.get('.btn-copy'),
 
@@ -104,6 +105,7 @@ class JobPostPage {
     }
     
     ExpireTheJob = () => {
+        cy.wait(5000)
         this.elements.ExpireJobBtn().click()
         this.elements.ConfirmExpireJob().click()
     }
@@ -329,7 +331,6 @@ class JobPostPage {
             .type(JobInfo.applyByCallSms)
     }
 
-    // Not Being used atm
     SendJobPostingFeedback = () => {
         // cy.get('#ratingModal').should('be.visible').then((modal) => {
         //     cy.get('#ratingModal > .modal-dialog > .modal-content > .modal-header > .modal-close').click();
