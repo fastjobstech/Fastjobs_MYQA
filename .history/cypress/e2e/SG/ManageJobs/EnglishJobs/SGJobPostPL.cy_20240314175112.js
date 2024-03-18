@@ -67,7 +67,6 @@ describe("Job posting", () => {
         SGJobPostPage.ClickPostNewJobBtn();
 
         //Edit the Job
-        cy.wait(5000);
         SGJobPostPage.EditTheJob();
         SGJobPostPage.FillPostNewJobForm(jobInfo);
         SGJobPostPage.ClickPostNewJobBtn();

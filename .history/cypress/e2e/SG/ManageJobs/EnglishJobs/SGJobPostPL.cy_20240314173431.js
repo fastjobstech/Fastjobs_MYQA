@@ -42,7 +42,7 @@ describe("Job posting", () => {
         SGJobPostPage.ExpireTheJob();
     });
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
@@ -57,7 +57,7 @@ describe("Job posting", () => {
         SGJobPostPage.ExpireTheJob();
     });
 
-    it.only("Verify able to edit the active job", () => {
+    it("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -67,7 +67,6 @@ describe("Job posting", () => {
         SGJobPostPage.ClickPostNewJobBtn();
 
         //Edit the Job
-        cy.wait(5000);
         SGJobPostPage.EditTheJob();
         SGJobPostPage.FillPostNewJobForm(jobInfo);
         SGJobPostPage.ClickPostNewJobBtn();
