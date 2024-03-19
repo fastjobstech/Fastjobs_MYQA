@@ -1,5 +1,5 @@
-import LoginPage from "../../../pages/UserPages/LoginPage"
-import JobPostPage from "../../../pages/ManageJobPage/JobPostPage"
+import LoginPage from "../../../../pages/MY/UserPages/LoginPage"
+import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage"
 
 describe("Job posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
@@ -39,10 +39,10 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to Post a feature job with valid job details", () => {
+    it.only("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(3)
+        JobPostPage.SelectPackage(1)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()

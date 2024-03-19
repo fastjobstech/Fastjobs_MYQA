@@ -39,10 +39,10 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to Post a feature job with valid job details", () => {
+    it.only("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
-        JobPostPage.SelectPackage(4)
+        JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifySuccessMsg()

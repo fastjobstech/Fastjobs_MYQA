@@ -1,15 +1,16 @@
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
-describe("Job posting", () => {
+
+describe("SG Job Posting", () => {
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
-    })
+    });
 
     beforeEach(() => {
-        cy.visit(Cypress.env("employerSG"))
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
+        cy.visit(Cypress.env("employerSG"));
+        LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'));
     });
 
     it("Verify the Job form elements are visible", () => {
@@ -32,6 +33,7 @@ describe("Job posting", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
+        SGJobPostPage.ConfirmSubmit();
         SGJobPostPage.ExpireTheJob();
     });
 
@@ -39,6 +41,7 @@ describe("Job posting", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
+        SGJobPostPage.ConfirmSubmit();
         SGJobPostPage.ExpireTheJob();
     });
 
@@ -46,6 +49,7 @@ describe("Job posting", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
+        SGJobPostPage.ConfirmSubmit();
 
         //Copy the same job
         SGJobPostPage.CopyTheJob();
@@ -65,13 +69,12 @@ describe("Job posting", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
+        SGJobPostPage.ConfirmSubmit();
 
         //Edit the Job
-        cy.wait(5000);
         SGJobPostPage.EditTheJob();
         SGJobPostPage.FillPostNewJobForm(jobInfo);
         SGJobPostPage.ClickPostNewJobBtn();
         SGJobPostPage.ExpireTheJob();
     });
-
-})
+});

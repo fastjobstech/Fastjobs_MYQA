@@ -9,7 +9,7 @@ describe("Job posting", () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env("employerSG"))
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
+        LoginPage.loginEmployer(Cypress.env('outlet_username'), Cypress.env('outlet_password'));
     });
 
     it("Verify the Job form elements are visible", () => {
@@ -35,7 +35,7 @@ describe("Job posting", () => {
         SGJobPostPage.ExpireTheJob();
     });
 
-    it("Verify able to Post a job without filling up the optional details", () => {
+    it.only("Verify able to Post a job without filling up the optional details", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
