@@ -168,7 +168,6 @@ class SGJobPostPage {
     }
 
     EditTheJob = () => {
-        cy.wait(5000);
         this.elements.EditJobBtn().click()
     }
 

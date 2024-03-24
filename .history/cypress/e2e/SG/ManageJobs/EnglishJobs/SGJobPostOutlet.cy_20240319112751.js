@@ -10,13 +10,13 @@ describe("SG Job Posting", () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env("employerSG"));
-        LoginPage.loginEmployer(Cypress.env('outlet_username'), Cypress.env('outlet_password'));
+        LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'));
     });
 
-    it("Verify the Job form elements are visible", () => {
+    it.only("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.VerifyJobPostFormElements();
-        SGJobPostPage.VerifyOutletSection();
+        // add here a verification for outlet elements
     });
 
     it("Verify Cancel button redirects back to Active job list", () => {

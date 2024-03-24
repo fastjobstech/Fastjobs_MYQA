@@ -76,6 +76,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.EditTheJob();
         SGJobPostPage.FillPostNewJobForm(jobInfo);
         SGJobPostPage.ClickPostNewJobBtn();
+        cy.wait(5000);
         SGJobPostPage.ExpireTheJob();
     });
 });

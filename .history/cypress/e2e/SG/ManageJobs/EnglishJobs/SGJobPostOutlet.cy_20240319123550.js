@@ -30,7 +30,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg();
     });
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.only("Verify able to Post a new job with valid job details", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();

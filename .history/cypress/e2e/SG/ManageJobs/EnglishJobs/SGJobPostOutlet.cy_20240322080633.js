@@ -62,7 +62,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ExpireTheJob();
     });
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }

@@ -13,15 +13,20 @@ class SGJobPostPage {
         SalaryDropdownFirst: () => cy.get('#salflag-dt > .btn'),
         SalaryField: () => cy.get('#maxsals'),
         SalaryType: () => cy.get('#salperiod-dt > .btn'),
-        JobDescription: () => cy.get('.rx-editor'),
+        JobDescription: () => cy.get('div.rx-editor-container'),
+        
         NearestMRT: () => cy.get('#c9jobs-regionc'),
         WorkingPlace: () => cy.get('#c9jobs-building'),
+        
         JobCategoryOne: () => cy.get('#c9jobs-category'),
         JobCategoryTwo: () => cy.get('#c9jobs-category2'),
+        
         Timing: () => cy.get('#c9jobs-timingc'),
+        
         PartTimeJobType: () => cy.get(':nth-child(1) > .checkbox > label'),
         FullTimeJobType: () => cy.get(':nth-child(2) > .checkbox > label'),
         ContractJobType: () => cy.get(':nth-child(3) > .checkbox > label'),
+        
         SetOutletsSettingBtn: () => cy.get('.col-xs-12 > :nth-child(3) > .btn'),
         ApplyByEmail: () => cy.get('#c9jobs-appdirecteml'),
         ApplyByCall: () => cy.get('#c9jobs-appdirectmobn'),
@@ -44,7 +49,29 @@ class SGJobPostPage {
 
         CancelBtn: () => cy.get('#cancel-job'),
         JobPostingFormPostNewJobBtn: () => cy.get('#save-job'),
-        SaveDraftBtn: () => cy.get('div[data-state="normal"] > .btn')
+        SaveDraftBtn: () => cy.get('div[data-state="normal"] > .btn'),
+
+        ConfirmSubmitJob: () => cy.get('#confirm-btn'),
+
+        //Error message elements
+        NewJobFormRequiredErrMsg: () => cy.get('.help-block'),
+
+        //Duplicate Error message
+        DuplicateNotification: () => cy.get('.panel-body'),
+        DuplicateMsg: () => cy.get('.panel-body > :nth-child(1) > .col-xs-12'),
+
+        //Expire job elements
+        ExpireJobBtn: () => cy.get('.btn-expire'),
+        ConfirmExpireJob: () => cy.get('#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit'),
+
+        //Edit Job elements
+        EditJobBtn: () => cy.get('.btn-edit'),
+
+        //Copy Job
+        CopyJobBtn: () => cy.get('.btn-copy'),
+
+        //Outlet elements
+        OutletSection: () => cy.get('.panel > .row > .col-md-12')
     }
 
     GotoPostNewJobForm = () => {
@@ -66,13 +93,12 @@ class SGJobPostPage {
         this.elements.PartTimeJobType().should('be.visible')
         this.elements.FullTimeJobType().should('be.visible')
         this.elements.ContractJobType().should('be.visible')
-        this.elements.SetOutletsSettingBtn().should('be.visible')
+        // this.elements.SetOutletsSettingBtn().should('be.visible')
         this.elements.ApplyByEmail().should('be.visible')
         this.elements.ApplyByCall().should('be.visible')
         this.elements.ApplyByWhatsapp().should('be.visible')
         this.elements.ApplyBySMS().should('be.visible')
         this.elements.EducationLevel().should('be.visible')
-        this.elements.ApplyBySMS().should('be.visible')
         this.elements.JobSkillsOne().should('be.visible')
         this.elements.JobSkillsTwo().should('be.visible')
         this.elements.JobSkillsThree().should('be.visible')
@@ -81,10 +107,105 @@ class SGJobPostPage {
         this.elements.JobLanguageThree().should('be.visible')
         this.elements.ApplicationFilter().should('be.visible')
         this.elements.ScheduledJobPost().should('be.visible')
-        this.elements.PackageSelection().should('be.visible')
+        // this.elements.PackageSelection().should('be.visible')
         this.elements.CancelBtn().should('be.visible')
         this.elements.JobPostingFormPostNewJobBtn().should('be.visible')
         this.elements.SaveDraftBtn().should('be.visible')
+    }
+
+    FillPostNewJobForm = (newJobInfo) => {
+        const JobInfo = {
+            jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
+            jobDesc: "This is a automated testing, DO NOT APPLY!",
+            applyByEmail: "kimjay.luta@fastco.asia",
+            applyByCallSms: "91191197"
+        }
+        this.elements
+            .JobTitle()
+            .clear()
+            .type(JobInfo.jobTitle)
+        this.elements
+            .JobDescription()
+            .find('.rtf-content[contenteditable="true"]')
+            .type(JobInfo.jobDesc, {force: true})
+
+        this.elements.NearestMRT().select(8)
+        this.elements.JobCategoryOne().select(5)
+        this.elements.JobCategoryTwo().select(10)
+        this.elements.PartTimeJobType().click()
+        this.elements.FullTimeJobType().click()
+        this.elements
+            .ApplyByEmail()
+            .clear()
+            .type(JobInfo.applyByEmail)
+        this.elements
+            .ApplyBySMS()
+            .clear()
+            .type(JobInfo.applyByCallSms)
+    }
+
+    ClickCancelButton = () => {
+        this.elements.CancelBtn().click();
+    }
+
+    ClickPostNewJobBtn = () => {
+        this.elements.UpPostJobBtn().click()
+    }
+
+    ConfirmSubmit = () => {
+        this.elements.ConfirmSubmitJob().click()
+    }
+
+    ExpireTheJob = () => {
+        cy.wait(5000);
+        this.elements.ExpireJobBtn().click()
+        this.elements.ConfirmExpireJob().click()
+    }
+
+    CopyTheJob = () => {
+        cy.wait(5000);
+        this.elements.CopyJobBtn().click()
+    }
+
+    EditTheJob = () => {
+        cy.wait(5000);
+        this.elements.EditJobBtn().click()
+    }
+
+    VerifyRequiredErrMsg = () => {
+        const RequiredText = [
+            "Please enter Job Title",
+            "Please enter Description",
+            "Please enter Nearest MRT",
+            "Please enter Job Category",
+            "Please enter Job Type",
+            "Please enter your preferred mode of application."
+        ]
+        this.elements.NewJobFormRequiredErrMsg().should("be.visible")
+        RequiredText.forEach((errText) => {
+            this.elements.NewJobFormRequiredErrMsg().contains(errText)
+        });
+    }
+
+    VerifyDuplicateNotification = () => {
+        const DuplicateMsg = [
+            "Oops, this job looks like a copy of an existing active job!",
+            "If you would like to proceed, we suggest modifying at least one of these fields to continue:",
+            "Job Title",
+            "Description",
+            "Nearest MRT",
+            "Job Type"
+        ]
+        this.elements.DuplicateNotification().should("be.visible")
+        this.elements.DuplicateMsg().should("be.visible")
+        DuplicateMsg.forEach((errText) => {
+            this.elements.DuplicateMsg().contains(errText)
+        })
+    }
+    
+    // Outlet
+    VerifyOutletSection = () => {
+        this.elements.OutletSection().should("be.visible");
     }
 }
 

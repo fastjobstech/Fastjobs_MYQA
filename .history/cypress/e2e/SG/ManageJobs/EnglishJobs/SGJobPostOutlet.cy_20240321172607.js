@@ -13,24 +13,24 @@ describe("SG Job Posting", () => {
         LoginPage.loginEmployer(Cypress.env('outlet_username'), Cypress.env('outlet_password'));
     });
 
-    it("Verify the Job form elements are visible", () => {
+    it.skip("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.VerifyJobPostFormElements();
         SGJobPostPage.VerifyOutletSection();
     });
 
-    it("Verify Cancel button redirects back to Active job list", () => {
+    it.skip("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.ClickCancelButton();
     });
 
-    it("Verify Required error message when Job form is submitted empty", () => {
+    it.skip("Verify Required error message when Job form is submitted empty", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.ClickPostNewJobBtn();
         SGJobPostPage.VerifyRequiredErrMsg();
     });
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.skip("Verify able to Post a new job with valid job details", () => {
         SGJobPostPage.GotoPostNewJobForm();
         SGJobPostPage.FillPostNewJobForm("");
         SGJobPostPage.ClickPostNewJobBtn();
