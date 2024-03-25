@@ -233,10 +233,6 @@ class SGJobPostPage {
     RAClickProceedButton = () => {
         this.elements.RAProceedButton().click()
     }
-
-    RAClickCheckbox = () => {
-        this.elements.RACheckbox().click()
-    }
 }
 
 module.exports = new SGJobPostPage()

@@ -79,8 +79,7 @@ class SGJobPostPage {
         EALicenseNo: () => cy.get('#job-ea-company'),
         EAPersonnelNo: () => cy.get('#job-ea-personnel'),
         ADOwner: () => cy.get('#job-ea-list'),
-        RACheckbox: () => cy.get(':nth-child(6) > .control > .control__indicator'),
-        RAProceedButton: () => cy.get('#continue-edit-ea-btn')
+        RACheckbox: () => cy.get(':nth-child(6) > .control > .control__indicator')
     }
 
     GotoPostNewJobForm = () => {
@@ -181,10 +180,6 @@ class SGJobPostPage {
         this.elements.EditJobBtn().click()
     }
 
-    VerifyLoaderTextIsDisplayed = () => {
-        cy.get('.loader-text').should('be.visible')
-    }
-
     VerifyRequiredErrMsg = () => {
         const RequiredText = [
             "Please enter Job Title",
@@ -228,14 +223,6 @@ class SGJobPostPage {
         this.elements.EAPersonnelNo().should('be.visible')
         this.elements.ADOwner().should('be.visible')
         this.elements.RACheckbox().should('be.visible')
-    }
-
-    RAClickProceedButton = () => {
-        this.elements.RAProceedButton().click()
-    }
-
-    RAClickCheckbox = () => {
-        this.elements.RACheckbox().click()
     }
 }
 

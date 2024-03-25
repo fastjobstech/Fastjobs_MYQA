@@ -79,8 +79,7 @@ class SGJobPostPage {
         EALicenseNo: () => cy.get('#job-ea-company'),
         EAPersonnelNo: () => cy.get('#job-ea-personnel'),
         ADOwner: () => cy.get('#job-ea-list'),
-        RACheckbox: () => cy.get(':nth-child(6) > .control > .control__indicator'),
-        RAProceedButton: () => cy.get('#continue-edit-ea-btn')
+        RACheckbox: () => cy.get(':nth-child(6) > .control > .control__indicator')
     }
 
     GotoPostNewJobForm = () => {
@@ -215,6 +214,11 @@ class SGJobPostPage {
             this.elements.DuplicateMsg().contains(errText)
         })
     }
+
+    VerifyJobAdIsPosted = () => {
+        cy.wait(6000)
+        cy.get('.job-ad-title').should('be.visible')
+    }
     
     // Outlet
     VerifyOutletSection = () => {
@@ -231,11 +235,7 @@ class SGJobPostPage {
     }
 
     RAClickProceedButton = () => {
-        this.elements.RAProceedButton().click()
-    }
-
-    RAClickCheckbox = () => {
-        this.elements.RACheckbox().click()
+        cy.get('#continue-edit-ea-btn').click()
     }
 }
 
