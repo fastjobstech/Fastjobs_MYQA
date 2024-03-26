@@ -202,7 +202,7 @@ class SGJobPostPage {
         }
     }
 
-    FillPostNewJobForm = (newJobInfo, AccountType, isUpdated) => {
+    FillPostNewJobForm = (newJobInfo, AccountType) => {
         const JobInfo = {
             jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
@@ -238,11 +238,6 @@ class SGJobPostPage {
 
         if (AccountType == "directEmployer" || AccountType == "parkingLot"){
             this.elements.NearestMRT().select(8)
-        }
-
-        if (isUpdated == true) {
-            this.elements.PartTimeJobType().click()
-            this.elements.FullTimeJobType().click()
         }
     }
 
@@ -346,10 +341,10 @@ class SGJobPostPage {
 
         cy.get('.usage-title').contains(ErrorTitle).should('be.visible')
         cy.get('.usage-error').contains(ErrorMessage).should('be.visible')
-    }
 
-    SelectReplaceJob = () => {
-        cy.get('.usage-radio').click()
+        this.GoToJobListing()
+        
+        cy.get('.slot-alert-message').should('be.visible')
     }
 }
 

@@ -32,20 +32,18 @@ describe("Job posting", () => {
 
     it('Verify able to Post a new job with valid job details', () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ExpireTheJob()
     })
 
     it('Post a job without available slot', () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
-
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.VerifyInsufficientSlotErrorMessage()
-
         SGJobPostPage.GoToJobListing()
         SGJobPostPage.ExpireTheJob()
     })
@@ -56,7 +54,7 @@ describe("Job posting", () => {
         }
 
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         
         SGJobPostPage.CopyTheJob()
@@ -73,16 +71,18 @@ describe("Job posting", () => {
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
 
+        //Copy the same job
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
 
+        //Duplicate Job Error
         SGJobPostPage.VerifyDuplicateNotification()
         SGJobPostPage.GoToJobListing()
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -91,6 +91,7 @@ describe("Job posting", () => {
         SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
 
+        //Edit the Job
         SGJobPostPage.EditTheJob()
         SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType)
         SGJobPostPage.ClickPostNewJobBtn()

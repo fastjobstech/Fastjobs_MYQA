@@ -1,6 +1,18 @@
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
+
+// Test cases
+/**
+ * 1. 
+ * 2. 
+ * 3. 
+ * 4. 
+ * 5. 
+ * 6. Replace the current job posted
+ * 7. Verify able to edit the posted job ad
+ */
+
 describe("Job posting", () => {
     const AccountType = 'parkingLot'
 
@@ -32,20 +44,18 @@ describe("Job posting", () => {
 
     it('Verify able to Post a new job with valid job details', () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ExpireTheJob()
     })
 
-    it('Post a job without available slot', () => {
+    it.only('Post a job without available slot', () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
-
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.VerifyInsufficientSlotErrorMessage()
-
         SGJobPostPage.GoToJobListing()
         SGJobPostPage.ExpireTheJob()
     })
@@ -56,7 +66,7 @@ describe("Job posting", () => {
         }
 
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("", AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         
         SGJobPostPage.CopyTheJob()
@@ -68,32 +78,21 @@ describe("Job posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
-        SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
-        SGJobPostPage.ClickPostNewJobBtn()
+    // it("Verify able to edit the active job", () => {
+    //     const jobInfo = {
+    //         jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
+    //     }
 
-        SGJobPostPage.CopyTheJob()
-        SGJobPostPage.SelectReplaceJob()
-        SGJobPostPage.ClickPostNewJobBtn()
+    //     SGJobPostPage.GotoPostNewJobForm();
+    //     SGJobPostPage.FillPostNewJobForm("");
+    //     SGJobPostPage.ClickPostNewJobBtn();
 
-        SGJobPostPage.VerifyDuplicateNotification()
-        SGJobPostPage.GoToJobListing()
-        SGJobPostPage.ExpireTheJob()
-    })
+    //     //Edit the Job
+    //     cy.wait(5000);
+    //     SGJobPostPage.EditTheJob();
+    //    SGJobPostPage.FillPostNewJobForm(jobInfo);
+    //     SGJobPostPage.ClickPostNewJobBtn();
+    //     SGJobPostPage.ExpireTheJob();
+    // });
 
-    it("Verify able to edit the active job", () => {
-        const jobInfo = {
-            jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
-        }
-
-        SGJobPostPage.GotoPostNewJobForm();
-        SGJobPostPage.FillPostNewJobForm("", AccountType)
-        SGJobPostPage.ClickPostNewJobBtn()
-
-        SGJobPostPage.EditTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType)
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.ExpireTheJob()
-    })
 })

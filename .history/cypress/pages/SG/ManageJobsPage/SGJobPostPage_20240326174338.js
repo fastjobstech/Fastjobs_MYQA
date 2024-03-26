@@ -231,6 +231,8 @@ class SGJobPostPage {
             .clear()
             .type(JobInfo.applyByCallSms)
 
+        cy.log("update is false")
+
         if (AccountType == "outlet"){
             this.elements.OutletOne().click()
             this.elements.OutletTwo().click()
@@ -243,6 +245,7 @@ class SGJobPostPage {
         if (isUpdated == true) {
             this.elements.PartTimeJobType().click()
             this.elements.FullTimeJobType().click()
+            cy.log("update is true")
         }
     }
 

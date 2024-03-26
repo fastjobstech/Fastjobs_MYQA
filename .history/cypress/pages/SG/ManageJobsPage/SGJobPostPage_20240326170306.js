@@ -88,10 +88,6 @@ class SGJobPostPage {
         RAProceedButton: () => cy.get('#continue-edit-ea-btn')
     }
 
-    GoToJobListing = () => {
-        this.elements.EnglishJobsNavlink().click()
-    }
-
     GotoPostNewJobForm = () => {
         this.elements.EnglishJobsNavlink().click()
         this.elements.PostNewJobBtn().click()
@@ -202,7 +198,7 @@ class SGJobPostPage {
         }
     }
 
-    FillPostNewJobForm = (newJobInfo, AccountType, isUpdated) => {
+    FillPostNewJobForm = (newJobInfo, AccountType) => {
         const JobInfo = {
             jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
@@ -239,11 +235,6 @@ class SGJobPostPage {
         if (AccountType == "directEmployer" || AccountType == "parkingLot"){
             this.elements.NearestMRT().select(8)
         }
-
-        if (isUpdated == true) {
-            this.elements.PartTimeJobType().click()
-            this.elements.FullTimeJobType().click()
-        }
     }
 
     ClickCancelButton = () => {
@@ -265,6 +256,7 @@ class SGJobPostPage {
     }
 
     CopyTheJob = () => {
+        cy.wait(5000);
         this.elements.CopyJobBtn().click()
     }
 
@@ -337,19 +329,6 @@ class SGJobPostPage {
 
     RAClickCheckbox = () => {
         this.elements.RACheckbox().click()
-    }
-
-    //Parking Lot
-    VerifyInsufficientSlotErrorMessage = () => {
-        const ErrorTitle = 'Insufficient slots - select a job post to expire*';
-        const ErrorMessage = 'Please select one job post to replace.';
-
-        cy.get('.usage-title').contains(ErrorTitle).should('be.visible')
-        cy.get('.usage-error').contains(ErrorMessage).should('be.visible')
-    }
-
-    SelectReplaceJob = () => {
-        cy.get('.usage-radio').click()
     }
 }
 

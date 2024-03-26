@@ -75,9 +75,6 @@ class SGJobPostPage {
         OutletTwo: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(2) > :nth-child(1)'),
         OutletThree: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(3) > :nth-child(1)'),
 
-        //Parking lot elements
-        UsageDetails: () => cy.get('.col-sm-12 > :nth-child(21)').contains('Usage details'),
-
         //RA Elements
         RAAgencyInfoTitle: () => cy.get('h3'),
         RAInfoLines: () => cy.get('.edit-job-ea-info-liner'),
@@ -86,10 +83,6 @@ class SGJobPostPage {
         ADOwner: () => cy.get('#job-ea-list'),
         RACheckbox: () => cy.get(':nth-child(6) > .control > .control__indicator'),
         RAProceedButton: () => cy.get('#continue-edit-ea-btn')
-    }
-
-    GoToJobListing = () => {
-        this.elements.EnglishJobsNavlink().click()
     }
 
     GotoPostNewJobForm = () => {
@@ -176,8 +169,7 @@ class SGJobPostPage {
         const ParkingLotElementsToCheck = [
             this.elements.NearestMRT,
             this.elements.WorkingPlace,
-            this.elements.SetOutletsSettingBtn,
-            this.elements.UsageDetails
+            this.elements.SetOutletsSettingBtn
         ]
 
         //Verify General elements for all account types
@@ -195,6 +187,7 @@ class SGJobPostPage {
         
         //Verify Parking lot elements
         if(AccountType == 'parkingLot'){
+            cy.get('.col-sm-12 > :nth-child(21)').contains('Usage details').should('be.visible')
             ParkingLotElementsToCheck.forEach(element => {
                 element().should('be.visible')
             })
@@ -202,7 +195,7 @@ class SGJobPostPage {
         }
     }
 
-    FillPostNewJobForm = (newJobInfo, AccountType, isUpdated) => {
+    FillPostNewJobForm = (newJobInfo, AccountType) => {
         const JobInfo = {
             jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
@@ -236,13 +229,8 @@ class SGJobPostPage {
             this.elements.OutletTwo().click()
         }
 
-        if (AccountType == "directEmployer" || AccountType == "parkingLot"){
+        if (AccountType == "directEmployer"){
             this.elements.NearestMRT().select(8)
-        }
-
-        if (isUpdated == true) {
-            this.elements.PartTimeJobType().click()
-            this.elements.FullTimeJobType().click()
         }
     }
 
@@ -265,6 +253,7 @@ class SGJobPostPage {
     }
 
     CopyTheJob = () => {
+        cy.wait(5000);
         this.elements.CopyJobBtn().click()
     }
 
@@ -296,13 +285,11 @@ class SGJobPostPage {
         if(AccountType == "outlet"){
             const OutletRequiredText = "Please choose at least one outlet"
             this.elements.NewJobFormRequiredErrMsg().contains(OutletRequiredText)
-            cy.log('Verified outlet error messages')
         }
 
-        if(AccountType == "directEmployer" || AccountType == "parkingLot"){
+        if(AccountType == "directEmployer"){
             const DeRequiredText =  "Please enter Nearest MRT"
             this.elements.NewJobFormRequiredErrMsg().contains(DeRequiredText)
-            cy.log('Verified DE and ParkingLot error messages')
         }
     }
 
@@ -337,19 +324,6 @@ class SGJobPostPage {
 
     RAClickCheckbox = () => {
         this.elements.RACheckbox().click()
-    }
-
-    //Parking Lot
-    VerifyInsufficientSlotErrorMessage = () => {
-        const ErrorTitle = 'Insufficient slots - select a job post to expire*';
-        const ErrorMessage = 'Please select one job post to replace.';
-
-        cy.get('.usage-title').contains(ErrorTitle).should('be.visible')
-        cy.get('.usage-error').contains(ErrorMessage).should('be.visible')
-    }
-
-    SelectReplaceJob = () => {
-        cy.get('.usage-radio').click()
     }
 }
 
