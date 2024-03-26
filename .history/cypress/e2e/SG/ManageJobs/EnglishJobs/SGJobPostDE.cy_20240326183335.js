@@ -1,9 +1,9 @@
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
+
 describe("SG Job Posting", () => {
     const AccountType = "directEmployer";
-    
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
@@ -30,7 +30,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg(AccountType)
     })
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.only("Verify able to Post a new job with valid job details", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
@@ -38,7 +38,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
@@ -55,7 +55,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
