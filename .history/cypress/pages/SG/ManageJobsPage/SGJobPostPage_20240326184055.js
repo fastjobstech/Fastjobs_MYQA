@@ -77,9 +77,6 @@ class SGJobPostPage {
 
         //Parking lot elements
         UsageDetails: () => cy.get('.col-sm-12 > :nth-child(21)').contains('Usage details'),
-        UsageTitle: () => cy.get('.usage-title'),
-        UsageError: () => cy.get('.usage-error'),
-        UsageRadioButton: () => cy.get('.usage-radio'),
 
         //RA Elements
         RAAgencyInfoTitle: () => cy.get('h3'),
@@ -301,12 +298,12 @@ class SGJobPostPage {
         const ErrorTitle = 'Insufficient slots - select a job post to expire*';
         const ErrorMessage = 'Please select one job post to replace.';
 
-        this.elements.UsageTitle().contains(ErrorTitle).should('be.visible')
-        this.elements.UsageError().contains(ErrorMessage).should('be.visible')
+        cy.get('.usage-title').contains(ErrorTitle).should('be.visible')
+        cy.get('.usage-error').contains(ErrorMessage).should('be.visible')
     }
 
     SelectReplaceJob = () => {
-        this.elements.UsageRadioButton().click()
+        cy.get('.usage-radio').click()
     }
 }
 
