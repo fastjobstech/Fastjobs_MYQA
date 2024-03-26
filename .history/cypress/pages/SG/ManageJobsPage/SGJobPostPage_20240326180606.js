@@ -244,7 +244,7 @@ class SGJobPostPage {
             this.elements.OutletTwo().click()
         }
 
-        if (AccountType == "directEmployer" || AccountType == "parkingLot" || AccountType == "recruitmentAgency"){
+        if (AccountType == "directEmployer" || AccountType == "parkingLot"){
             this.elements.NearestMRT().select(8)
         }
 

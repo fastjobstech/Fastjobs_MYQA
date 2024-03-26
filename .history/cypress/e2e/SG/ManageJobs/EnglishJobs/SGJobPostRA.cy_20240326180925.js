@@ -32,42 +32,33 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg()
     })
 
-    it("Post new job ad with Agency information included", () => {
+    it.only("Post new job ad with Agency information included", () => {
         SGJobPostPage.GotoPostNewJobForm()
-        
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
-        
         SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
-        
         SGJobPostPage.ExpireTheJob()
     })
 
     it('Post withouht Agency Info in Job description', () => {
         SGJobPostPage.GotoPostNewJobForm()
-        
         SGJobPostPage.RAClickCheckbox()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("")
         SGJobPostPage.ClickPostNewJobBtn()
-        
         SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
-        
         SGJobPostPage.ExpireTheJob()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
-
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm("")
         SGJobPostPage.ClickPostNewJobBtn()
-        
         SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
-        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 
@@ -83,16 +74,14 @@ describe("SG Job Posting", () => {
         }
 
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
-
+        SGJobPostPage.FillPostNewJobForm("")
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
 
         //Edit the Job
         SGJobPostPage.EditTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType)
-
+        SGJobPostPage.FillPostNewJobForm(jobInfo)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ExpireTheJob()
