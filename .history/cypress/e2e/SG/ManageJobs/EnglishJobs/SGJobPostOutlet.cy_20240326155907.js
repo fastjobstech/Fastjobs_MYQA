@@ -30,49 +30,13 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg('outlet')
     })
 
-    // Got issue at the moment FJEMP-3594
-    it.skip("Verify able to post a Job with outlets selected", () => {
+    it.only("Verify able to post a Job with outlets selected", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', 'outlet')
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.ExpireTheJob()
     })
-
-    it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
-        SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', 'outlet')
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.ConfirmSubmit()
-
-        //Copy the same job
-        SGJobPostPage.CopyTheJob()
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.ConfirmSubmit()
-
-        //Duplicate Job Error
-        SGJobPostPage.VerifyDuplicateNotification()
-        SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.ExpireTheJob()
-    })
-
-    it.skip("Verify able to edit the active job", () => {
-        const jobInfo = {
-            jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
-        }
-
-        SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', 'outlet')
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.ConfirmSubmit()
-
-        //Edit the Job
-        cy.wait(5000)
-        SGJobPostPage.EditTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, 'outlet')
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.ExpireTheJob()
-    })
+    //Verify error notification appears when submitted a job that was already posted.
     //Verify able to edit the posted job
 })

@@ -211,7 +211,6 @@ class SGJobPostPage {
 
         if (AccountType == "outlet"){
             this.elements.OutletOne().click()
-            this.elements.OutletTwo().click()
         }
 
         if (AccountType == "directEmployer"){

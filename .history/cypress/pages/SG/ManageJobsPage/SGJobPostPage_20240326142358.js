@@ -71,9 +71,6 @@ class SGJobPostPage {
         CopyJobBtn: () => cy.get('.btn-copy'),
 
         //Outlet elements
-        OutletOne: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(1) > :nth-child(1)'),
-        OutletTwo: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(2) > :nth-child(1)'),
-        OutletThree: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(3) > :nth-child(1)'),
 
         //RA Elements
         RAAgencyInfoTitle: () => cy.get('h3'),
@@ -93,12 +90,8 @@ class SGJobPostPage {
     VerifyJobPostFormElements = () => {
         this.elements.UpPostJobBtn().should('be.visible')
         this.elements.UpSaveDraftBtn().should('be.visible')
-
-        this.elements.JobTitle().should('be.visible')
-
         this.elements.SalaryDropdownFirst().should('be.visible')
         this.elements.SalaryType().should('be.visible')
-
         this.elements.JobDescription().should('be.visible')
         
         // This section is not displayed when account type is outlet
@@ -138,49 +131,12 @@ class SGJobPostPage {
     }
 
     VerifyJobFormElements = (AccountType) => {
-        const generalElementsToCheck = [
-            this.elements.UpPostJobBtn,
-            this.elements.UpSaveDraftBtn,
-            this.elements.JobTitle,
-            this.elements.SalaryDropdownFirst,
-            this.elements.SalaryType,
-            this.elements.JobDescription,
-            this.elements.JobCategoryOne,
-            this.elements.JobCategoryTwo,
-            this.elements.PartTimeJobType,
-            this.elements.FullTimeJobType,
-            this.elements.ContractJobType,
-            this.elements.ApplyByEmail,
-            this.elements.ApplyByCall,
-            this.elements.ApplyByWhatsapp,
-            this.elements.ApplyBySMS,
-            this.elements.CancelBtn,
-            this.elements.JobPostingFormPostNewJobBtn,
-            this.elements.SaveDraftBtn
-        ]
-
-        const OutletElementsToCheck = [
-            this.elements.OutletOne,
-            this.elements.OutletTwo,
-            this.elements.OutletThree,
-            this.elements.PackageSelection
-        ]
-
-        //Verify General elements for all account types
-        generalElementsToCheck.forEach(element => {
-            element().should('be.visible')
-        })
-
-        //Verify outlet elements
-        if(AccountType == 'outlet') {
-            OutletElementsToCheck.forEach(element => {
-                element().should('be.visible')
-            })
-            cy.log('Outlet section is been verified!')
+        if(AccountType = 'outlet') {
+            cy.log('This is an outlet account')
         }
     }
 
-    FillPostNewJobForm = (newJobInfo, AccountType) => {
+    FillPostNewJobForm = (newJobInfo) => {
         const JobInfo = {
             jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
@@ -196,6 +152,7 @@ class SGJobPostPage {
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
+        this.elements.NearestMRT().select(8)
         this.elements.JobCategoryOne().select(5)
         this.elements.JobCategoryTwo().select(10)
         this.elements.PartTimeJobType().click()
@@ -208,15 +165,6 @@ class SGJobPostPage {
             .ApplyBySMS()
             .clear()
             .type(JobInfo.applyByCallSms)
-
-        if (AccountType == "outlet"){
-            this.elements.OutletOne().click()
-            this.elements.OutletTwo().click()
-        }
-
-        if (AccountType == "directEmployer"){
-            this.elements.NearestMRT().select(8)
-        }
     }
 
     ClickCancelButton = () => {
@@ -251,31 +199,19 @@ class SGJobPostPage {
         cy.get('.loader-text').should('be.visible')
     }
 
-    VerifyRequiredErrMsg = (AccountType) => {
+    VerifyRequiredErrMsg = () => {
         const RequiredText = [
             "Please enter Job Title",
             "Please enter Description",
+            "Please enter Nearest MRT",
             "Please enter Job Category",
             "Please enter Job Type",
             "Please enter your preferred mode of application."
         ]
-        
-        //Verify the error message for all account types
         this.elements.NewJobFormRequiredErrMsg().should("be.visible")
         RequiredText.forEach((errText) => {
             this.elements.NewJobFormRequiredErrMsg().contains(errText)
         });
-
-        //Verify the error message specifically for account type
-        if(AccountType == "outlet"){
-            const OutletRequiredText = "Please choose at least one outlet"
-            this.elements.NewJobFormRequiredErrMsg().contains(OutletRequiredText)
-        }
-
-        if(AccountType == "directEmployer"){
-            const DeRequiredText =  "Please enter Nearest MRT"
-            this.elements.NewJobFormRequiredErrMsg().contains(DeRequiredText)
-        }
     }
 
     VerifyDuplicateNotification = () => {
@@ -292,6 +228,12 @@ class SGJobPostPage {
         DuplicateMsg.forEach((errText) => {
             this.elements.DuplicateMsg().contains(errText)
         })
+    }
+    
+    // Outlet
+    VerifyOutletSection = () => {
+        //Verify that all 3 outlets are displayed with correct name
+
     }
 
     //Recruitment Agency

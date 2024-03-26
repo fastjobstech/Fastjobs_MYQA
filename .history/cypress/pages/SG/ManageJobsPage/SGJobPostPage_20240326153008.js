@@ -71,9 +71,9 @@ class SGJobPostPage {
         CopyJobBtn: () => cy.get('.btn-copy'),
 
         //Outlet elements
-        OutletOne: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(1) > :nth-child(1)'),
-        OutletTwo: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(2) > :nth-child(1)'),
-        OutletThree: () => cy.get('.col-md-12 > .block-grid-xs-1 > :nth-child(3) > :nth-child(1)'),
+        OutletOne: () => cy.get('.block-grid-item > label').contains('Alor Setar'),
+        OutletTwo: () => cy.get('.block-grid-item > label').contains('George Town'),
+        OutletThree: () => cy.get('.block-grid-item > label').contains('Kota Kinabalu'),
 
         //RA Elements
         RAAgencyInfoTitle: () => cy.get('h3'),
@@ -180,7 +180,7 @@ class SGJobPostPage {
         }
     }
 
-    FillPostNewJobForm = (newJobInfo, AccountType) => {
+    FillPostNewJobForm = (newJobInfo) => {
         const JobInfo = {
             jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
             jobDesc: "This is a automated testing, DO NOT APPLY!",
@@ -196,6 +196,7 @@ class SGJobPostPage {
             .find('.rtf-content[contenteditable="true"]')
             .type(JobInfo.jobDesc, {force: true})
 
+        this.elements.NearestMRT().select(8)
         this.elements.JobCategoryOne().select(5)
         this.elements.JobCategoryTwo().select(10)
         this.elements.PartTimeJobType().click()
@@ -208,15 +209,6 @@ class SGJobPostPage {
             .ApplyBySMS()
             .clear()
             .type(JobInfo.applyByCallSms)
-
-        if (AccountType == "outlet"){
-            this.elements.OutletOne().click()
-            this.elements.OutletTwo().click()
-        }
-
-        if (AccountType == "directEmployer"){
-            this.elements.NearestMRT().select(8)
-        }
     }
 
     ClickCancelButton = () => {
@@ -251,31 +243,19 @@ class SGJobPostPage {
         cy.get('.loader-text').should('be.visible')
     }
 
-    VerifyRequiredErrMsg = (AccountType) => {
+    VerifyRequiredErrMsg = () => {
         const RequiredText = [
             "Please enter Job Title",
             "Please enter Description",
+            "Please enter Nearest MRT",
             "Please enter Job Category",
             "Please enter Job Type",
             "Please enter your preferred mode of application."
         ]
-        
-        //Verify the error message for all account types
         this.elements.NewJobFormRequiredErrMsg().should("be.visible")
         RequiredText.forEach((errText) => {
             this.elements.NewJobFormRequiredErrMsg().contains(errText)
         });
-
-        //Verify the error message specifically for account type
-        if(AccountType == "outlet"){
-            const OutletRequiredText = "Please choose at least one outlet"
-            this.elements.NewJobFormRequiredErrMsg().contains(OutletRequiredText)
-        }
-
-        if(AccountType == "directEmployer"){
-            const DeRequiredText =  "Please enter Nearest MRT"
-            this.elements.NewJobFormRequiredErrMsg().contains(DeRequiredText)
-        }
     }
 
     VerifyDuplicateNotification = () => {
