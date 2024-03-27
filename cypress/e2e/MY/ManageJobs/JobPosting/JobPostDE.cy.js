@@ -91,7 +91,6 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
 
         // Expire
-        cy.wait(5000)
         JobPostPage.ExpireTheJob()
     })
 })

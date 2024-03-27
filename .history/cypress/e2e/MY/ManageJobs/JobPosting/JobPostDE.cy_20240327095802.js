@@ -10,7 +10,6 @@ describe("Job posting", () => {
     beforeEach(() => {
         cy.visit("/");
         LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        // JobPostPage.SendJobPostingFeedback();
     });
 
     it("Verify the Job form elements are visible", () => {
@@ -30,7 +29,6 @@ describe("Job posting", () => {
     })
 
     it("Verify able to Post a new job with valid job details", () => {
-
         JobPostPage.GoToPostNewJobForm();
         JobPostPage.FillPostNewJobForm("");
         JobPostPage.FillOptionalFields();
@@ -38,7 +36,6 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn();
         JobPostPage.ConfirmSubmit();
         JobPostPage.ExpireTheJob();
-        JobPostPage.SendJobPostingFeedback();
     });
 
     it("Verify able to Post a feature job with valid job details", () => {
@@ -48,32 +45,26 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.ExpireTheJob()
-        JobPostPage.SendJobPostingFeedback();
     })
 
-
     it("Verify able to Post a job without filling up the optional details", () => {
-
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.SendJobPostingFeedback();
         JobPostPage.ExpireTheJob()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
-
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.SendJobPostingFeedback();
-
 
         // Copy the same job
+        cy.wait(5000)
         JobPostPage.CopyTheJob()
         JobPostPage.ClickPostNewJobBtn()
 
@@ -93,8 +84,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-
-        JobPostPage.SendJobPostingFeedback();
 
         // Edit the Job
         JobPostPage.EditTheJob()

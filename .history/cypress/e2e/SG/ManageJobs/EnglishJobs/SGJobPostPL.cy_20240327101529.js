@@ -74,13 +74,10 @@ describe("Job posting", () => {
         SGJobPostPage.ClickPostNewJobBtn()
 
         SGJobPostPage.CopyTheJob()
-        cy.wait(5000)
         SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
 
-        cy.wait(5000)
         SGJobPostPage.VerifyDuplicateNotification()
-        
         SGJobPostPage.GoToJobListing()
         SGJobPostPage.ExpireTheJob()
     })

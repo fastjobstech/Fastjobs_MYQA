@@ -68,7 +68,7 @@ describe("Job posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
@@ -78,9 +78,7 @@ describe("Job posting", () => {
         SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
 
-        cy.wait(5000)
         SGJobPostPage.VerifyDuplicateNotification()
-        
         SGJobPostPage.GoToJobListing()
         SGJobPostPage.ExpireTheJob()
     })
