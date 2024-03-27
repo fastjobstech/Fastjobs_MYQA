@@ -315,7 +315,7 @@ class SGJobPostPage {
     VerifyPostedJobAd = () => {
         this.GoToJobListing()
         cy.wait(500)
-
+        // cy.get('#jobsList')
         this.elements.JoblistingEl().then(($jobAdElement) => {
             const findJobCardElement = $jobAdElement.find('.panel-body')
 
@@ -323,11 +323,16 @@ class SGJobPostPage {
                 findJobCardElement.each($el => {
                     this.elements.ExpireJobBtn().eq($el).click()
                     this.elements.ConfirmExpireJob().click()
+                    // cy.get('.btn-expire').eq($el).click()
+                    // cy.get('#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit').click()
                 })
+
             } else {
                 cy.log('No Posted job!')
+
             }
-        })
+
+        });
     }
 }
 

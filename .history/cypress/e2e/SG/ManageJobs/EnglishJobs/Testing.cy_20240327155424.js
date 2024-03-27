@@ -16,7 +16,23 @@ describe("Expire JOb", () => {
     it('TEST 1', () => {
         cy.get('.col-sm-12 > .nav > :nth-child(2) > a').click()
         cy.url().should('contain','/p/my-activity/jobs/')
+
+        // cy.wait(500)
+        // cy.get('#jobsList').then(($jobAdElement) => {
+        //     const findJobCardElement = $jobAdElement.find('.panel-body')
+        //     if (findJobCardElement.length > 0) {
+        //         cy.log('May posted job')
+        //         findJobCardElement.each($el => {
+        //             cy.log('Expire the Job')
+        //             cy.get('.btn-expire').eq($el).click()
+        //             cy.get('#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit').click()
+        //         })
+        //     } else {
+        //         cy.log('No Posted job!')
+        //     }
+        // })
     })
+
 
     it('TEST 2', () => {
         cy.get('.col-sm-12 > .nav > :nth-child(2) > a').click()

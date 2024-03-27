@@ -313,21 +313,25 @@ class SGJobPostPage {
 
     // Check if there's a posted job and expire it 
     VerifyPostedJobAd = () => {
-        this.GoToJobListing()
         cy.wait(500)
-
-        this.elements.JoblistingEl().then(($jobAdElement) => {
+        // cy.get('#jobsList')
+        this.JoblistingEl().then(($jobAdElement) => {
             const findJobCardElement = $jobAdElement.find('.panel-body')
 
             if (findJobCardElement.length > 0) {
                 findJobCardElement.each($el => {
                     this.elements.ExpireJobBtn().eq($el).click()
                     this.elements.ConfirmExpireJob().click()
+                    // cy.get('.btn-expire').eq($el).click()
+                    // cy.get('#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit').click()
                 })
+
             } else {
                 cy.log('No Posted job!')
+
             }
-        })
+
+        });
     }
 }
 
