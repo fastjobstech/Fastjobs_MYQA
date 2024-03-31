@@ -35,7 +35,7 @@ describe("Job posting", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
-        // SGJobPostPage.ExpireTheJob()
+        SGJobPostPage.ExpireTheJob()
     })
 
     it('Post a job without available slot', () => {
