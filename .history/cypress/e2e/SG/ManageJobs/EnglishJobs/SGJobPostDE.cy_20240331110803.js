@@ -41,7 +41,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()

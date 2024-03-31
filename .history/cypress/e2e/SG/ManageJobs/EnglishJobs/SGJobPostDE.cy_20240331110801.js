@@ -41,13 +41,14 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        // cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 

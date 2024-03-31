@@ -1,5 +1,3 @@
-/// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
@@ -14,10 +12,9 @@ describe("SG Job Posting", () => {
     beforeEach(() => {
         cy.visit(Cypress.env("employerSG"))
         LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'))
-        SGJobPostPage.VerifyPostedJobAd()
     })
 
-    it("Verify the Job form elements are visible", () => {
+    it.only("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.VerifyJobFormElements(AccountType)
     })
@@ -48,6 +45,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 

@@ -1,5 +1,4 @@
-/// <reference types = "Cypress" />
-
+/// <required === 'Cypress' />
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
@@ -17,7 +16,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyPostedJobAd()
     })
 
-    it("Verify the Job form elements are visible", () => {
+    it.only("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.VerifyJobFormElements(AccountType)
     })
@@ -48,6 +47,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 

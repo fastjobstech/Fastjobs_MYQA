@@ -27,7 +27,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ClickCancelButton()
     })
 
-    it("Verify Required error message when Job form is submitted empty", () => {
+    it.only("Verify Required error message when Job form is submitted empty", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.VerifyRequiredErrMsg(AccountType)
@@ -48,6 +48,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 

@@ -22,7 +22,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyJobFormElements(AccountType)
     })
 
-    it("Verify Cancel button redirects back to Active job list", () => {
+    it.only("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickCancelButton()
     })
@@ -48,6 +48,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 

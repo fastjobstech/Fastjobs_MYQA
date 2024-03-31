@@ -33,15 +33,15 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg(AccountType)
     })
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.only("Verify able to Post a new job with valid job details", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.ExpireTheJob()
+        // SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.only("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()

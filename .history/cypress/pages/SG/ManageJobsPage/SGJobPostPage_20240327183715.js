@@ -97,7 +97,7 @@ class SGJobPostPage {
     }
 
     GotoPostNewJobForm = () => {
-        // this.elements.EnglishJobsNavlink().click()
+        this.elements.EnglishJobsNavlink().click()
         this.elements.PostNewJobBtn().click()
     }
 
@@ -320,7 +320,6 @@ class SGJobPostPage {
             const findJobCardElement = $jobAdElement.find('.panel-body')
 
             if (findJobCardElement.length > 0) {
-                cy.log('Have a posted job!')
                 findJobCardElement.each($el => {
                     this.elements.ExpireJobBtn().eq($el).click()
                     this.elements.ConfirmExpireJob().click()
