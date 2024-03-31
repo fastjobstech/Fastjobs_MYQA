@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sg:test": "cypress run --spec 'cypress/e2e/SG/'",
-    "my:test": "cypress run --spec 'cypress/e2e/MY/'"
+    "sg:test": "cypress run --spec 'cypress/e2e/SG/*spec.cy.js'",
+    "my:test": "cypress run --spec 'cypress/e2e/MY/*spec.cy.js'"
   },
   "keywords": [],
   "author": "",

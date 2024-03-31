@@ -11,6 +11,9 @@ module.exports = defineConfig({
     },
     baseUrl: "https://employer-test.fastjobs.my/",
     experimentalSessionAndOrigin: true,
+    "scripts": {
+      "sg:test": "cypress run --spec 'cypress/e2e/SG/*spec.cy.js'",
+    }
   },
   resposnseTimeout: 30000,
   pageLoadTimeout: 30000,

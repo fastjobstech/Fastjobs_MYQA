@@ -10,7 +10,7 @@ module.exports = defineConfig({
       })
     },
     baseUrl: "https://employer-test.fastjobs.my/",
-    experimentalSessionAndOrigin: true,
+    experimentalSessionAndOrigin: true
   },
   resposnseTimeout: 30000,
   pageLoadTimeout: 30000,

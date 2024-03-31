@@ -10,7 +10,7 @@ module.exports = defineConfig({
       })
     },
     baseUrl: "https://employer-test.fastjobs.my/",
-    experimentalSessionAndOrigin: true,
+    experimentalSessionAndOrigin: true
   },
   resposnseTimeout: 30000,
   pageLoadTimeout: 30000,
@@ -27,5 +27,5 @@ module.exports = defineConfig({
     outlet_password: "Password123",
     SG_DE_Username: "kimjayfastcoqa@gmail.com",
     SG_DE_Password: "Password1234",
-  },
+  }
 });
