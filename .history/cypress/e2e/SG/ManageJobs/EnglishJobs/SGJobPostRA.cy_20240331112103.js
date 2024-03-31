@@ -68,6 +68,7 @@ describe("SG Job Posting", () => {
         SGJobPostPage.ConfirmSubmit()
 
         //Copy the same job
+        cy.wait(5000)
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
 
