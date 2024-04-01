@@ -4,7 +4,7 @@ class SGJobPostPage {
         EnglishJobsNavlink: () => cy.get('.col-sm-12 > .nav > :nth-child(2) > a'),
         PostNewJobBtn: () => cy.get('.pull-right > .btn'),
         JoblistingEl: () => cy.get('#jobsList'),
-        JobListingTitle: () => cy.get('.page-title > .pull-left', {timeout: 5000}),
+        JobListingTitle: () => cy.get('.page-title > .pull-left', {timeout: 500}),
 
         // Post new job form elements
         UpPostJobBtn: () => cy.get('#update-job'),

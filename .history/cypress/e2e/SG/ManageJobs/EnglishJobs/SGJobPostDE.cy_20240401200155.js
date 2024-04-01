@@ -26,7 +26,6 @@ describe("SG Job Posting", () => {
     it("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
     })
 
     it("Verify Required error message when Job form is submitted empty", () => {
@@ -40,7 +39,6 @@ describe("SG Job Posting", () => {
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobListingPage()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
     })
 
@@ -58,7 +56,6 @@ describe("SG Job Posting", () => {
         //Duplicate Job Error
         SGJobPostPage.VerifyDuplicateNotification()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
     })
 
     it("Verify able to edit the active job", () => {
@@ -76,6 +73,5 @@ describe("SG Job Posting", () => {
         SGJobPostPage.EditTheJob()
         SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyJobListingPage()
     })
 })

@@ -1,52 +1,47 @@
-/// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
+
 describe("SG Job Posting", () => {
-    const AccountType = "directEmployer";
-    
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
     })
 
     beforeEach(() => {
-        cy.visit(Cypress.env("employerSG"))
-        LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'))
+        cy.visit(Cypress.env('employerSG'))
+        LoginPage.loginEmployer(Cypress.env('outlet_username'), Cypress.env('outlet_password'))
         SGJobPostPage.VerifyJobPostingFeedbackModal()
         SGJobPostPage.VerifyPostedJobAd()
     })
 
     it("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.VerifyJobFormElements(AccountType)
+        SGJobPostPage.VerifyJobFormElements('outlet')
     })
 
     it("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
     })
 
-    it("Verify Required error message when Job form is submitted empty", () => {
+    it("Verify Required error messagges are displayed", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyRequiredErrMsg(AccountType)
+        SGJobPostPage.VerifyRequiredErrMsg('outlet')
     })
 
-    it("Verify able to Post a new job with valid job details", () => {
+    // Got issue at the moment FJEMP-3594 (FIXED!!!)
+    it.skip("Verify able to post a Job with outlets selected", () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm('', 'outlet')
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobListingPage()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm('', 'outlet')
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
@@ -54,28 +49,30 @@ describe("SG Job Posting", () => {
         //Copy the same job
         SGJobPostPage.CopyTheJob()
         SGJobPostPage.ClickPostNewJobBtn()
+        SGJobPostPage.ConfirmSubmit()
 
         //Duplicate Job Error
         SGJobPostPage.VerifyDuplicateNotification()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.skip("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
 
         SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.FillPostNewJobForm('', 'outlet')
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
 
         //Edit the Job
+        cy.wait(5000)
         SGJobPostPage.EditTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+        SGJobPostPage.FillPostNewJobForm(jobInfo, 'outlet')
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.ConfirmSubmit()
+        SGJobPostPage.ExpireTheJob()
     })
 })

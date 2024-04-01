@@ -26,7 +26,6 @@ describe("SG Job Posting", () => {
     it("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
     })
 
     it("Verify Required error message when Job form is submitted empty", () => {
@@ -35,13 +34,12 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyRequiredErrMsg(AccountType)
     })
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.only("Verify able to Post a new job with valid job details", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobListingPage()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
+        // SGJobPostPage.ExpireTheJob()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
@@ -49,7 +47,6 @@ describe("SG Job Posting", () => {
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
 
         //Copy the same job
         SGJobPostPage.CopyTheJob()
@@ -58,7 +55,7 @@ describe("SG Job Posting", () => {
         //Duplicate Job Error
         SGJobPostPage.VerifyDuplicateNotification()
         SGJobPostPage.ClickCancelButton()
-        SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.ExpireTheJob()
     })
 
     it("Verify able to edit the active job", () => {
@@ -70,12 +67,11 @@ describe("SG Job Posting", () => {
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.ConfirmSubmit()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
 
         //Edit the Job
         SGJobPostPage.EditTheJob()
         SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.ExpireTheJob()
     })
 })

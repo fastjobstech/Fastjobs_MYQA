@@ -1,11 +1,10 @@
 /// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
 describe("SG Job Posting", () => {
-    const AccountType = "directEmployer";
-    
+    const AccountType = "recruitmentAgency";
+
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
         return false
@@ -13,7 +12,7 @@ describe("SG Job Posting", () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env("employerSG"))
-        LoginPage.loginEmployer(Cypress.env('SG_DE_Username'), Cypress.env('SG_DE_Password'))
+        LoginPage.loginEmployer(Cypress.env('ra_username'), Cypress.env('ra_password'))
         SGJobPostPage.VerifyJobPostingFeedbackModal()
         SGJobPostPage.VerifyPostedJobAd()
     })
@@ -29,25 +28,46 @@ describe("SG Job Posting", () => {
         SGJobPostPage.VerifyJobListingPage()
     })
 
-    it("Verify Required error message when Job form is submitted empty", () => {
+    //Skip the test for now issue (FJEMP-3581)
+    it.skip("Verify Required error message when Job form is submitted empty", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyRequiredErrMsg(AccountType)
+        SGJobPostPage.VerifyRequiredErrMsg()
     })
 
-    it("Verify able to Post a new job with valid job details", () => {
+    it.only("Post new job ad with Agency information included", () => {
         SGJobPostPage.GotoPostNewJobForm()
+        
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
+        SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.VerifyJobPostingFeedbackModal()
+    })
+
+    it('Post withouht Agency Info in Job description', () => {
+        SGJobPostPage.GotoPostNewJobForm()
+        
+        SGJobPostPage.RAClickCheckbox()
+        SGJobPostPage.FillPostNewJobForm('', AccountType)
+        SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
+        SGJobPostPage.ConfirmSubmit()
+        
         SGJobPostPage.VerifyJobListingPage()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
+
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
 
@@ -68,14 +88,19 @@ describe("SG Job Posting", () => {
 
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
+
         SGJobPostPage.ClickPostNewJobBtn()
+        SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
 
         //Edit the Job
         SGJobPostPage.EditTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType)
+
         SGJobPostPage.ClickPostNewJobBtn()
+        SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.VerifyJobListingPage()
     })
+
 })
