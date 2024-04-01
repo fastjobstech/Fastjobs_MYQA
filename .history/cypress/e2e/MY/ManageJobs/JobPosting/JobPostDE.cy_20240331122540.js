@@ -10,36 +10,33 @@ describe("Job posting", () => {
     beforeEach(() => {
         cy.visit("/");
         LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        JobPostPage.VerifyJobPostingFeedbackModal()
-        JobPostPage.VerifyPostedJobAd()
     });
 
-    it('Verify the Job form elements are visible', () => {
+    it.only("Verify the Job form elements are visible", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.VerifyJobFormElements()
     })
 
-    it('Verify Cancel button redirects back to Active job list', () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.ClickCancelButton()
+    it("Verify Cancel button redirects back to Active job list", () => {
+        JobPostPage.GoToPostNewJobForm();
+        JobPostPage.ClickCancelButton();
     })
 
-    it('Verify Required error message when Job form is submitted empty', () => {
+    it("Verify Required error message when Job form is submitted empty", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.VerifyRequiredErrMsg()
     })
 
-    it.only('Verify able to Post a new job with valid job details', () => {
-        JobPostPage.GoToPostNewJobForm()
-        JobPostPage.FillPostNewJobForm("")
-        JobPostPage.FillOptionalFields()
-        JobPostPage.SelectPackage(2)
-        JobPostPage.ClickPostNewJobBtn()
-        JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
+    it("Verify able to Post a new job with valid job details", () => {
+        JobPostPage.GoToPostNewJobForm();
+        JobPostPage.FillPostNewJobForm("");
+        JobPostPage.FillOptionalFields();
+        JobPostPage.SelectPackage(2);
+        JobPostPage.ClickPostNewJobBtn();
+        JobPostPage.ConfirmSubmit();
         JobPostPage.ExpireTheJob();
-    })
+    });
 
     it("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
@@ -47,7 +44,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -57,7 +53,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -67,7 +62,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Copy the same job
         cy.wait(5000)
@@ -90,7 +84,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Edit the Job
         JobPostPage.EditTheJob()

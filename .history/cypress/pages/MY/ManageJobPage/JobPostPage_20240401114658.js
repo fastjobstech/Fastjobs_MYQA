@@ -392,10 +392,11 @@ class JobPostPage {
 
             if (findJobCardElement.length > 0) {
                 cy.log('Have a posted job!')
-                findJobCardElement.each($el => {
-                    this.elements.ExpireJobBtn().eq($el).click()
-                    this.elements.ConfirmExpireJob().click()
-                })
+                // findJobCardElement.each($el => {
+                //     this.elements.ExpireJobBtn().eq($el).click()
+                //     cy.wait(100)
+                //     this.elements.ConfirmExpireJob().click()
+                // })
             } else {
                 cy.log('No Posted job!')
             }

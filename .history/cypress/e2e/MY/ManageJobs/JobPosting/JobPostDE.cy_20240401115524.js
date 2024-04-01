@@ -32,12 +32,16 @@ describe("Job posting", () => {
 
     it.only('Verify able to Post a new job with valid job details', () => {
         JobPostPage.GoToPostNewJobForm()
+        // Fill in Job form
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.FillOptionalFields()
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
+        // Submit the job
         JobPostPage.ConfirmSubmit()
+        // Checks the Feedback modal if visible
         JobPostPage.VerifyJobPostingFeedbackModal()
+        // Expire the Job
         JobPostPage.ExpireTheJob();
     })
 
@@ -47,7 +51,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -57,7 +60,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -67,7 +69,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Copy the same job
         cy.wait(5000)
@@ -90,7 +91,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Edit the Job
         JobPostPage.EditTheJob()

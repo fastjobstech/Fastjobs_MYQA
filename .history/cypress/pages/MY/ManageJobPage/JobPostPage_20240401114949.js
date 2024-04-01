@@ -394,6 +394,7 @@ class JobPostPage {
                 cy.log('Have a posted job!')
                 findJobCardElement.each($el => {
                     this.elements.ExpireJobBtn().eq($el).click()
+                    cy.wait(100)
                     this.elements.ConfirmExpireJob().click()
                 })
             } else {

@@ -367,18 +367,20 @@ class JobPostPage {
             const feedbackModalElement = $el.find('#ratingModal')
 
             if (feedbackModalElement.length > 0 && feedbackModalElement.is(':visible')) {
-                cy.log('Feedback Rating modal is visible');
+                cy.log('Modal is visible')
                 //Submits feedback or close the modal?
                 cy.get('#rating5').click()
                 cy.get('.rating-comments > textarea').type('This is automated Testing!')
                 cy.get('.rating-submit').click()
-              
+
                 //Success modal
                 cy.get('#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close').click()
-            
+                
             } else {
-                cy.log('Feedback Rating modal is not visible');
+                cy.log('Not visible.');
             }
+
+            cy.log(feedbackModalElement)
         })
     }
     
@@ -392,10 +394,11 @@ class JobPostPage {
 
             if (findJobCardElement.length > 0) {
                 cy.log('Have a posted job!')
-                findJobCardElement.each($el => {
-                    this.elements.ExpireJobBtn().eq($el).click()
-                    this.elements.ConfirmExpireJob().click()
-                })
+                // findJobCardElement.each($el => {
+                //     this.elements.ExpireJobBtn().eq($el).click()
+                //     cy.wait(100)
+                //     this.elements.ConfirmExpireJob().click()
+                // })
             } else {
                 cy.log('No Posted job!')
             }

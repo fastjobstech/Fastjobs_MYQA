@@ -10,8 +10,6 @@ describe("Job posting", () => {
     beforeEach(() => {
         cy.visit("/");
         LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'));
-        JobPostPage.VerifyJobPostingFeedbackModal()
-        JobPostPage.VerifyPostedJobAd()
     });
 
     it('Verify the Job form elements are visible', () => {
@@ -31,14 +29,14 @@ describe("Job posting", () => {
     })
 
     it.only('Verify able to Post a new job with valid job details', () => {
+        JobPostPage.GoToJobListing()
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.FillOptionalFields()
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
-        JobPostPage.ExpireTheJob();
+        // JobPostPage.ExpireTheJob();
     })
 
     it("Verify able to Post a feature job with valid job details", () => {
@@ -47,7 +45,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -57,7 +54,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
@@ -67,7 +63,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Copy the same job
         cy.wait(5000)
@@ -90,7 +85,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Edit the Job
         JobPostPage.EditTheJob()

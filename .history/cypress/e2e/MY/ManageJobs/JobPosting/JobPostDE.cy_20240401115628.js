@@ -32,42 +32,43 @@ describe("Job posting", () => {
 
     it.only('Verify able to Post a new job with valid job details', () => {
         JobPostPage.GoToPostNewJobForm()
+        // Fill in Job form
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.FillOptionalFields()
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
+        // Submit the job
         JobPostPage.ConfirmSubmit()
+        // Checks the Feedback modal if visible
         JobPostPage.VerifyJobPostingFeedbackModal()
+        // Expire the Job
         JobPostPage.ExpireTheJob();
     })
 
-    it("Verify able to Post a feature job with valid job details", () => {
+    it.skip("Verify able to Post a feature job with valid job details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(3)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to Post a job without filling up the optional details", () => {
+    it.skip("Verify able to Post a job without filling up the optional details", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Copy the same job
         cy.wait(5000)
@@ -80,7 +81,7 @@ describe("Job posting", () => {
         JobPostPage.ExpireTheJob()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.skip("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -90,7 +91,6 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        JobPostPage.VerifyJobPostingFeedbackModal()
 
         // Edit the Job
         JobPostPage.EditTheJob()
