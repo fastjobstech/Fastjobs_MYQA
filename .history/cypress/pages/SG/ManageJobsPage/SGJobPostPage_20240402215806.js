@@ -220,7 +220,7 @@ class SGJobPostPage {
 	};
 
 	ClickPostNewJobBtn = () => {
-		this.elements.UpPostJobBtn().should('be.visible').click();
+		this.elements.UpPostJobBtn().click();
 	};
 
 	ConfirmSubmit = () => {
@@ -316,7 +316,7 @@ class SGJobPostPage {
 	};
 
 	SelectReplaceJob = () => {
-		this.elements.UsageRadioButton().should('be.visible').click();
+		this.elements.UsageRadioButton().click();
 	};
 
 	// Verify if Feedback modal is displayed

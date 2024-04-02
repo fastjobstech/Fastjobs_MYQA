@@ -1,5 +1,3 @@
-/// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
@@ -74,10 +72,10 @@ describe("Job posting", () => {
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
         SGJobPostPage.CopyTheJob()
-        // cy.wait(5000)
+        cy.wait(5000)
         SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
-        // cy.wait(5000)
+        cy.wait(5000)
         SGJobPostPage.VerifyDuplicateNotification()
     })
 

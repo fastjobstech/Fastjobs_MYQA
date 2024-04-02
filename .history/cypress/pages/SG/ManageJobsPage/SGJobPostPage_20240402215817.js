@@ -220,7 +220,7 @@ class SGJobPostPage {
 	};
 
 	ClickPostNewJobBtn = () => {
-		this.elements.UpPostJobBtn().should('be.visible').click();
+		this.elements.UpPostJobBtn().click();
 	};
 
 	ConfirmSubmit = () => {

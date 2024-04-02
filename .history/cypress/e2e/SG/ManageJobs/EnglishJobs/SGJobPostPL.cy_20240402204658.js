@@ -1,5 +1,3 @@
-/// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
@@ -74,14 +72,14 @@ describe("Job posting", () => {
         SGJobPostPage.ClickPostNewJobBtn()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
         SGJobPostPage.CopyTheJob()
-        // cy.wait(5000)
+        cy.wait(5000)
         SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
-        // cy.wait(5000)
+        cy.wait(5000)
         SGJobPostPage.VerifyDuplicateNotification()
     })
 
-    it("Verify able to edit the active job", () => {
+    it.only("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }

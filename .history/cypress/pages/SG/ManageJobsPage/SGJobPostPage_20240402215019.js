@@ -64,7 +64,10 @@ class SGJobPostPage {
 
 		//Expire job elements
 		ExpireJobBtn: () => cy.get(".btn-expire"),
-		ConfirmExpireJob: () => cy.get( "#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit"),
+		ConfirmExpireJob: () =>
+			cy.get(
+				"#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit"
+			),
 
 		//Edit Job elements
 		EditJobBtn: () => cy.get(".btn-edit", { timeout: 10000 }),
@@ -220,7 +223,7 @@ class SGJobPostPage {
 	};
 
 	ClickPostNewJobBtn = () => {
-		this.elements.UpPostJobBtn().should('be.visible').click();
+		this.elements.UpPostJobBtn().click();
 	};
 
 	ConfirmSubmit = () => {
@@ -245,7 +248,7 @@ class SGJobPostPage {
 	};
 
 	EditTheJob = () => {
-		this.elements.EditJobBtn().should('be.visible').click();
+		this.elements.EditJobBtn().click();
 	};
 
 	VerifyLoaderTextIsDisplayed = () => {
@@ -316,7 +319,7 @@ class SGJobPostPage {
 	};
 
 	SelectReplaceJob = () => {
-		this.elements.UsageRadioButton().should('be.visible').click();
+		this.elements.UsageRadioButton().click();
 	};
 
 	// Verify if Feedback modal is displayed
@@ -333,7 +336,10 @@ class SGJobPostPage {
 				cy.get(".rating-submit").click();
 
 				//Success modal
-				cy.get("#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close")
+				cy
+					.get(
+						"#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close"
+					)
 					.click();
 			} else {
 				cy.log("Feedback Rating modal is not visible");

@@ -1,10 +1,9 @@
 /// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
-describe("Job posting", () => {
-    const AccountType = 'parkingLot';
+describe("SG Job Posting", () => {
+    const AccountType = "recruitmentAgency";
 
     Cypress.on("uncaught:exception", (err, runnable) => {
         console.log(err)
@@ -13,90 +12,95 @@ describe("Job posting", () => {
 
     beforeEach(() => {
         cy.visit(Cypress.env("employerSG"))
-        LoginPage.loginEmployer(Cypress.env('de_username'), Cypress.env('de_password'))
+        LoginPage.loginEmployer(Cypress.env('ra_username'), Cypress.env('ra_password'))
         SGJobPostPage.VerifyJobPostingFeedbackModal()
         SGJobPostPage.VerifyPostedJobAd()
     })
 
-    it('Verify the Job form elements are visible', () => {
+    it("Verify the Job form elements are visible", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.VerifyJobFormElements(AccountType)
     })
 
-    it('Verify Cancel button redirects back to Active job list', () => {
+    it("Verify Cancel button redirects back to Active job list", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickCancelButton()
         SGJobPostPage.VerifyJobListingPage()
     })
 
-    it('Verify Required error message when Job form is submitted empty', () => {
+    //Skip the test for now issue (FJEMP-3581)
+    it.skip("Verify Required error message when Job form is submitted empty", () => {
         SGJobPostPage.GotoPostNewJobForm()
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyRequiredErrMsg(AccountType)
+        SGJobPostPage.VerifyRequiredErrMsg()
     })
 
-    it('Verify able to Post a new job with valid job details', () => {
+    it("Post new job ad with Agency information included", () => {
         SGJobPostPage.GotoPostNewJobForm()
+        
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
+        SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobListingPage()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
     })
 
-    it('Post a job without available slot', () => {
+    it('Post withouht Agency Info in Job description', () => {
         SGJobPostPage.GotoPostNewJobForm()
+        
+        SGJobPostPage.RAClickCheckbox()
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
-        SGJobPostPage.CopyTheJob()
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyInsufficientSlotErrorMessage()
-    })
-
-    it('Replace the current posted job ad', () => {
-        const jobInfo = {
-            jobTitle: "Replace Job (Automated Script Do not Apply!!!)"
-        }
-        SGJobPostPage.GotoPostNewJobForm()
-        SGJobPostPage.FillPostNewJobForm('', AccountType)
-        SGJobPostPage.ClickPostNewJobBtn()
-        SGJobPostPage.VerifyJobPostingFeedbackModal()
-        SGJobPostPage.CopyTheJob()
-        SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true)
-        SGJobPostPage.SelectReplaceJob()
-        SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
+        SGJobPostPage.ConfirmSubmit()
+        
         SGJobPostPage.VerifyJobListingPage()
+        SGJobPostPage.VerifyJobPostingFeedbackModal()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         SGJobPostPage.GotoPostNewJobForm()
+
         SGJobPostPage.FillPostNewJobForm('', AccountType)
         SGJobPostPage.ClickPostNewJobBtn()
+        
+        SGJobPostPage.RAClickProceedButton()
+        SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
+
+        //Copy the same job
         SGJobPostPage.CopyTheJob()
-        // cy.wait(5000)
-        SGJobPostPage.SelectReplaceJob()
         SGJobPostPage.ClickPostNewJobBtn()
-        // cy.wait(5000)
+
+        //Duplicate Job Error
         SGJobPostPage.VerifyDuplicateNotification()
+        SGJobPostPage.ClickCancelButton()
+        SGJobPostPage.VerifyJobListingPage()
     })
 
     it("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
-        SGJobPostPage.GotoPostNewJobForm();
-        SGJobPostPage.FillPostNewJobForm("", AccountType)
-        SGJobPostPage.ClickPostNewJobBtn()
 
+        SGJobPostPage.GotoPostNewJobForm()
+        SGJobPostPage.FillPostNewJobForm('', AccountType)
+
+        SGJobPostPage.ClickPostNewJobBtn()
+        SGJobPostPage.RAClickProceedButton()
+        SGJobPostPage.ConfirmSubmit()
         SGJobPostPage.VerifyJobPostingFeedbackModal()
-        SGJobPostPage.VerifyJobListingPage()
+
+        //Edit the Job
         SGJobPostPage.EditTheJob()
-
         SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType)
+
         SGJobPostPage.ClickPostNewJobBtn()
-
+        SGJobPostPage.RAClickProceedButton()
         SGJobPostPage.VerifyJobListingPage()
-
     })
+
 })

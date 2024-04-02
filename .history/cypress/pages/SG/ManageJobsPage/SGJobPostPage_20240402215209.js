@@ -220,7 +220,7 @@ class SGJobPostPage {
 	};
 
 	ClickPostNewJobBtn = () => {
-		this.elements.UpPostJobBtn().should('be.visible').click();
+		this.elements.UpPostJobBtn().click();
 	};
 
 	ConfirmSubmit = () => {
@@ -245,7 +245,7 @@ class SGJobPostPage {
 	};
 
 	EditTheJob = () => {
-		this.elements.EditJobBtn().should('be.visible').click();
+		this.elements.EditJobBtn().click();
 	};
 
 	VerifyLoaderTextIsDisplayed = () => {
@@ -316,7 +316,7 @@ class SGJobPostPage {
 	};
 
 	SelectReplaceJob = () => {
-		this.elements.UsageRadioButton().should('be.visible').click();
+		this.elements.UsageRadioButton().click();
 	};
 
 	// Verify if Feedback modal is displayed

@@ -4,7 +4,7 @@ const { queryTestDb } = require("./db");
 module.exports = defineConfig({
   responseTimeout: 30000,
   pageLoadTimeout: 30000,
-  defaultCommandTimeout: 30000,
+  // defaultCommandTimeout: 30000,
   chromeWebSecurity: false,
 
   e2e: {
