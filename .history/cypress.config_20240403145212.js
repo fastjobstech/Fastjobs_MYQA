@@ -2,15 +2,29 @@ const { defineConfig } = require("cypress");
 const { queryTestDb } = require("./db");
 
 module.exports = defineConfig({
-  responseTimeout: 50000,
-  pageLoadTimeout: 50000,
-  defaultCommandTimeout: 50000,
+  responseTimeout: 30000,
+  pageLoadTimeout: 30000,
+  defaultCommandTimeout: 30000,
   chromeWebSecurity: false,
   // video: true,
   e2e: {
     setupNodeEvents(on, config) {
+      // implement node event listeners here
       on('task', {
         queryDb: query => { return queryTestDb(query, config)}
+      }),
+
+      on('after:spec', (spec, results) => {
+        if (results && results.video) {
+          // Do we have failures for any retry attempts?
+          const failures = results.tests.some((test) =>
+            test.attempts.some((attempt) => attempt.state === 'failed')
+          )
+          if (!failures) {
+            // delete the video if the spec passed and no tests retried
+            fs.unlinkSync(results.video)
+          }
+        }
       })
     },
     baseUrl: "https://employer-test.fastjobs.my/",

@@ -2,13 +2,14 @@ const { defineConfig } = require("cypress");
 const { queryTestDb } = require("./db");
 
 module.exports = defineConfig({
-  responseTimeout: 50000,
-  pageLoadTimeout: 50000,
-  defaultCommandTimeout: 50000,
+  responseTimeout: 30000,
+  pageLoadTimeout: 30000,
+  defaultCommandTimeout: 30000,
   chromeWebSecurity: false,
-  // video: true,
+  video: true,
   e2e: {
     setupNodeEvents(on, config) {
+      // implement node event listeners here
       on('task', {
         queryDb: query => { return queryTestDb(query, config)}
       })

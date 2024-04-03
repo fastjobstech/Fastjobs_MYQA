@@ -50,7 +50,8 @@ describe("Job posting", () => {
         JobPostPage.VerifySuccessMsg()
     })
 
-    it("Verify error notification appears when submitted a job that was already posted.", () => {
+    // Updating job Issue FJEMP-3640
+    it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)

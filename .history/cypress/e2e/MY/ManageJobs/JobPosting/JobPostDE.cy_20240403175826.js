@@ -50,6 +50,16 @@ describe("Job posting", () => {
         JobPostPage.VerifySuccessMsg()
     })
 
+    it("Verify able to Post a job without filling up the optional details", () => {
+        JobPostPage.GoToPostNewJobForm()
+        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.SelectPackage(2)
+        JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifyJobPostingFeedbackModal()
+        JobPostPage.VerifySuccessMsg()
+    })
+
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
@@ -69,8 +79,7 @@ describe("Job posting", () => {
         JobPostPage.ClickCancelButton()
     })
 
-    // Updating job Issue FJEMP-3640
-    it.skip("Verify able to edit the active job", () => {
+    it("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }

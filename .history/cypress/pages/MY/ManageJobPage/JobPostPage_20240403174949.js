@@ -144,6 +144,24 @@ class JobPostPage {
     }
 
     VerifyJobFormElements = () => {
+        // this.elements.JobTitle().should("be.visible")
+        // this.elements.Salary().should("be.visible")
+        // this.elements.JobDescription().should("be.visible")
+        // this.elements.Location().should("be.visible")
+        // this.elements.SubLocation().should("be.visible")
+        // this.elements.WorkingPlace().should("be.visible")
+        // this.elements.JobCategory().should("be.visible")
+        // this.elements.JobCategoryTwo().should("be.visible")
+        // this.elements.JobTypePartTime().should("be.visible")
+        // this.elements.JobTypeFullTime().should("be.visible")
+        // this.elements.JobTypeContracts().should("be.visible")
+        // this.elements.Timing().should("be.visible")
+        // this.elements.FilterApplicants().should("be.visible")
+        // this.elements.ApplyByEmail().should("be.visible")
+        // this.elements.ApplyByCallSms().should("be.visible")
+        // this.elements.AppyByWhatsapp().should("be.visible")
+        // this.elements.PostNewJobBtn().should("be.visible")
+
         const generalElements = [
             this.elements.JobTitle,
             this.elements.Salary,

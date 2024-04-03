@@ -50,6 +50,7 @@ describe("Job posting", () => {
         JobPostPage.VerifySuccessMsg()
     })
 
+    // Updating job Issue FJEMP-3640
     it("Verify error notification appears when submitted a job that was already posted.", () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")

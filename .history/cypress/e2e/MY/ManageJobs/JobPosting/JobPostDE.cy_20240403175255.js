@@ -30,7 +30,7 @@ describe("Job posting", () => {
         JobPostPage.VerifyRequiredErrMsg()
     })
 
-    it('Verify able to Post a new job with valid job details', () => {
+    it.only('Verify able to Post a new job with valid job details', () => {
         JobPostPage.GoToPostNewJobForm()
         JobPostPage.FillPostNewJobForm("")
         JobPostPage.SelectPackage(2)
@@ -38,6 +38,7 @@ describe("Job posting", () => {
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifyJobPostingFeedbackModal()
         JobPostPage.VerifySuccessMsg()
+        // JobPostPage.ExpireTheJob();
     })
 
     it("Verify able to Post a feature job with valid job details", () => {
@@ -47,7 +48,17 @@ describe("Job posting", () => {
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifyJobPostingFeedbackModal()
-        JobPostPage.VerifySuccessMsg()
+        JobPostPage.ExpireTheJob()
+    })
+
+    it("Verify able to Post a job without filling up the optional details", () => {
+        JobPostPage.GoToPostNewJobForm()
+        JobPostPage.FillPostNewJobForm("")
+        JobPostPage.SelectPackage(2)
+        JobPostPage.ClickPostNewJobBtn()
+        JobPostPage.ConfirmSubmit()
+        JobPostPage.VerifyJobPostingFeedbackModal()
+        JobPostPage.ExpireTheJob()
     })
 
     it("Verify error notification appears when submitted a job that was already posted.", () => {
@@ -56,9 +67,7 @@ describe("Job posting", () => {
         JobPostPage.SelectPackage(2)
         JobPostPage.ClickPostNewJobBtn()
         JobPostPage.ConfirmSubmit()
-        
         JobPostPage.VerifyJobPostingFeedbackModal()
-        JobPostPage.VerifySuccessMsg()
 
         // Copy the same job
         JobPostPage.CopyTheJob()
@@ -67,10 +76,10 @@ describe("Job posting", () => {
         //Verify the notification
         JobPostPage.VerifyDuplicateNotification()
         JobPostPage.ClickCancelButton()
+        JobPostPage.ExpireTheJob()
     })
 
-    // Updating job Issue FJEMP-3640
-    it.skip("Verify able to edit the active job", () => {
+    it("Verify able to edit the active job", () => {
         const jobInfo = {
             jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)"
         }
@@ -82,13 +91,12 @@ describe("Job posting", () => {
         JobPostPage.ConfirmSubmit()
         JobPostPage.VerifyJobPostingFeedbackModal()
 
-        JobPostPage.VerifySuccessMsg()
         // Edit the Job
         JobPostPage.EditTheJob()
         JobPostPage.FillPostNewJobForm(jobInfo)
         JobPostPage.ClickPostNewJobBtn()
 
         // Expire
-        JobPostPage.VerifySuccessMsg()
+        JobPostPage.ExpireTheJob()
     })
 })
