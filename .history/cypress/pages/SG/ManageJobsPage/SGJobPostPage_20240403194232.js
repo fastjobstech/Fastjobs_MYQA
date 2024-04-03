@@ -37,33 +37,14 @@ class SGJobPostPage {
 
 		// Preference fields Optional
 		EducationLevel: () => cy.get("#c9jobs-edulvlc"),
-		JobSkillsOne: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"
-			),
-		JobSkillsTwo: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"
-			),
-		JobSkillsThree: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"
-			),
-		JobLanguageOne: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"
-			),
-		JobLanguageTwo: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"
-			),
-		JobLanguageThree: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"
-			),
+		JobSkillsOne: () => cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"),
+		JobSkillsTwo: () => cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"),
+		JobSkillsThree: () => cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"),
+		JobLanguageOne: () => cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"),
+		JobLanguageTwo: () => cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"),
+		JobLanguageThree: () => cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"),
 		ApplicationFilter: () => cy.get("#c9jobs-appfilterflag"),
-		ScheduledJobPost: () =>
-			cy.get("#c9jobs-scheduledttme-datetime > #c9jobs-scheduledttme"),
+		ScheduledJobPost: () => cy.get("#c9jobs-scheduledttme-datetime > #c9jobs-scheduledttme"),
 
 		// Packages Default
 		PackageSelection: () => cy.get(":nth-child(22) > .col-xs-2 > center > label"),
@@ -83,10 +64,7 @@ class SGJobPostPage {
 
 		//Expire job elements
 		ExpireJobBtn: () => cy.get(".btn-expire"),
-		ConfirmExpireJob: () =>
-			cy.get(
-				"#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit"
-			),
+		ConfirmExpireJob: () => cy.get( "#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit"),
 
 		//Edit Job elements
 		EditJobBtn: () => cy.get(".btn-edit"),
@@ -120,7 +98,7 @@ class SGJobPostPage {
 	};
 
 	GoToJobListing = () => {
-		this.elements.EnglishJobsNavlink().should("be.visible").click();
+		this.elements.EnglishJobsNavlink().click();
 	};
 
 	GotoPostNewJobForm = () => {
@@ -242,7 +220,7 @@ class SGJobPostPage {
 	};
 
 	ClickPostNewJobBtn = () => {
-		this.elements.UpPostJobBtn().should("be.visible").click();
+		this.elements.UpPostJobBtn().should('be.visible').click();
 	};
 
 	ConfirmSubmit = () => {
@@ -267,7 +245,7 @@ class SGJobPostPage {
 	};
 
 	EditTheJob = () => {
-		this.elements.EditJobBtn().should("be.visible").click();
+		this.elements.EditJobBtn().should('be.visible').click();
 	};
 
 	VerifyLoaderTextIsDisplayed = () => {
@@ -338,7 +316,7 @@ class SGJobPostPage {
 	};
 
 	SelectReplaceJob = () => {
-		this.elements.UsageRadioButton().should("be.visible").click();
+		this.elements.UsageRadioButton().should('be.visible').click();
 	};
 
 	// Verify if Feedback modal is displayed
@@ -355,10 +333,7 @@ class SGJobPostPage {
 				cy.get(".rating-submit").click();
 
 				//Success modal
-				cy
-					.get(
-						"#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close"
-					)
+				cy.get("#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close")
 					.click();
 			} else {
 				cy.log("Feedback Rating modal is not visible");
@@ -371,23 +346,20 @@ class SGJobPostPage {
 		this.GoToJobListing();
 		cy.wait(500);
 
-		this.elements
-			.JoblistingEl()
-			.should("be.visible")
-			.then(($jobAdElement) => {
-				const findJobCardElement = $jobAdElement.find(".panel-body");
+		this.elements.JoblistingEl().then(($jobAdElement) => {
+			const findJobCardElement = $jobAdElement.find(".panel-body");
 
-				if (findJobCardElement.length > 0) {
-					cy.log("Have a posted job!");
-					findJobCardElement.each(($el) => {
-						this.elements.ExpireJobBtn().eq($el).click();
-						cy.wait(100);
-						this.elements.ConfirmExpireJob().click();
-					});
-				} else {
-					cy.log("No Posted job!");
-				}
-			});
+			if (findJobCardElement.length > 0) {
+				cy.log("Have a posted job!");
+				findJobCardElement.each(($el) => {
+					this.elements.ExpireJobBtn().eq($el).click();
+					cy.wait(100);
+					this.elements.ConfirmExpireJob().click();
+				});
+			} else {
+				cy.log("No Posted job!");
+			}
+		});
 	};
 }
 

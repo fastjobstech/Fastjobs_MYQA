@@ -2,6 +2,7 @@ const { defineConfig } = require("cypress");
 const { queryTestDb } = require("./db");
 
 module.exports = defineConfig({
+  projectId: '2fvt3x',
   responseTimeout: 50000,
   pageLoadTimeout: 50000,
   defaultCommandTimeout: 50000,
