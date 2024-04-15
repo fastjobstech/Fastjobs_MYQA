@@ -8,7 +8,6 @@ module.exports = defineConfig({
 	defaultCommandTimeout: 50000,
 	chromeWebSecurity: false,
 	// video: true,
-	reporter: "cypress-mochawesome-reporter",
 	e2e: {
 		setupNodeEvents(on, config) {
 			on("task", {
