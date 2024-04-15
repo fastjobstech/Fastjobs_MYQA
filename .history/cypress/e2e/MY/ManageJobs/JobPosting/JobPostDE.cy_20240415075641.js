@@ -10,8 +10,8 @@ describe("Job posting", () => {
 	beforeEach(() => {
 		cy.visit("/");
 		LoginPage.loginEmployer(
-			Cypress.env("outlet_username"),
-			Cypress.env("outlet_password")
+			Cypress.env("de_username"),
+			Cypress.env("de_password")
 		);
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
@@ -19,7 +19,7 @@ describe("Job posting", () => {
 
 	it("Verify the Job form elements are visible", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.VerifyOutletElements();
+		JobPostPage.VerifyJobFormElements();
 	});
 
 	it("Verify Cancel button redirects back to Active job list", () => {
@@ -30,33 +30,37 @@ describe("Job posting", () => {
 	it("Verify Required error message when Job form is submitted empty", () => {
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifyOutletRequiredErrMsg();
+		JobPostPage.VerifyRequiredErrMsg();
 	});
 
 	it("Verify able to Post a new job with valid job details", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("");
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 	});
 
-	it("Verify able to Post a Featured job", () => {
+	it("Verify able to Post a feature job with valid job details", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("");
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(3);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 	});
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("");
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
+
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 
 		// Copy the same job
@@ -68,22 +72,26 @@ describe("Job posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
+	// Updating job Issue FJEMP-3640
 	it("Verify able to edit the active job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
 		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("");
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 
+		JobPostPage.VerifySuccessMsg();
 		// Edit the Job
 		JobPostPage.EditTheJob();
-		JobPostPage.EditletPostjobForm(jobInfo);
+		JobPostPage.FillPostNewJobForm(jobInfo);
 		JobPostPage.ClickPostNewJobBtn();
+
+		// Expire
 		JobPostPage.VerifySuccessMsg();
 	});
 });

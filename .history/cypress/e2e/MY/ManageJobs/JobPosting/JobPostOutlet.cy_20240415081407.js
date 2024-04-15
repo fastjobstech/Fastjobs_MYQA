@@ -27,7 +27,7 @@ describe("Job posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
-	it("Verify Required error message when Job form is submitted empty", () => {
+	it.only("Verify Required error message when Job form is submitted empty", () => {
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifyOutletRequiredErrMsg();

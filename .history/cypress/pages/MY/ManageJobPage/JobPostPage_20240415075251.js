@@ -248,8 +248,7 @@ class JobPostPage {
 		const RequiredText = [
 			"Please enter Job Title",
 			"Please enter Description",
-			// "Please select at least one outlet.",
-			"Joboutlets cannot be blank",
+			"Please select at least one outlet.",
 			"Please enter Job Category",
 			"Please enter Job Type",
 			"Please enter your preferred mode of application.",

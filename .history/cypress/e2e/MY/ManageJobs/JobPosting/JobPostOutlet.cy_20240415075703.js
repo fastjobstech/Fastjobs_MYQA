@@ -68,22 +68,24 @@ describe("Job posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
-	it("Verify able to edit the active job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
-		// Post A Job
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("");
-		JobPostPage.SelectPackage(2);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifySuccessMsg();
+	it =
+		("Verify able to edit the active job",
+		() => {
+			const jobInfo = {
+				jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
+			};
+			// Post A Job
+			JobPostPage.GoToPostNewJobForm();
+			JobPostPage.FillOutletPostjobForm("");
+			JobPostPage.SelectPackage(2);
+			JobPostPage.ClickPostNewJobBtn();
+			JobPostPage.ConfirmSubmit();
+			JobPostPage.VerifySuccessMsg();
 
-		// Edit the Job
-		JobPostPage.EditTheJob();
-		JobPostPage.EditletPostjobForm(jobInfo);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifySuccessMsg();
-	});
+			// Edit the Job
+			JobPostPage.EditTheJob();
+			JobPostPage.EditletPostjobForm(jobInfo);
+			JobPostPage.ClickPostNewJobBtn();
+			JobPostPage.VerifySuccessMsg();
+		});
 });

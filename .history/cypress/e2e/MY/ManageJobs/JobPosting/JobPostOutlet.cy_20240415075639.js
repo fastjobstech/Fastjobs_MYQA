@@ -68,7 +68,8 @@ describe("Job posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
-	it("Verify able to edit the active job", () => {
+	// Has issue - FJEMP-3640
+	it.only("Verify able to edit the active job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
