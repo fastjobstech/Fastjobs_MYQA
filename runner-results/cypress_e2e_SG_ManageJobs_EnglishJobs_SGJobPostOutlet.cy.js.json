@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 4,
+  "passes": 3,
+  "pending": 3,
+  "failures": 0,
+  "start": "2024-04-17T02:02:25.393Z",
+  "duration": 46421,
+  "file": "cypress/e2e/SG/ManageJobs/EnglishJobs/SGJobPostOutlet.cy.js"
+}

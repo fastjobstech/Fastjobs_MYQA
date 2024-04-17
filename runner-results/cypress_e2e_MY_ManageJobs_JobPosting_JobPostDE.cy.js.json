@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 7,
+  "passes": 7,
+  "pending": 0,
+  "failures": 0,
+  "start": "2024-04-17T01:56:06.084Z",
+  "duration": 251722,
+  "file": "cypress/e2e/MY/ManageJobs/JobPosting/JobPostDE.cy.js"
+}

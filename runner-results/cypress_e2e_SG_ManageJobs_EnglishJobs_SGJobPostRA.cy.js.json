@@ -1,0 +1,10 @@
+{
+  "suites": 1,
+  "tests": 6,
+  "passes": 6,
+  "pending": 1,
+  "failures": 0,
+  "start": "2024-04-17T02:05:48.524Z",
+  "duration": 127978,
+  "file": "cypress/e2e/SG/ManageJobs/EnglishJobs/SGJobPostRA.cy.js"
+}
