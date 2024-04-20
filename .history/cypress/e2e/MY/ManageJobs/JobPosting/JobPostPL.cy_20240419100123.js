@@ -27,11 +27,11 @@ describe("Parking lot - Job Posting", () => {
 	// 	JobPostPage.ClickCancelButton();
 	// });
 
-	// it("Verify Required error message when Job form is submitted empty", () => {
-	// 	JobPostPage.GoToPostNewJobForm();
-	// 	JobPostPage.ClickPostNewJobBtn();
-	// 	JobPostPage.VerifyRequiredErrMsg();
-	// });
+	it("Verify Required error message when Job form is submitted empty", () => {
+		JobPostPage.GoToPostNewJobForm();
+		JobPostPage.ClickPostNewJobBtn();
+		JobPostPage.VerifyRequiredErrMsg();
+	});
 
 	it("Verify able to Post a new job with valid job details", () => {
 		JobPostPage.GoToPostNewJobForm();
