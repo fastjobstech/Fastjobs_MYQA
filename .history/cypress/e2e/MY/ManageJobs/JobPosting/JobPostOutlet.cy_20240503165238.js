@@ -28,7 +28,7 @@ describe("Outlet - Job Posting", () => {
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("", false);
+		JobPostPage.FillOutletPostjobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -43,7 +43,7 @@ describe("Outlet - Job Posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
-	it("Verify able to edit the active job", () => {
+	it.only("Verify able to edit the active job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
@@ -61,6 +61,5 @@ describe("Outlet - Job Posting", () => {
 		JobPostPage.FillOutletPostjobForm(jobInfo, true);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifySuccessMsg();
-		JobPostPage.ExpireTheJob();
 	});
 });

@@ -28,7 +28,7 @@ describe("Outlet - Job Posting", () => {
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("", false);
+		JobPostPage.FillOutletPostjobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();

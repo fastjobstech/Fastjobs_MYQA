@@ -17,7 +17,7 @@ describe("Outlet - Job Posting", () => {
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a job with valid details", () => {
+	it.only("Verify able to Post a job with valid details", () => {
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.FillOutletPostjobForm("", false);
 		JobPostPage.SelectPackage(3);
@@ -28,7 +28,7 @@ describe("Outlet - Job Posting", () => {
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("", false);
+		JobPostPage.FillOutletPostjobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -49,7 +49,7 @@ describe("Outlet - Job Posting", () => {
 		};
 		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm("", false);
+		JobPostPage.FillOutletPostjobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -57,10 +57,8 @@ describe("Outlet - Job Posting", () => {
 
 		// Edit the Job
 		JobPostPage.EditTheJob();
-		// JobPostPage.EditletPostjobForm(jobInfo);
-		JobPostPage.FillOutletPostjobForm(jobInfo, true);
+		JobPostPage.EditletPostjobForm(jobInfo);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifySuccessMsg();
-		JobPostPage.ExpireTheJob();
 	});
 });

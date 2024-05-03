@@ -238,8 +238,9 @@ class JobPostPage {
 		if (isEdit == false) {
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
+			this.elements.SearchLocation().type("Citta");
 			this.elements.LocationItem().eq(0).click();
-			cy.contains("Confirm selection").click();
+			this.elements.AddWorkAddressBtn().click();
 		}
 
 		this.elements.JobCategory().select(5);
