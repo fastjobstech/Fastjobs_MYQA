@@ -1,7 +1,7 @@
 import LoginPage from "../../../../pages/MY/UserPages/LoginPage";
 import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage";
 
-describe("Direct Employer - Job Posting", () => {
+describe("Recruitment Agency - Job Posting", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
@@ -10,31 +10,28 @@ describe("Direct Employer - Job Posting", () => {
 	beforeEach(() => {
 		cy.visit("/");
 		LoginPage.loginEmployer(
-			Cypress.env("de_username"),
-			Cypress.env("de_password")
+			Cypress.env("ra_username"),
+			Cypress.env("ra_password")
 		);
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a job with valid job details", () => {
+	it("Verify able to Post a job with valid details", () => {
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.FillPostNewJobForm("", false);
 		JobPostPage.SelectPackage(3);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 	});
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
-
-		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 
 		// Copy the same job
@@ -52,20 +49,19 @@ describe("Direct Employer - Job Posting", () => {
 		};
 		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-
 		JobPostPage.VerifySuccessMsg();
+
 		// Edit the Job
 		JobPostPage.EditTheJob();
-		JobPostPage.FillPostNewJobForm(jobInfo, true);
+		JobPostPage.FillPostNewJobForm(jobInfo);
 		JobPostPage.ClickPostNewJobBtn();
+		JobPostPage.VerifySuccessMsg();
 
 		// Expire
-		JobPostPage.VerifySuccessMsg();
 		JobPostPage.ExpireTheJob();
 	});
 });

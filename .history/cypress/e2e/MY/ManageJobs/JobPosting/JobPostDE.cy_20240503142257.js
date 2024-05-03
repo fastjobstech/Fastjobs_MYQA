@@ -19,7 +19,7 @@ describe("Direct Employer - Job Posting", () => {
 
 	it("Verify able to Post a job with valid job details", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(3);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -29,7 +29,7 @@ describe("Direct Employer - Job Posting", () => {
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.FillPostNewJobForm("");
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -66,6 +66,5 @@ describe("Direct Employer - Job Posting", () => {
 
 		// Expire
 		JobPostPage.VerifySuccessMsg();
-		JobPostPage.ExpireTheJob();
 	});
 });

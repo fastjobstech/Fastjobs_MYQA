@@ -129,6 +129,7 @@ class JobPostPage {
 	};
 
 	VerifySuccessMsg = () => {
+		// cy.wait(7000)
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
@@ -143,6 +144,7 @@ class JobPostPage {
 	};
 
 	EditTheJob = () => {
+		// cy.wait(5000)
 		this.elements.EditJobBtn().click();
 	};
 

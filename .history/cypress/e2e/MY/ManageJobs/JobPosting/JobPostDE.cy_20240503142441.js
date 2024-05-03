@@ -66,6 +66,5 @@ describe("Direct Employer - Job Posting", () => {
 
 		// Expire
 		JobPostPage.VerifySuccessMsg();
-		JobPostPage.ExpireTheJob();
 	});
 });

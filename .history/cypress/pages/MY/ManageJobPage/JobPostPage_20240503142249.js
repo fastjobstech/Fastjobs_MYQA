@@ -129,6 +129,7 @@ class JobPostPage {
 	};
 
 	VerifySuccessMsg = () => {
+		// cy.wait(7000)
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
@@ -143,6 +144,7 @@ class JobPostPage {
 	};
 
 	EditTheJob = () => {
+		// cy.wait(5000)
 		this.elements.EditJobBtn().click();
 	};
 
@@ -189,7 +191,6 @@ class JobPostPage {
 			applyByEmail: "kimjay.luta@fastco.asia",
 			applyByCallSms: "911911978",
 		};
-
 		this.elements.JobTitle().clear().type(JobInfo.jobTitle);
 		this.elements
 			.JobDescription()
@@ -198,7 +199,6 @@ class JobPostPage {
 
 		// this.elements.Location().select(8);
 		// this.elements.SubLocation().select(10);
-
 		if (isEdit == false) {
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
@@ -206,14 +206,45 @@ class JobPostPage {
 			this.elements.LocationItem().eq(0).click();
 			this.elements.AddWorkAddressBtn().click();
 		}
-
 		this.elements.JobCategory().select(5);
 		this.elements.JobCategoryTwo().select(10);
 		this.elements.JobTypePartTime().click();
 		this.elements.JobTypeFullTime().click();
-
 		this.elements.ApplyByEmail().clear().type(JobInfo.applyByEmail);
 		this.elements.ApplyByCallSms().clear().type(JobInfo.applyByCallSms);
+	};
+
+	FillOptionalFields = () => {
+		this.elements.SalaryFlag().click();
+		this.elements.SalaryFlagDropdown().click();
+		this.elements.Salary().type("100");
+		this.elements.SalaryPeriod().click();
+		this.elements.SalaryPeriodDropdown().click();
+
+		this.elements.WorkingPlace().type("Test");
+		this.elements.WorkingPlaceSelect().click();
+		this.elements.Timing().select(1);
+
+		this.elements.EducLevel().select(5);
+		this.elements.JobSkills().select(1);
+		this.elements.JobLanguage().select(1);
+	};
+
+	//Outlet functions
+	VerifyOutletRequiredErrMsg = () => {
+		const RequiredText = [
+			"Please enter Job Title",
+			"Please enter Description",
+			// "Please select at least one outlet.",
+			"Joboutlets cannot be blank",
+			"Please enter Job Category",
+			"Please enter Job Type",
+			"Please enter your preferred mode of application.",
+		];
+		cy.get(".help-block").should("be.visible");
+		RequiredText.forEach((errText) => {
+			cy.get(".help-block").contains(errText);
+		});
 	};
 
 	FillOutletPostjobForm = (newJobInfo) => {
@@ -230,10 +261,10 @@ class JobPostPage {
 			.type(JobInfo.jobDesc, { force: true });
 
 		//Outlet selection
-		// this.elements.OutletField().click();
-		// this.elements.OutletSelectionOne().click();
-		// this.elements.OutletSelectionTwo().click();
-		// this.elements.OutletConfirmButton().click();
+		this.elements.OutletField().click();
+		this.elements.OutletSelectionOne().click();
+		this.elements.OutletSelectionTwo().click();
+		this.elements.OutletConfirmButton().click();
 
 		this.elements.JobCategory().select(5);
 		this.elements.JobCategoryTwo().select(10);
