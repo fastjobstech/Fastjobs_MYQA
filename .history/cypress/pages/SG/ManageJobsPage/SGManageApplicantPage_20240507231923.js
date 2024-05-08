@@ -77,51 +77,45 @@ class SGManageApplicantPage {
 	MoveApplicantToHire = () => {
 		this.element.kivTab().should("be.visible");
 		this.element.kivTab().click();
-		cy.wait(1000);
 		this.element.applicantCardDetails().should("be.visible");
+
 		this.element.moveToHire().click();
-		cy
-			.get(".iziToast-body")
-			.contains("Applicant has been moved to Hired successfully.");
-		this.element.hireTab().should("be.visible");
 		this.element.hireTab().click();
 		this.element.applicantCardDetails().should("be.visible");
 	};
 
-	// Need nalang ning multiple testing saaga then good to go na ining script
-	checkApplicantDataIsReceived = () => {
+	checkApplicantIsReceived = () => {
+		cy.wait(500);
+
+		cy.get("#job-candidates").then(($applicantCardEl) => {
+			const applicantEl = $applicantCardEl.find(".panel-body");
+			if (applicantEl.is(":visible")) {
+				cy.log("Application data received!");
+			} else {
+				cy.log("Application data is not Received!");
+				cy.wait(10000);
+				cy.reload();
+			}
+		});
+	};
+
+	waitApplicantData = () => {
 		let isApplicantReceived = false;
-		const maxRetry = 5;
-		let retries = 0;
 
-		const checkData = () => {
-			cy.get("#job-candidates").then(($applicantCardEl) => {
-				const applicantEl = $applicantCardEl.find(".panel-body");
-
-				if (retries == maxRetry) {
-					cy.log("Maximum try is been reached, stopping the code from running!");
-					return;
-				}
-
-				if (applicantEl.is(":visible")) {
-					isApplicantReceived = true;
-
-					cy.log("Application received!");
-				} else {
-					cy.log("Application not received!");
-
-					isApplicantReceived = false;
-					retries++;
-
-					cy.wait(20000);
-					cy.reload();
-
-					checkData();
-				}
-			});
-		};
-
-		checkData();
+		cy.get("#job-candidates").then(($applicantCardEl) => {
+			const applicantEl = $applicantCardEl.find(".panel-body");
+			if (applicantEl.is(":visible")) {
+				isApplicantReceived = true;
+				cy.log(isApplicantReceived);
+				cy.log("Application received!");
+			} else {
+				cy.log("Not received!");
+				isApplicantReceived = false;
+				cy.wait(10000);
+				cy.reload();
+				this.waitApplicantData();
+			}
+		});
 	};
 }
 

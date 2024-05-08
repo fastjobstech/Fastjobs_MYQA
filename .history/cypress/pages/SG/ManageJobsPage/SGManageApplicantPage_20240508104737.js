@@ -77,7 +77,6 @@ class SGManageApplicantPage {
 	MoveApplicantToHire = () => {
 		this.element.kivTab().should("be.visible");
 		this.element.kivTab().click();
-		cy.wait(1000);
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToHire().click();
 		cy

@@ -56,7 +56,7 @@ describe("SG | Manage Applicants", () => {
 		SGManageApplicantPage.GoToManageApplicants();
 		// cy.get(":nth-child(2) > .app-folder-link").click();
 		cy.wait(500);
-		SGManageApplicantPage.checkApplicantDataIsReceived();
+		SGManageApplicantPage.checkApplicantIsReceived();
 		SGManageApplicantPage.MoveApplicantToShortlisted();
 	});
 

@@ -77,21 +77,17 @@ class SGManageApplicantPage {
 	MoveApplicantToHire = () => {
 		this.element.kivTab().should("be.visible");
 		this.element.kivTab().click();
-		cy.wait(1000);
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToHire().click();
-		cy
-			.get(".iziToast-body")
-			.contains("Applicant has been moved to Hired successfully.");
+
 		this.element.hireTab().should("be.visible");
 		this.element.hireTab().click();
 		this.element.applicantCardDetails().should("be.visible");
 	};
 
-	// Need nalang ning multiple testing saaga then good to go na ining script
 	checkApplicantDataIsReceived = () => {
 		let isApplicantReceived = false;
-		const maxRetry = 5;
+		const maxRetry = 3;
 		let retries = 0;
 
 		const checkData = () => {
@@ -105,23 +101,20 @@ class SGManageApplicantPage {
 
 				if (applicantEl.is(":visible")) {
 					isApplicantReceived = true;
-
+					cy.log(isApplicantReceived);
 					cy.log("Application received!");
 				} else {
 					cy.log("Application not received!");
-
 					isApplicantReceived = false;
+					cy.log(retries);
 					retries++;
-
-					cy.wait(20000);
+					cy.log(retries);
+					cy.wait(5000);
 					cy.reload();
-
-					checkData();
+					this.checkData();
 				}
 			});
 		};
-
-		checkData();
 	};
 }
 

@@ -77,7 +77,6 @@ class SGManageApplicantPage {
 	MoveApplicantToHire = () => {
 		this.element.kivTab().should("be.visible");
 		this.element.kivTab().click();
-		cy.wait(1000);
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToHire().click();
 		cy
@@ -88,7 +87,6 @@ class SGManageApplicantPage {
 		this.element.applicantCardDetails().should("be.visible");
 	};
 
-	// Need nalang ning multiple testing saaga then good to go na ining script
 	checkApplicantDataIsReceived = () => {
 		let isApplicantReceived = false;
 		const maxRetry = 5;
@@ -113,7 +111,7 @@ class SGManageApplicantPage {
 					isApplicantReceived = false;
 					retries++;
 
-					cy.wait(20000);
+					cy.wait(15000);
 					cy.reload();
 
 					checkData();

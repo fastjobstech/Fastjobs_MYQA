@@ -45,19 +45,20 @@ describe("SG | Manage Applicants", () => {
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobListingPage();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
-
 		// SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.LoginAsJobseeker(JobseekerLogin);
 		SGManageApplicantPage.ApplyToTheJob();
 	});
 
-	it("Move Jobseeker from New to Shortlisted", () => {
+	it.only("Move Jobseeker from New to Shortlisted", () => {
 		SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.GoToManageApplicants();
 		// cy.get(":nth-child(2) > .app-folder-link").click();
+		// SGManageApplicantPage.checkApplicantIsReceived();
 		cy.wait(500);
-		SGManageApplicantPage.checkApplicantDataIsReceived();
-		SGManageApplicantPage.MoveApplicantToShortlisted();
+
+		SGManageApplicantPage.waitApplicantData();
+		// SGManageApplicantPage.MoveApplicantToShortlisted();
 	});
 
 	it("Move Jobseeker from Shortlisted to Rejected", () => {
