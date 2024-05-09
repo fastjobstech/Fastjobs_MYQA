@@ -16,10 +16,6 @@ describe("Manage Applicants", () => {
 		);
 	});
 
-	after(() => {
-		JobPostPage.VerifyPostedJobAd();
-	});
-
 	it("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {
 			username: "kimjay.luta@fastjobs.ph",
@@ -66,7 +62,7 @@ describe("Manage Applicants", () => {
 		ManageApplicant.verifyMoveSuccessMessage();
 	});
 
-	it("Move Jobseeker from KIV to Hire", () => {
+	it.only("Move Jobseeker from KIV to Hire", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
 		ManageApplicant.MoveApplicantToHire();

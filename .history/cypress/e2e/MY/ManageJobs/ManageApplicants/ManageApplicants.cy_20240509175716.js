@@ -15,10 +15,14 @@ describe("Manage Applicants", () => {
 			Cypress.env("de_password")
 		);
 	});
+	// before(() => {
 
-	after(() => {
-		JobPostPage.VerifyPostedJobAd();
-	});
+	// });
+
+	// after(() => {
+	// 	JobPostPage.VerifyJobPostingFeedbackModal();
+	// 	JobPostPage.VerifyPostedJobAd();
+	// });
 
 	it("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {

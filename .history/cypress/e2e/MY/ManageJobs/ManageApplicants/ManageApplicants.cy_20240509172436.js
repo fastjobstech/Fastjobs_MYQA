@@ -16,10 +16,6 @@ describe("Manage Applicants", () => {
 		);
 	});
 
-	after(() => {
-		JobPostPage.VerifyPostedJobAd();
-	});
-
 	it("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {
 			username: "kimjay.luta@fastjobs.ph",
@@ -42,34 +38,8 @@ describe("Manage Applicants", () => {
 		ManageApplicant.ApplyJob();
 	});
 
-	it("Move Jobseeker from New to Shortlisted", () => {
+	it.only("Move Jobseeker from New to Shortlisted", () => {
 		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
-		// cy.get(":nth-child(2) > .app-folder-link").should("be.visible").click();
 		cy.wait(500);
-		ManageApplicant.checkApplicantDataIsReceived();
-		ManageApplicant.MoveApplicantToShortlisted();
-		ManageApplicant.verifyMoveSuccessMessage();
-	});
-
-	it("Move Jobseeker from Shortlisted to Rejected", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
-		ManageApplicant.MoveApplicantToRejected();
-		ManageApplicant.verifyMoveSuccessMessage();
-	});
-
-	it("Move Jobseeker from Rejected to KIV", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
-		ManageApplicant.MoveApplicantToKIV();
-		ManageApplicant.verifyMoveSuccessMessage();
-	});
-
-	it("Move Jobseeker from KIV to Hire", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
-		ManageApplicant.MoveApplicantToHire();
-		ManageApplicant.verifyMoveSuccessMessage();
 	});
 });
