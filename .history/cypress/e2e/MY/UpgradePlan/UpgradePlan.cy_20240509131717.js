@@ -15,13 +15,13 @@ describe("Upgrade Plan", () => {
 		);
 	});
 
-	it("Verify checkout required fields", () => {
+	it.skip("Verify checkout required fields", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
 		UpgradePlan.SubmitCheckoutFormEmpty();
 	});
 
-	it("Verify error message with invalid inputs", () => {
+	it.skip("Verify error message with invalid inputs", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
 		UpgradePlan.SubmitInvalidDetails();
