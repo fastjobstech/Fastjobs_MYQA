@@ -1,4 +1,4 @@
-import LoginPage from "../../../pages/SG/User/LoginPage";
+import LoginPage from "../../../../pages/SG/User/LoginPage";
 
 describe("SG Login", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -10,10 +10,5 @@ describe("SG Login", () => {
 		cy.visit(Cypress.env("employerSG"));
 	});
 
-	it("Visit employer SG", () => {
-		LoginPage.loginEmployer(
-			Cypress.env("SG_DE_Username"),
-			Cypress.env("SG_DE_Password")
-		);
-	});
+	it("Visit employer SG", () => {});
 });

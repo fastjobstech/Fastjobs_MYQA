@@ -1,4 +1,4 @@
-import LoginPage from "../../../pages/SG/User/LoginPage";
+import LoginPage from "../../../../pages/SG/User/LoginPage";
 
 describe("SG Login", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {

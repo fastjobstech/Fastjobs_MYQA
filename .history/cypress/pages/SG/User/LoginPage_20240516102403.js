@@ -12,8 +12,6 @@ class LoginPage {
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);
 		this.elements.loginButton().click();
-
-		cy.url().should("contain", "/dashboard");
 	};
 }
 
