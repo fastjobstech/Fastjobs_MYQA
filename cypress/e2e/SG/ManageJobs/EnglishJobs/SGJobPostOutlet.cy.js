@@ -17,8 +17,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
-	// Got issue at the moment FJEMP-3594 (FIXED!!!)
-	it.skip("Verify able to post a Job with outlets selected", () => {
+	it.only("Verify able to post a Job with outlets selected", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 		SGJobPostPage.FillPostNewJobForm("", "outlet");
 		SGJobPostPage.ClickPostNewJobBtn();
@@ -27,7 +26,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 	});
 
-	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
+	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 		SGJobPostPage.FillPostNewJobForm("", "outlet");
 		SGJobPostPage.ClickPostNewJobBtn();
@@ -45,7 +44,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
-	it.skip("Verify able to edit the active job", () => {
+	it("Verify able to edit the active job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
