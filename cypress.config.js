@@ -24,6 +24,9 @@ module.exports = defineConfig({
 
 	env: {
 		employerSG: "https://employer-test.fastjobs.sg",
+		adminMY: "https://admin-test.fastjobs.my/",
+		adminUsernameMY: "admin@fastjobs.sg",
+		adminPassMY: "123qwerty88",
 		de_username: "kimjayfastcoqa2@gmail.com",
 		de_password: "Password1234",
 		pl_username: "kimjayfastcoqa@gmail.com",

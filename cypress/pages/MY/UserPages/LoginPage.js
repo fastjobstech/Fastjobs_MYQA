@@ -1,44 +1,55 @@
 class LoginPage {
-    elements = {
-        // login elements
-        usernameField: () => cy.get("#loginform-username"),
-        passwordField: () => cy.get("#loginform-password"),
-        loginButton: () => cy.get("[name=login-button]"),
-        loginErrorMessage: () => cy.get(".help-block-error"),
-        employerLoginBtn: () => cy.contains("Employer Login")
-    }
+	elements = {
+		// login elements
+		usernameField: () => cy.get("#loginform-username"),
+		passwordField: () => cy.get("#loginform-password"),
+		loginButton: () => cy.get("[name=login-button]"),
+		loginErrorMessage: () => cy.get(".help-block-error"),
+		employerLoginBtn: () => cy.contains("Employer Login"),
 
-    verifyErrorMessage = () => {
-        this.elements.loginErrorMessage().should('be.visible')
-    }
+		// admin login elements
+		adminUsernameField: () => cy.get("#loginform-username"),
+		adminPasswordField: () => cy.get("#loginform-password"),
+		adminLoginBtn: () => cy.get(".btn"),
+	};
 
-    loginEmployer = (username, password) => {
-        this.elements.employerLoginBtn().click()
-        
-        this.elements.usernameField().type(username)
-        this.elements.passwordField().type(password)
-        this.elements.loginButton().click()
+	verifyErrorMessage = () => {
+		this.elements.loginErrorMessage().should("be.visible");
+	};
 
-        cy.location("pathname").should("equal", "/p/my-activity/dashboard")
-    }
+	loginEmployer = (username, password) => {
+		this.elements.employerLoginBtn().click();
 
-    loginEmployerWithEmptyfields = () => {
-        this.elements.employerLoginBtn().click()
-        
-        this.elements.loginButton().click()
-        this.verifyErrorMessage()
-    }
+		this.elements.usernameField().type(username);
+		this.elements.passwordField().type(password);
+		this.elements.loginButton().click();
 
-    loginEmployerWithInvalidCreds = (username, password) => {
-        this.elements.employerLoginBtn().click()
-        
-        this.elements.usernameField().type(username)
-        this.elements.passwordField().type(password)
-        this.elements.loginButton().click()
-        this.verifyErrorMessage()
-    }
+		cy.location("pathname").should("equal", "/p/my-activity/dashboard");
+	};
 
-    
+	loginEmployerWithEmptyfields = () => {
+		this.elements.employerLoginBtn().click();
+
+		this.elements.loginButton().click();
+		this.verifyErrorMessage();
+	};
+
+	loginEmployerWithInvalidCreds = (username, password) => {
+		this.elements.employerLoginBtn().click();
+
+		this.elements.usernameField().type(username);
+		this.elements.passwordField().type(password);
+		this.elements.loginButton().click();
+		this.verifyErrorMessage();
+	};
+
+	adminLoginMY = (username, password) => {
+		this.elements.adminUsernameField().type(username);
+		this.elements.adminPasswordField().type(password);
+		this.elements.adminLoginBtn().click();
+
+		cy.url().should("contain", "/protectedindex");
+	};
 }
 
 module.exports = new LoginPage();
