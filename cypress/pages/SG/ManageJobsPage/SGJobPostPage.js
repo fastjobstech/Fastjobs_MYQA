@@ -369,7 +369,7 @@ class SGJobPostPage {
 	// Check if there's a posted job and expire it
 	VerifyPostedJobAd = () => {
 		this.GoToJobListing();
-		cy.wait(500);
+		cy.wait(800);
 
 		this.elements
 			.JoblistingEl()
