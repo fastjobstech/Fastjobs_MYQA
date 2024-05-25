@@ -1,4 +1,5 @@
 import LoginPage from "../../../pages/MY/UserPages/LoginPage";
+import BannerPage from "../../../pages/MY/admin/BannerMY";
 
 describe("Admin Banner Management", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -7,14 +8,26 @@ describe("Admin Banner Management", () => {
 	});
 
 	beforeEach(() => {
-		cy.viewport("macbook-15");
+		cy.viewport("macbook-11");
 		cy.visit(Cypress.env("adminMY"));
-	});
-
-	it("Creates a banner and verify the data", () => {
 		LoginPage.adminLoginMY(
 			Cypress.env("adminUsernameMY"),
 			Cypress.env("adminPassMY")
 		);
+	});
+
+	it("Creates a banner and verify the data", () => {
+		BannerPage.navigateToBannerListing();
+		BannerPage.navigateToCreateBanner();
+
+		//Verify the form
+		BannerPage.verifyBannerFormElement();
+
+		// Fill the form
+		BannerPage.uploadBannerImage();
+
+		// save the changes
+
+		// verify the changes was added
 	});
 });

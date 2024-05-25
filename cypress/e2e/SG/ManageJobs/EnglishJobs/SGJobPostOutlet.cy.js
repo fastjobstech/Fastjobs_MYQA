@@ -17,7 +17,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
-	it.only("Verify able to post a Job with outlets selected", () => {
+	it("Verify able to post a Job with outlets selected", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 		SGJobPostPage.FillPostNewJobForm("", "outlet");
 		SGJobPostPage.ClickPostNewJobBtn();
