@@ -10,6 +10,9 @@ class BannerMY {
 
 		//uploadBanner
 		uploadBanner: () => cy.get("#tmpbanner"),
+
+		//alert
+		alertDiv: () => cy.get("#alertdiv"),
 	};
 
 	formElements = {
@@ -26,6 +29,7 @@ class BannerMY {
 		bannerCoyID: () => cy.get("#coyid"),
 		bannerJobID: () => cy.get("#jobid"),
 		bannerUrl: () => cy.get("#url"),
+		isFallback: () => cy.get("#isfallback"),
 		saveBannerBtn: () => cy.get(".col-sm-8 > .btn"),
 	};
 
@@ -54,6 +58,32 @@ class BannerMY {
 		const fileName = "cypress/fixtures/banner.jpeg";
 		this.elements.uploadBanner().should("exist");
 		this.elements.uploadBanner().selectFile(fileName, { force: true }); // upload file
+	};
+
+	verifyAlertDisplayed = (alertClass) => {
+		this.elements.alertDiv().should("be.visible");
+		this.elements.alertDiv().should("have.class", alertClass);
+	};
+
+	fillBannerForm = () => {
+		const bannerData = {
+			descrition:
+				"Find Your Dream Job Today! 🚀 Explore top opportunities in your field. Apply now and take the next step in your career!",
+			buttonText: "Apply Now!",
+			title: "Exciting Career Opportunities!",
+			coyID: 20320,
+		};
+
+		this.uploadBannerImage();
+		this.formElements.bannerDescription().clear().type(bannerData.descrition);
+		this.formElements.buttonText().clear().type(bannerData.buttonText);
+		this.formElements.title().clear().type(bannerData.title);
+		this.formElements.bannerRow().select(1);
+		this.formElements.jobfuncID().select(1);
+		this.formElements.locID().select(1);
+		this.formElements.bannerCoyID().type(bannerData.coyID);
+		this.formElements.isFallback().click();
+		this.formElements.saveBannerBtn().click();
 	};
 }
 

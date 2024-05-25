@@ -24,7 +24,8 @@ describe("Admin Banner Management", () => {
 		BannerPage.verifyBannerFormElement();
 
 		// Fill the form
-		BannerPage.uploadBannerImage();
+		BannerPage.fillBannerForm();
+		BannerPage.verifyAlertDisplayed("alert-success");
 
 		// save the changes
 
