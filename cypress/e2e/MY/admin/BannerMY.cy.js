@@ -16,19 +16,66 @@ describe("Admin Banner Management", () => {
 		);
 	});
 
-	it("Creates a banner and verify the data", () => {
+	it("Verify able to create the Banner", () => {
+		const bannerData = {
+			descrition:
+				"Find Your Dream Job Today! 🚀 Explore top opportunities in your field. Apply now and take the next step in your career!",
+			buttonText: "Apply Now!",
+			title: "Exciting Career Opportunities!",
+			coyID: 20320,
+		};
+
+		const actionDelete = 1;
+		//Navigate to the Banner form
 		BannerPage.navigateToBannerListing();
 		BannerPage.navigateToCreateBanner();
 
-		//Verify the form
+		// Verify the form
 		BannerPage.verifyBannerFormElement();
 
 		// Fill the form
-		BannerPage.fillBannerForm();
+		BannerPage.fillBannerForm(bannerData, false);
 		BannerPage.verifyAlertDisplayed("alert-success");
 
-		// save the changes
+		// Remove the added Banner
+		BannerPage.actionBanner(actionDelete, bannerData.title);
+		BannerPage.verifyAlertDisplayed("alert-success");
+	});
 
-		// verify the changes was added
+	it("Verify able to update the Banner", () => {
+		const bannerData = {
+			descrition:
+				"Find Your Dream Job Today! 🚀 Explore top opportunities in your field. Apply now and take the next step in your career!",
+			buttonText: "Apply Now!",
+			title: "Exciting Career Opportunities!",
+			coyID: 20320,
+		};
+
+		const newBannerData = {
+			descrition: "(Update) Find Your Dream Job Today!",
+			buttonText: "(Update) Apply Now!",
+			title: "(Update) Exciting Career Opportunities!",
+			coyID: 20320,
+		};
+
+		//Navigate to the Banner form
+		BannerPage.navigateToBannerListing();
+		BannerPage.navigateToCreateBanner();
+
+		// Verify the form
+		BannerPage.verifyBannerFormElement();
+
+		// Fill the form
+		BannerPage.fillBannerForm(bannerData, false);
+		BannerPage.verifyAlertDisplayed("alert-success");
+
+		//Update Banner data
+		BannerPage.actionBanner(0, bannerData.title);
+		BannerPage.fillBannerForm(newBannerData, true);
+		BannerPage.verifyAlertDisplayed("alert-success");
+
+		//Delete the Banner
+		BannerPage.actionBanner(1, newBannerData.title);
+		BannerPage.verifyAlertDisplayed("alert-success");
 	});
 });

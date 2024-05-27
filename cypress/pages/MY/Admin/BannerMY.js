@@ -65,15 +65,7 @@ class BannerMY {
 		this.elements.alertDiv().should("have.class", alertClass);
 	};
 
-	fillBannerForm = () => {
-		const bannerData = {
-			descrition:
-				"Find Your Dream Job Today! 🚀 Explore top opportunities in your field. Apply now and take the next step in your career!",
-			buttonText: "Apply Now!",
-			title: "Exciting Career Opportunities!",
-			coyID: 20320,
-		};
-
+	fillBannerForm = (bannerData, isEdit) => {
 		this.uploadBannerImage();
 		this.formElements.bannerDescription().clear().type(bannerData.descrition);
 		this.formElements.buttonText().clear().type(bannerData.buttonText);
@@ -82,8 +74,18 @@ class BannerMY {
 		this.formElements.jobfuncID().select(1);
 		this.formElements.locID().select(1);
 		this.formElements.bannerCoyID().type(bannerData.coyID);
-		this.formElements.isFallback().click();
+		if (!isEdit) {
+			this.formElements.isFallback().click();
+		}
 		this.formElements.saveBannerBtn().click();
+	};
+
+	actionBanner = (actionType, bannerTitle) => {
+		cy.get(".table").should("be.visible");
+		cy.contains("table.table tbody tr", bannerTitle).should("be.visible");
+		cy.contains("table.table tbody tr", bannerTitle).as("bannerRow");
+		cy.get("@bannerRow").find("a").eq(actionType).should("be.visible");
+		cy.get("@bannerRow").find("a").eq(actionType).click();
 	};
 }
 
