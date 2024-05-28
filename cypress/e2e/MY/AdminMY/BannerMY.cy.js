@@ -1,5 +1,5 @@
 import LoginPage from "../../../pages/MY/UserPages/LoginPage";
-import BannerPage from "../../../pages/MY/admin/BannerMY";
+import BannerPage from "../../../pages/MY/AdminMY/BannerMYPage";
 
 describe("Admin Banner Management", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
