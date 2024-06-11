@@ -7,19 +7,23 @@ module.exports = defineConfig({
 	pageLoadTimeout: 50000,
 	defaultCommandTimeout: 50000,
 	chromeWebSecurity: false,
-	// video: true,
 	reporter: "cypress-mochawesome-reporter",
+	reporterOptions: {
+		reportDir: "cypress/reports",
+		overwrite: false,
+		html: false,
+		json: true,
+	},
 	e2e: {
 		setupNodeEvents(on, config) {
+			require("cypress-mochawesome-reporter/plugin")(on);
 			on("task", {
 				queryDb: (query) => {
 					return queryTestDb(query, config);
 				},
-			}),
-				require("cypress-mochawesome-reporter/plugin")(on);
+			});
 		},
 		baseUrl: "https://employer-test.fastjobs.my/",
-		// experimentalSessionAndOrigin: true,
 	},
 
 	env: {

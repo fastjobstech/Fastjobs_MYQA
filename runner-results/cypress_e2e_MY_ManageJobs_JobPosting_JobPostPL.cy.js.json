@@ -4,7 +4,7 @@
   "passes": 3,
   "pending": 0,
   "failures": 0,
-  "start": "2024-05-09T06:54:59.721Z",
-  "duration": 150426,
+  "start": "2024-06-03T08:40:16.840Z",
+  "duration": 149743,
   "file": "cypress/e2e/MY/ManageJobs/JobPosting/JobPostPL.cy.js"
 }

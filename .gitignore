@@ -1,3 +1,5 @@
 .history/
 cypress/reports/
 cypress/screenshots/
+node_modules/
+runner-results/

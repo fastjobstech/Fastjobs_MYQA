@@ -1,10 +1,10 @@
 {
   "suites": 1,
   "tests": 3,
-  "passes": 3,
+  "passes": 0,
   "pending": 0,
-  "failures": 0,
-  "start": "2024-05-09T06:57:31.304Z",
-  "duration": 110712,
+  "failures": 3,
+  "start": "2024-06-03T08:42:47.919Z",
+  "duration": 226936,
   "file": "cypress/e2e/MY/ManageJobs/JobPosting/JobPostRA.cy.js"
 }
