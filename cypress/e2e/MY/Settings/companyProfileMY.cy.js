@@ -1,6 +1,6 @@
 import LoginPage from "../../../pages/MY/UserPages/LoginPage";
 import JobPostPage from "../../../pages/MY/ManageJobPage/JobPostPage";
-import companyProfilePage from "../../../pages/MY/MY_Settings/companyProfilePage";
+import companyProfilePage from "../../../pages/MY/Settings/companyProfilePageMY";
 
 describe("Admin Banner Management", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -36,6 +36,6 @@ describe("Admin Banner Management", () => {
 		companyProfilePage.fillCompanyDetails(newCompanyDetails);
 		companyProfilePage.fillCompanyAddress(newCompanyAddress);
 		companyProfilePage.clickSaveChanges();
-		companyProfilePage.verifySuccessNotifIsVisible();
+		companyProfilePage.verifyUpdateSuccess(newCompanyDetails, newCompanyAddress);
 	});
 });

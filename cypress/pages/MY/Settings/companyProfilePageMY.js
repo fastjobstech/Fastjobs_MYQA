@@ -67,8 +67,43 @@ class companyProfilePage {
 		this.elements.updateSubmitButton().click();
 	};
 
-	verifySuccessNotifIsVisible = () => {
-		cy.get(".iziToast").contains("Company profile updated.").should("be.visible");
+	verifyUpdateSuccess = (newCompanyDetails, newCompanyAddress) => {
+		cy.wait(500);
+		this.elements.companyName().should("exist");
+		this.elements
+			.companyName()
+			.eq(1)
+			.should("have.value", newCompanyDetails.companyName);
+
+		this.elements.companyDesc().should("exist");
+		this.elements
+			.companyDesc()
+			.eq(1)
+			.should("have.value", newCompanyDetails.description);
+
+		this.elements.floorNo().should("exist");
+		this.elements.floorNo().eq(1).should("have.value", newCompanyAddress.floorNo);
+
+		this.elements.unitNo().should("exist");
+		this.elements.unitNo().eq(1).should("have.value", newCompanyAddress.unitNo);
+
+		this.elements.streetName().should("exist");
+		this.elements
+			.streetName()
+			.eq(1)
+			.should("have.value", newCompanyAddress.streetName);
+
+		this.elements.building().should("exist");
+		this.elements
+			.building()
+			.eq(1)
+			.should("have.value", newCompanyAddress.building);
+
+		this.elements.postalCode().should("exist");
+		this.elements
+			.postalCode()
+			.eq(1)
+			.should("have.value", newCompanyAddress.postalCode);
 	};
 }
 
