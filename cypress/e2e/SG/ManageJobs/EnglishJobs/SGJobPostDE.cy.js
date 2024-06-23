@@ -1,5 +1,3 @@
-/// <reference types = "Cypress" />
-
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
