@@ -21,53 +21,7 @@ describe("Job posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a new job with valid job details", () => {
-		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyJobListingPage();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-	});
-
-	it("Post a job without available slot", () => {
-		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-		SGJobPostPage.ClickPostNewJobBtn();
-
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-		SGJobPostPage.CopyTheJob();
-
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyInsufficientSlotErrorMessage();
-	});
-
-	it("Replace the current posted job ad", () => {
-		const jobInfo = {
-			jobTitle: "Replace Job (Automated Script Do not Apply!!!)",
-		};
-		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-		SGJobPostPage.CopyTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
-		SGJobPostPage.SelectReplaceJob();
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyJobListingPage();
-	});
-
-	it("Verify error notification appears when submitted a job that was already posted.", () => {
-		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-		SGJobPostPage.CopyTheJob();
-		SGJobPostPage.SelectReplaceJob();
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.VerifyDuplicateNotification();
-	});
-
-	it("Verify able to edit the active job", () => {
+	it("Verify able to post and edit the job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
@@ -83,5 +37,36 @@ describe("Job posting", () => {
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.VerifyJobListingPage();
+	});
+
+	it("Replace the current posted job ad", () => {
+		const jobInfo = {
+			jobTitle: "Replace Job (Automated Script Do not Apply!!!)",
+		};
+
+		SGJobPostPage.GotoPostNewJobForm();
+		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+
+		SGJobPostPage.CopyTheJob();
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.VerifyInsufficientSlotErrorMessage();
+
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
+		SGJobPostPage.SelectReplaceJob();
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.VerifyJobListingPage();
+	});
+
+	it("Verify error notification appears when submitted a job that was already posted.", () => {
+		SGJobPostPage.GotoPostNewJobForm();
+		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+		SGJobPostPage.CopyTheJob();
+		SGJobPostPage.SelectReplaceJob();
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.VerifyDuplicateNotification();
 	});
 });

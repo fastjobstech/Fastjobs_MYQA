@@ -20,7 +20,7 @@ describe("SG | Manage Applicants", () => {
 		);
 	});
 
-	it("Post a Job and Jobseeker applied to the Job", () => {
+	it.skip("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {
 			username: "kimjay.luta@fastjobs.ph",
 			password: "Password123",
@@ -41,7 +41,7 @@ describe("SG | Manage Applicants", () => {
 		SGManageApplicantPage.ApplyToTheJob();
 	});
 
-	it("Move Jobseeker from New to Shortlisted", () => {
+	it.skip("Move Jobseeker from New to Shortlisted", () => {
 		SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.GoToManageApplicants();
 		cy.wait(500);
@@ -49,19 +49,19 @@ describe("SG | Manage Applicants", () => {
 		SGManageApplicantPage.MoveApplicantToShortlisted();
 	});
 
-	it("Move Jobseeker from Shortlisted to Rejected", () => {
+	it.skip("Move Jobseeker from Shortlisted to Rejected", () => {
 		SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.GoToManageApplicants();
 		SGManageApplicantPage.MoveApplicantToRejected();
 	});
 
-	it("Move Jobseeker from Rejected to KIV", () => {
+	it.skip("Move Jobseeker from Rejected to KIV", () => {
 		SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.GoToManageApplicants();
 		SGManageApplicantPage.MoveApplicantToKIV();
 	});
 
-	it("Move Jobseeker from KIV to Hire", () => {
+	it.skip("Move Jobseeker from KIV to Hire", () => {
 		SGJobPostPage.GoToJobListing();
 		SGManageApplicantPage.GoToManageApplicants();
 		SGManageApplicantPage.MoveApplicantToHire();

@@ -5,7 +5,8 @@ class SGManageApplicantPage {
 
 		loginUsername: () => cy.get("#loginform-username"),
 		loginPassword: () => cy.get("#loginform-password"),
-		loginButton: () => cy.get("#btn-login"),
+		// loginButton: () => cy.get("#btn-login"),
+		loginButton: () => cy.get("#login-btn"),
 
 		applyMethodFastApply: () => cy.contains("FAST Apply"),
 		sendApplicationButton: () => cy.get("#btn-mode-apply-send"),

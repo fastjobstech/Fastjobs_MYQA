@@ -9,6 +9,7 @@ describe("Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
+		cy.viewport("macbook-15");
 		cy.visit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("de_username"),

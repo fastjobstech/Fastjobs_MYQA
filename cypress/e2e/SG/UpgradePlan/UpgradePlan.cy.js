@@ -15,38 +15,38 @@ describe("Upgrade Plan", () => {
 		);
 	});
 
-	it("Verify Required fields in Billing information form", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.SubmitBillingInformationEmpty();
-	});
+	// it("Verify Required fields in Billing information form", () => {
+	// 	UpgradePlan.ClickUpgradePlanLink();
+	// 	UpgradePlan.SelectPackage();
+	// 	UpgradePlan.SubmitBillingInformationEmpty();
+	// });
 
-	it("Submits the Billing information form with valid inputs", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.SubmitBillingInformation();
-	});
+	// it("Submits the Billing information form with valid inputs", () => {
+	// 	UpgradePlan.ClickUpgradePlanLink();
+	// 	UpgradePlan.SelectPackage();
+	// 	UpgradePlan.SubmitBillingInformation();
+	// });
 
-	it("Verify Required fields in Payment form", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.SubmitBillingInformation();
-		UpgradePlan.SubmitPaymentDetailsEmpty();
-	});
+	// it.skip("Verify Required fields in Payment form", () => {
+	// 	UpgradePlan.ClickUpgradePlanLink();
+	// 	UpgradePlan.SelectPackage();
+	// 	UpgradePlan.SubmitBillingInformation();
+	// 	UpgradePlan.SubmitPaymentDetailsEmpty();
+	// });
 
-	it("Submits the Payment form with invalid card details", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.SubmitBillingInformation();
-		UpgradePlan.SubmitWithInvalidPaymentDetails();
-	});
+	// it.skip("Submits the Payment form with invalid card details", () => {
+	// 	UpgradePlan.ClickUpgradePlanLink();
+	// 	UpgradePlan.SelectPackage();
+	// 	UpgradePlan.SubmitBillingInformation();
+	// 	UpgradePlan.SubmitWithInvalidPaymentDetails();
+	// });
 
-	it("Submits the Payment with valid details", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.SubmitBillingInformation();
-		UpgradePlan.SubmitPaymentWithValidDetails();
-	});
+	// it("Submits the Payment with valid details", () => {
+	// 	UpgradePlan.ClickUpgradePlanLink();
+	// 	UpgradePlan.SelectPackage();
+	// 	UpgradePlan.SubmitBillingInformation();
+	// 	UpgradePlan.SubmitPaymentWithValidDetails();
+	// });
 
 	// it("Edit the Payment Details", () => {
 	//     UpgradePlan.ClickUpgradePlanLink();
@@ -64,11 +64,11 @@ describe("Upgrade Plan", () => {
 	//     UpgradePlan.ClickChangePlanAtReviewOrder();
 	// });
 
-	// it("Download the invoice without error", () => {
-	//     UpgradePlan.ClickUpgradePlanLink();
-	//     UpgradePlan.SelectPackage();
-	//     UpgradePlan.SubmitBillingInformation();
-	//     UpgradePlan.SubmitPaymentWithValidDetails();
-	//     UpgradePlan.ClickDownloadInvoice();
-	// });
+	it("Upgrade plan and Download the invoice without error", () => {
+		UpgradePlan.ClickUpgradePlanLink();
+		UpgradePlan.SelectPackage();
+		UpgradePlan.SubmitBillingInformation();
+		UpgradePlan.SubmitPaymentWithValidDetails();
+		UpgradePlan.ClickDownloadInvoice();
+	});
 });

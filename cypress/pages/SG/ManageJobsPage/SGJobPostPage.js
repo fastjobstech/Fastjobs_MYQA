@@ -217,7 +217,7 @@ class SGJobPostPage {
 		this.elements.ApplyByEmail().clear().type(JobInfo.applyByEmail);
 		this.elements.ApplyBySMS().clear().type(JobInfo.applyByCallSms);
 
-		if (AccountType == "outlet") {
+		if (AccountType == "outlet" && isUpdated == false) {
 			this.elements.OutletOne().click();
 			this.elements.OutletTwo().click();
 		}
@@ -369,7 +369,7 @@ class SGJobPostPage {
 	// Check if there's a posted job and expire it
 	VerifyPostedJobAd = () => {
 		this.GoToJobListing();
-		cy.wait(800);
+		cy.wait(1000);
 
 		this.elements
 			.JoblistingEl()

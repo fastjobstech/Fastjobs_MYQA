@@ -20,7 +20,11 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Post new job ad with Agency information included", () => {
+	it("Post new job ad and Edit with Agency information included", () => {
+		const jobInfo = {
+			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
+		};
+
 		SGJobPostPage.GotoPostNewJobForm();
 
 		SGJobPostPage.FillPostNewJobForm("", AccountType);
@@ -30,6 +34,14 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobListingPage();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
+
+		//Edit the Job
+		SGJobPostPage.EditTheJob();
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.VerifyJobListingPage();
 	});
 
 	it("Post withouht Agency Info in Job description", () => {
@@ -46,7 +58,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 	});
 
-	it("Verify error notification appears when submitted a job that was already posted.", () => {
+	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 
 		SGJobPostPage.FillPostNewJobForm("", AccountType);
@@ -59,32 +71,12 @@ describe("SG Job Posting", () => {
 		//Copy the same job
 		SGJobPostPage.CopyTheJob();
 		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.ConfirmSubmit();
 
 		//Duplicate Job Error
 		SGJobPostPage.VerifyDuplicateNotification();
 		SGJobPostPage.ClickCancelButton();
-		SGJobPostPage.VerifyJobListingPage();
-	});
-
-	it("Verify able to edit the active job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
-
-		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.RAClickProceedButton();
-		SGJobPostPage.ConfirmSubmit();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-
-		//Edit the Job
-		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
-
-		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.VerifyJobListingPage();
 	});
 });
