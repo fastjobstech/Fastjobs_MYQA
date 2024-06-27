@@ -17,12 +17,22 @@ describe("Recruitment Agency - Job Posting", () => {
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a job with valid details", () => {
+	it("Verify able to Post Job ad and edit the job", () => {
+		const jobInfo = {
+			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
+		};
+		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(3);
+		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
+		JobPostPage.VerifySuccessMsg();
+
+		// Edit the Job
+		JobPostPage.EditTheJob();
+		JobPostPage.FillPostNewJobForm(jobInfo, true);
+		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifySuccessMsg();
 	});
 
@@ -41,27 +51,5 @@ describe("Recruitment Agency - Job Posting", () => {
 		//Verify the notification
 		JobPostPage.VerifyDuplicateNotification();
 		JobPostPage.ClickCancelButton();
-	});
-
-	it("Verify able to edit the active job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
-		// Post A Job
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(2);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifySuccessMsg();
-
-		// Edit the Job
-		JobPostPage.EditTheJob();
-		JobPostPage.FillPostNewJobForm(jobInfo, true);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifySuccessMsg();
-
-		// Expire
-		JobPostPage.ExpireTheJob();
 	});
 });

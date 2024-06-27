@@ -18,30 +18,12 @@ describe("Parking lot - Job Posting", () => {
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a new job with valid job details", () => {
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.ClickPostNewJobBtn();
+	afterEach(() => {
 		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify error notification appears when submitted a job that was already posted.", () => {
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifySuccessMsg();
-		// Copy the same job
-		JobPostPage.CopyTheJob();
-		JobPostPage.ClickPostNewJobBtn();
-
-		//Verify the notification
-		JobPostPage.VerifyDuplicateNotification();
-		JobPostPage.ClickCancelButton();
-	});
-
-	it("Verify able to edit the active job", () => {
+	it("Verify able to Post Job ad and edit the job", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
@@ -58,8 +40,20 @@ describe("Parking lot - Job Posting", () => {
 		JobPostPage.FillPostNewJobForm(jobInfo, true);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifySuccessMsg();
+	});
 
-		// Expire
-		JobPostPage.ExpireTheJob();
+	it("Verify error notification appears when submitted a job that was already posted.", () => {
+		JobPostPage.GoToPostNewJobForm();
+		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.ClickPostNewJobBtn();
+		JobPostPage.VerifyJobPostingFeedbackModal();
+		JobPostPage.VerifySuccessMsg();
+		// Copy the same job
+		JobPostPage.CopyTheJob();
+		JobPostPage.ClickPostNewJobBtn();
+
+		//Verify the notification
+		JobPostPage.VerifyDuplicateNotification();
+		JobPostPage.ClickCancelButton();
 	});
 });

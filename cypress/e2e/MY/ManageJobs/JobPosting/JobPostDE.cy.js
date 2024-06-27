@@ -17,13 +17,28 @@ describe("Direct Employer - Job Posting", () => {
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Verify able to Post a job with valid job details", () => {
+	afterEach(() => {
+		JobPostPage.VerifyJobPostingFeedbackModal();
+		JobPostPage.VerifyPostedJobAd();
+	});
+
+	it("Verify able to Post Job ad and edit the job", () => {
+		const jobInfo = {
+			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
+		};
+		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(3);
+		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
 		JobPostPage.VerifyJobPostingFeedbackModal();
+		JobPostPage.VerifySuccessMsg();
+
+		// Edit the Job
+		JobPostPage.EditTheJob();
+		JobPostPage.FillPostNewJobForm(jobInfo, true);
+		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.VerifySuccessMsg();
 	});
 
@@ -44,28 +59,5 @@ describe("Direct Employer - Job Posting", () => {
 		//Verify the notification
 		JobPostPage.VerifyDuplicateNotification();
 		JobPostPage.ClickCancelButton();
-	});
-
-	it("Verify able to edit the active job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
-		// Post A Job
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(2);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-
-		JobPostPage.VerifySuccessMsg();
-		// Edit the Job
-		JobPostPage.EditTheJob();
-		JobPostPage.FillPostNewJobForm(jobInfo, true);
-		JobPostPage.ClickPostNewJobBtn();
-
-		// Expire
-		JobPostPage.VerifySuccessMsg();
-		JobPostPage.ExpireTheJob();
 	});
 });
