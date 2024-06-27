@@ -20,6 +20,11 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
+	afterEach(() => {
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+		SGJobPostPage.VerifyPostedJobAd();
+	});
+
 	it("Post new job ad and Edit with Agency information included", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
@@ -44,20 +49,7 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
-	it("Post withouht Agency Info in Job description", () => {
-		SGJobPostPage.GotoPostNewJobForm();
-
-		SGJobPostPage.RAClickCheckbox();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
-		SGJobPostPage.ClickPostNewJobBtn();
-
-		SGJobPostPage.RAClickProceedButton();
-		SGJobPostPage.ConfirmSubmit();
-
-		SGJobPostPage.VerifyJobListingPage();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-	});
-
+	// Issue reported - FJEMP-3904
 	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 

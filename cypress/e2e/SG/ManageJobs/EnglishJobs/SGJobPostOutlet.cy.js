@@ -19,6 +19,11 @@ describe("SG Job Posting", () => {
 		SGJobPostPage.VerifyPostedJobAd();
 	});
 
+	afterEach(() => {
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+		SGJobPostPage.VerifyPostedJobAd();
+	});
+
 	it("Verify able to post and edit a Job with outlets selected", () => {
 		const jobInfo = {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
