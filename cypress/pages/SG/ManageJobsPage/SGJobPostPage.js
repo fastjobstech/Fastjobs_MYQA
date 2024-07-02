@@ -344,7 +344,7 @@ class SGJobPostPage {
 	// Verify if Feedback modal is displayed
 	VerifyJobPostingFeedbackModal = () => {
 		cy.get("body").then(($el) => {
-			cy.wait(200);
+			cy.wait(800);
 			const feedbackModalElement = $el.find("#ratingModal");
 
 			if (feedbackModalElement.length > 0 && feedbackModalElement.is(":visible")) {

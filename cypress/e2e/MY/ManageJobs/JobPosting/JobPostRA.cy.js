@@ -28,6 +28,7 @@ describe("Recruitment Agency - Job Posting", () => {
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
 		JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 
 		// Edit the Job
 		JobPostPage.EditTheJob();
@@ -42,6 +43,7 @@ describe("Recruitment Agency - Job Posting", () => {
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifySuccessMsg();
 
 		// Copy the same job

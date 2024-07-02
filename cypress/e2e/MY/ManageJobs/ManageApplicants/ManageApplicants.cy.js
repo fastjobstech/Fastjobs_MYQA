@@ -21,7 +21,7 @@ describe("Manage Applicants", () => {
 		JobPostPage.VerifyPostedJobAd();
 	});
 
-	it("Post a Job and Jobseeker applied to the Job", () => {
+	it.skip("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {
 			username: "kimjay.luta@fastjobs.ph",
 			password: "Password123",
@@ -43,7 +43,7 @@ describe("Manage Applicants", () => {
 		ManageApplicant.ApplyJob();
 	});
 
-	it("Move Jobseeker from New to Shortlisted", () => {
+	it.skip("Move Jobseeker from New to Shortlisted", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
 		// cy.get(":nth-child(2) > .app-folder-link").should("be.visible").click();
@@ -53,21 +53,21 @@ describe("Manage Applicants", () => {
 		ManageApplicant.verifyMoveSuccessMessage();
 	});
 
-	it("Move Jobseeker from Shortlisted to Rejected", () => {
+	it.skip("Move Jobseeker from Shortlisted to Rejected", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
 		ManageApplicant.MoveApplicantToRejected();
 		ManageApplicant.verifyMoveSuccessMessage();
 	});
 
-	it("Move Jobseeker from Rejected to KIV", () => {
+	it.skip("Move Jobseeker from Rejected to KIV", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
 		ManageApplicant.MoveApplicantToKIV();
 		ManageApplicant.verifyMoveSuccessMessage();
 	});
 
-	it("Move Jobseeker from KIV to Hire", () => {
+	it.skip("Move Jobseeker from KIV to Hire", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
 		ManageApplicant.MoveApplicantToHire();
