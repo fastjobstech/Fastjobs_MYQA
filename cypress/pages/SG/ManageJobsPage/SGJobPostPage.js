@@ -35,6 +35,12 @@ class SGJobPostPage {
 		ApplyByWhatsapp: () => cy.get("#c9jobs-appwhatsapp"),
 		ApplyBySMS: () => cy.get("#txtAppModeSMSNo"),
 
+		//Job Form new Elements
+		AddWorkLocation: () => cy.get(".actions > .fj-btn"),
+		SearchLocation: () => cy.get("#location-search-input"),
+		LocationItem: () => cy.get(".location-item"),
+		AddWorkAddressBtn: () => cy.contains("Add work address"),
+
 		// Preference fields Optional
 		EducationLevel: () => cy.get("#c9jobs-edulvlc"),
 		JobSkillsOne: () =>
@@ -218,16 +224,19 @@ class SGJobPostPage {
 		this.elements.ApplyBySMS().clear().type(JobInfo.applyByCallSms);
 
 		if (AccountType == "outlet" && isUpdated == false) {
-			this.elements.OutletOne().click();
-			this.elements.OutletTwo().click();
+			this.elements.AddWorkLocation().click();
+			cy.wait(500);
+			this.elements.LocationItem().eq(0).click();
+			cy.contains("Confirm selection").click();
 		}
 
-		if (
-			AccountType == "directEmployer" ||
-			AccountType == "parkingLot" ||
-			AccountType == "recruitmentAgency"
-		) {
-			this.elements.NearestMRT().select(8);
+		if (AccountType != "outlet" && isUpdated == false) {
+			// this.elements.NearestMRT().select(8);
+			this.elements.AddWorkLocation().click();
+			cy.wait(500);
+			this.elements.SearchLocation().type("Testing");
+			this.elements.LocationItem().eq(0).click();
+			this.elements.AddWorkAddressBtn().click();
 		}
 
 		//This logic can be used when copying a job
@@ -309,7 +318,7 @@ class SGJobPostPage {
 			"If you would like to proceed, we suggest modifying at least one of these fields to continue:",
 			"Job Title",
 			"Description",
-			"Nearest MRT",
+			"Work location",
 			"Job Type",
 		];
 		this.elements.DuplicateNotification().should("be.visible");

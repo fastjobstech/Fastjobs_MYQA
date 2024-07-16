@@ -32,7 +32,7 @@ describe("SG Job Posting", () => {
 
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();
@@ -42,18 +42,18 @@ describe("SG Job Posting", () => {
 
 		//Edit the Job
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
 
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
-	// Issue reported - FJEMP-3904
+	// Issue reported - FJEMP-3904 NOT FIXED
 	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();

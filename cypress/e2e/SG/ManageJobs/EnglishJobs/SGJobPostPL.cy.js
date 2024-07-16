@@ -31,14 +31,14 @@ describe("Job posting", () => {
 			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
 		};
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyJobListingPage();
 		SGJobPostPage.EditTheJob();
 
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.VerifyJobListingPage();
@@ -50,7 +50,7 @@ describe("Job posting", () => {
 		};
 
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 
@@ -66,7 +66,7 @@ describe("Job posting", () => {
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.CopyTheJob();

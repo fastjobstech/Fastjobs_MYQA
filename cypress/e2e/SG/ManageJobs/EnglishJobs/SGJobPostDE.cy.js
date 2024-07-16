@@ -30,21 +30,21 @@ describe("SG Job Posting", () => {
 		};
 
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 
 		// Edit the Job
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm("", AccountType);
+		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();

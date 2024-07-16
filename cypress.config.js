@@ -23,12 +23,12 @@ module.exports = defineConfig({
 				},
 			});
 		},
-		baseUrl: "https://employer-test.fastjobs.my/",
+		baseUrl: "https://employer-qa.fastjobs.my/",
 	},
 
 	env: {
 		employerSG: "https://employer-test.fastjobs.sg",
-		adminMY: "https://admin-test.fastjobs.my/",
+		adminMY: "https://admin-qa.fastjobs.my/",
 		adminUsernameMY: "admin@fastjobs.sg",
 		adminPassMY: "123qwerty88",
 		de_username: "kimjayfastcoqa2@gmail.com",

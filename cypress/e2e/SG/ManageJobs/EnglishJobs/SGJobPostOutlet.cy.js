@@ -39,7 +39,7 @@ describe("SG Job Posting", () => {
 
 		//Edit the Job
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType);
+		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.VerifyJobListingPage();
 	});
