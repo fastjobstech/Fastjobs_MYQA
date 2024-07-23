@@ -11,6 +11,7 @@ class LoginPage {
 
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);
+		cy.wait(1000);
 		this.elements.loginButton().click();
 
 		cy.url().should("contain", "/dashboard");

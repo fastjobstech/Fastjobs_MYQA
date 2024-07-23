@@ -33,6 +33,15 @@ class companyProfilePageSG {
 		this.elements.companyDesc().should("exist");
 		this.elements.companyDesc().eq(1).clear();
 		this.elements.companyDesc().eq(1).type(newCompanyDetails.description);
+
+		// Company size update
+		// cy
+		// 	.get(
+		// 		":nth-child(10) > .sc-fast-select-h > .container > .input-container > .input"
+		// 	)
+		// 	.click();
+		// cy.get('[label="1-10"] > .option').should("be.visible");
+		// cy.get('[label="1-10"] > .option').click();
 	};
 
 	fillCompanyAddress = (newCompanyAddress) => {

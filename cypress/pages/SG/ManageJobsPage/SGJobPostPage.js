@@ -224,6 +224,13 @@ class SGJobPostPage {
 		this.elements.ApplyBySMS().clear().type(JobInfo.applyByCallSms);
 
 		if (AccountType == "outlet" && isUpdated == false) {
+			// cy
+			// 	.get(
+			// 		".col-md-12 > .block-grid-xs-1 > :nth-child(1) > :nth-child(1) > label"
+			// 	)
+			// 	.click();
+
+			// New Job posting - Location
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
 			this.elements.LocationItem().eq(0).click();
@@ -232,6 +239,8 @@ class SGJobPostPage {
 
 		if (AccountType != "outlet" && isUpdated == false) {
 			// this.elements.NearestMRT().select(8);
+
+			// New Job posting - Location
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
 			this.elements.SearchLocation().type("Testing");
@@ -318,7 +327,6 @@ class SGJobPostPage {
 			"If you would like to proceed, we suggest modifying at least one of these fields to continue:",
 			"Job Title",
 			"Description",
-			"Work location",
 			"Job Type",
 		];
 		this.elements.DuplicateNotification().should("be.visible");

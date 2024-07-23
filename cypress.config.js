@@ -27,7 +27,7 @@ module.exports = defineConfig({
 	},
 
 	env: {
-		employerSG: "https://employer-test.fastjobs.sg",
+		employerSG: "https://employer-qa.fastjobs.sg",
 		adminMY: "https://admin-qa.fastjobs.my/",
 		adminUsernameMY: "admin@fastjobs.sg",
 		adminPassMY: "123qwerty88",
@@ -41,5 +41,7 @@ module.exports = defineConfig({
 		outlet_password: "Password123",
 		SG_DE_Username: "kimjayfastcoqa@gmail.com",
 		SG_DE_Password: "Password1234",
+		// SG_DE_Username: "kimjay.luta@fastjobs.ph",
+		// SG_DE_Password: "Password123",
 	},
 });
