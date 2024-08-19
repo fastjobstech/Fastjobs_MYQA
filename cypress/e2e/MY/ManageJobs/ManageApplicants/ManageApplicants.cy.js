@@ -8,18 +8,18 @@ describe("Manage Applicants", () => {
 		return false;
 	});
 
-	beforeEach(() => {
-		cy.viewport("macbook-15");
-		cy.visit("/");
-		LoginPage.loginEmployer(
-			Cypress.env("de_username"),
-			Cypress.env("de_password")
-		);
-	});
+	// beforeEach(() => {
+	// 	cy.viewport("macbook-15");
+	// 	cy.visit("/");
+	// 	LoginPage.loginEmployer(
+	// 		Cypress.env("de_username"),
+	// 		Cypress.env("de_password")
+	// 	);
+	// });
 
-	after(() => {
-		JobPostPage.VerifyPostedJobAd();
-	});
+	// after(() => {
+	// 	JobPostPage.VerifyPostedJobAd();
+	// });
 
 	it.skip("Post a Job and Jobseeker applied to the Job", () => {
 		const JobseekerLogin = {

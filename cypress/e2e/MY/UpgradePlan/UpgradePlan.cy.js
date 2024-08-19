@@ -13,6 +13,10 @@ describe("Upgrade Plan", () => {
 			Cypress.env("de_username"),
 			Cypress.env("de_password")
 		);
+
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
 	});
 
 	it("Verify checkout required fields", () => {
@@ -27,25 +31,14 @@ describe("Upgrade Plan", () => {
 		UpgradePlan.SubmitInvalidDetails();
 	});
 
-	/**
-	 * NEED TO UPDATE - New design was implemented in TEST/QA
-	 */
-
-	it.skip("2PCP Checkout | Verify required fields", () => {
-		UpgradePlan.ClickUpgradePlanLink();
-		UpgradePlan.SelectPackage();
-		UpgradePlan.ClickCheckoutButton();
-		UpgradePlan.CheckoutSubmitFormEmpty();
-	});
-
-	it.skip("2PCP Checkout | Verify unable to Upgrage plan when there are invalid card details", () => {
+	it("2C2P Checkout | Verify unable to Upgrage plan when there are invalid card details", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
 		UpgradePlan.ClickCheckoutButton();
 		UpgradePlan.CheckoutWithInvalidDetails();
 	});
 
-	it.skip("2PCP Checkout | Verify able to Upgrage plan with valid Card details", () => {
+	it("2C2P Checkout | Verify able to Upgrage plan with valid Card details", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
 		UpgradePlan.ClickCheckoutButton();

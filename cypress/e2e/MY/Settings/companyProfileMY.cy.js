@@ -2,7 +2,7 @@ import LoginPage from "../../../pages/MY/UserPages/LoginPage";
 import JobPostPage from "../../../pages/MY/ManageJobPage/JobPostPage";
 import companyProfilePage from "../../../pages/MY/Settings/companyProfilePageMY";
 
-describe("Admin Banner Management", () => {
+describe("Update Company profile", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
@@ -14,6 +14,11 @@ describe("Admin Banner Management", () => {
 			Cypress.env("de_username"),
 			Cypress.env("de_password")
 		);
+
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
+
 		JobPostPage.VerifyJobPostingFeedbackModal();
 	});
 
