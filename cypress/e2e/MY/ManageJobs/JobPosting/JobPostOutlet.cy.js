@@ -13,6 +13,11 @@ describe("Outlet - Job Posting", () => {
 			Cypress.env("outlet_username"),
 			Cypress.env("outlet_password")
 		);
+
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
+
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
 	});

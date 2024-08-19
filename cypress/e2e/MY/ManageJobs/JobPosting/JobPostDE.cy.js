@@ -13,6 +13,11 @@ describe("Direct Employer - Job Posting", () => {
 			Cypress.env("de_username"),
 			Cypress.env("de_password")
 		);
+
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
+
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
 	});

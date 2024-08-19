@@ -13,6 +13,11 @@ describe("Recruitment Agency - Job Posting", () => {
 			Cypress.env("ra_username"),
 			Cypress.env("ra_password")
 		);
+
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
+
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
 	});

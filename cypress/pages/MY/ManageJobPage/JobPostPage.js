@@ -156,8 +156,8 @@ class JobPostPage {
 			"If you would like to proceed, we suggest modifying at least one of these fields to continue:",
 			"Job title",
 			"Description",
-			"Location/Sub-location",
-			"Job Type",
+			"Work location(s)",
+			"Job type",
 		];
 		this.elements.DuplicateNotification().should("be.visible");
 		this.elements.DuplicateMsg().should("be.visible");
