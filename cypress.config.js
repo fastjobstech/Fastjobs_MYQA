@@ -46,5 +46,7 @@ module.exports = defineConfig({
 		SG_DE_Password: "Password1234",
 		// SG_DE_Username: "kimjay.luta@fastjobs.ph",
 		// SG_DE_Password: "Password123",
+		manageApplicantUsername: "repear.leaf@gmail.com",
+		manageApplicantPassword: "Password123",
 	},
 });

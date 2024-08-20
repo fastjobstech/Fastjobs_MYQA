@@ -8,69 +8,37 @@ describe("Manage Applicants", () => {
 		return false;
 	});
 
-	// beforeEach(() => {
-	// 	cy.viewport("macbook-15");
-	// 	cy.visit("/");
-	// 	LoginPage.loginEmployer(
-	// 		Cypress.env("de_username"),
-	// 		Cypress.env("de_password")
-	// 	);
-	// });
+	beforeEach(() => {
+		cy.viewport("macbook-15");
+		cy.visit("/");
+		LoginPage.loginEmployer(
+			Cypress.env("manageApplicantUsername"),
+			Cypress.env("manageApplicantPassword")
+		);
 
-	// after(() => {
-	// 	JobPostPage.VerifyPostedJobAd();
-	// });
-
-	it.skip("Post a Job and Jobseeker applied to the Job", () => {
-		const JobseekerLogin = {
-			username: "kimjay.luta@fastjobs.ph",
-			password: "Password123",
-			userTwo: "lsdka@gmail.com",
-			passTwo: "Password123",
-		};
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifyPostedJobAd();
-
-		// JobPostPage.GoToJobListing();
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(3);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-
-		ManageApplicant.LoginAsJobseeker(JobseekerLogin);
-		ManageApplicant.ApplyJob();
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
 	});
 
-	it.skip("Move Jobseeker from New to Shortlisted", () => {
+	it("Moves the Jobseeker to each folders (Rejected, KIV, Hire, Shortlisted)", () => {
 		JobPostPage.GoToJobListing();
 		ManageApplicant.GoToManageApplicant();
-		// cy.get(":nth-child(2) > .app-folder-link").should("be.visible").click();
-		cy.wait(500);
-		ManageApplicant.checkApplicantDataIsReceived();
-		ManageApplicant.MoveApplicantToShortlisted();
-		ManageApplicant.verifyMoveSuccessMessage();
-	});
 
-	it.skip("Move Jobseeker from Shortlisted to Rejected", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
+		// Shortlisted to Rejected
 		ManageApplicant.MoveApplicantToRejected();
 		ManageApplicant.verifyMoveSuccessMessage();
-	});
 
-	it.skip("Move Jobseeker from Rejected to KIV", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
+		// Rejected to KIV
 		ManageApplicant.MoveApplicantToKIV();
 		ManageApplicant.verifyMoveSuccessMessage();
-	});
 
-	it.skip("Move Jobseeker from KIV to Hire", () => {
-		JobPostPage.GoToJobListing();
-		ManageApplicant.GoToManageApplicant();
+		// Kiv to Hire
 		ManageApplicant.MoveApplicantToHire();
+		ManageApplicant.verifyMoveSuccessMessage();
+
+		// Hire to Shortlisted
+		ManageApplicant.MoveApplicantToShortlisted();
 		ManageApplicant.verifyMoveSuccessMessage();
 	});
 });

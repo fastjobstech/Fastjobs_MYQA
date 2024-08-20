@@ -30,6 +30,7 @@ class ManageApplicant {
 		kivTab: () => cy.get(":nth-child(4) > .app-folder-link"),
 
 		moveToHire: () => cy.get("#w3 > .btn-candidate-change-folder"),
+		hireTab: () => cy.get(":nth-child(3) > .app-folder-link"),
 	};
 
 	LoginAsJobseeker = (JobseekerCredentials) => {
@@ -74,6 +75,8 @@ class ManageApplicant {
 	};
 
 	MoveApplicantToShortlisted = () => {
+		this.element.hireTab().should("be.visible");
+		this.element.hireTab().click();
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToShortlisted().click();
 	};
