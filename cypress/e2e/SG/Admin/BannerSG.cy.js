@@ -57,7 +57,7 @@ describe("SG Job Posting", () => {
 		// 	.should("be.visible")
 		// 	.click();
 
-		// Verify the banner is created successfully
+		//// Verify the banner is created successfully
 		// cy
 		// 	.get("#alertdiv")
 		// 	.should("be.visible")
