@@ -28,14 +28,14 @@ class LoginPage {
 	};
 
 	loginEmployerWithEmptyfields = () => {
-		this.elements.employerLoginBtn().click();
+		// this.elements.employerLoginBtn().click();
 
 		this.elements.loginButton().click();
 		this.verifyErrorMessage();
 	};
 
 	loginEmployerWithInvalidCreds = (username, password) => {
-		this.elements.employerLoginBtn().click();
+		// this.elements.employerLoginBtn().click();
 
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);
