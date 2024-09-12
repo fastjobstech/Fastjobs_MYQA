@@ -9,7 +9,6 @@ describe("Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
-		cy.viewport("macbook-15");
 		cy.visit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("manageApplicantUsername"),
@@ -32,13 +31,16 @@ describe("Manage Applicants", () => {
 		// Rejected to KIV
 		ManageApplicant.MoveApplicantToKIV();
 		ManageApplicant.verifyMoveSuccessMessage();
+		cy.wait(1000);
 
 		// Kiv to Hire
 		ManageApplicant.MoveApplicantToHire();
 		ManageApplicant.verifyMoveSuccessMessage();
+		cy.wait(1000);
 
 		// Hire to Shortlisted
 		ManageApplicant.MoveApplicantToShortlisted();
 		ManageApplicant.verifyMoveSuccessMessage();
+		cy.wait(1000);
 	});
 });

@@ -77,6 +77,9 @@ class ManageApplicant {
 	MoveApplicantToShortlisted = () => {
 		this.element.hireTab().should("be.visible");
 		this.element.hireTab().click();
+
+		cy.wait(1000);
+
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToShortlisted().click();
 	};
@@ -84,6 +87,9 @@ class ManageApplicant {
 	MoveApplicantToRejected = () => {
 		this.element.shortlistedTab().should("be.visible");
 		this.element.shortlistedTab().click();
+
+		cy.wait(1000);
+
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToRejected().click();
 	};
@@ -91,6 +97,9 @@ class ManageApplicant {
 	MoveApplicantToKIV = () => {
 		this.element.rejectedTab().should("be.visible");
 		this.element.rejectedTab().click();
+
+		cy.wait(1000);
+
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToKIV().click();
 	};
@@ -98,9 +107,13 @@ class ManageApplicant {
 	MoveApplicantToHire = () => {
 		this.element.kivTab().should("be.visible");
 		this.element.kivTab().click();
+		cy.wait(1000);
+
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToShortlisted().click();
 		this.element.shortlistedTab().click();
+		cy.wait(1000);
+
 		this.element.applicantCardDetails().should("be.visible");
 		this.element.moveToHire().click();
 	};
