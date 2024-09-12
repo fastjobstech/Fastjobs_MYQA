@@ -18,7 +18,7 @@ class LoginPage {
 	};
 
 	loginEmployer = (username, password) => {
-		this.elements.employerLoginBtn().click();
+		// this.elements.employerLoginBtn().click();
 
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);

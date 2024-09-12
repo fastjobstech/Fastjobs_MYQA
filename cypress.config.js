@@ -3,9 +3,9 @@ const { queryTestDb } = require("./db");
 
 module.exports = defineConfig({
 	projectId: "2fvt3x",
-	responseTimeout: 50000,
-	pageLoadTimeout: 50000,
-	defaultCommandTimeout: 50000,
+	responseTimeout: 30000,
+	pageLoadTimeout: 60000,
+	defaultCommandTimeout: 10000,
 	chromeWebSecurity: false,
 	reporter: "cypress-mochawesome-reporter",
 	reporterOptions: {
@@ -23,11 +23,13 @@ module.exports = defineConfig({
 				},
 			});
 		},
-		baseUrl: "https://employer-qa.fastjobs.my/",
+		baseUrl: "https://employer-qa.fastjobs.my/site/login",
+		viewportWidth: 1920,
+		viewportHeight: 1080,
 	},
 
 	env: {
-		employerSG: "https://employer-qa.fastjobs.sg",
+		employerSG: "https://employer-qa.fastjobs.sg/site/login",
 		adminMY: "https://admin-qa.fastjobs.my/",
 		adminSG: "https://admin-qa.fastjobs.sg/",
 		adminUsernameMY: "admin@fastjobs.sg",
