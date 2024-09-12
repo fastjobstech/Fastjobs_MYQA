@@ -2,7 +2,7 @@
 import LoginPage from "../../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
-describe("SG Job Posting", () => {
+describe("SG Job Posting DE", () => {
 	const AccountType = "recruitmentAgency";
 
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -16,6 +16,7 @@ describe("SG Job Posting", () => {
 			Cypress.env("ra_username"),
 			Cypress.env("ra_password")
 		);
+		SGJobPostPage.CloseToolTips();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();
 	});

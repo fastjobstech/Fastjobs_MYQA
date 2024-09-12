@@ -17,6 +17,7 @@ describe("Job posting", () => {
 			Cypress.env("de_username"),
 			Cypress.env("de_password")
 		);
+		SGJobPostPage.CloseToolTips();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();
 	});

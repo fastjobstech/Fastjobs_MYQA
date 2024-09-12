@@ -292,6 +292,12 @@ class SGJobPostPage {
 		cy.get(".loader-text").should("be.visible");
 	};
 
+	CloseToolTips = () => {
+		// Tour - close the tour
+		cy.get("#tg-dialog-close-btn").should("be.visible");
+		cy.get("#tg-dialog-close-btn").click();
+	};
+
 	VerifyRequiredErrMsg = (AccountType) => {
 		const RequiredText = [
 			"Please enter Job Title",
