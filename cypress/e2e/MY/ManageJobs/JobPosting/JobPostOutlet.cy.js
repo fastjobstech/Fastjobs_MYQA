@@ -8,7 +8,7 @@ describe("Outlet - Job Posting", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit("/");
+		cy.pageVisit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("outlet_username"),
 			Cypress.env("outlet_password")

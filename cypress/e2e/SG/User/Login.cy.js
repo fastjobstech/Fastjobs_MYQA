@@ -7,7 +7,7 @@ describe("SG Login", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit(Cypress.env("employerSG"));
+		cy.pageVisit(Cypress.env("employerSG"));
 	});
 
 	it("Visit employer SG", () => {

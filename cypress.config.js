@@ -4,7 +4,8 @@ const { queryTestDb } = require("./db");
 module.exports = defineConfig({
 	projectId: "2fvt3x",
 	responseTimeout: 30000,
-	pageLoadTimeout: 60000,
+	requestTimeout: 30000,
+	pageLoadTimeout: 30000,
 	defaultCommandTimeout: 10000,
 	chromeWebSecurity: false,
 	reporter: "cypress-mochawesome-reporter",

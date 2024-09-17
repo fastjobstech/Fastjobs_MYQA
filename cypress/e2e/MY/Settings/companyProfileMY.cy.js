@@ -9,7 +9,7 @@ describe("Update Company profile", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit("/");
+		cy.pageVisit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("de_username"),
 			Cypress.env("de_password")

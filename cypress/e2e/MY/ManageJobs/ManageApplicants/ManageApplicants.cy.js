@@ -9,7 +9,7 @@ describe("Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit("/");
+		cy.pageVisit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("manageApplicantUsername"),
 			Cypress.env("manageApplicantPassword")

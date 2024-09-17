@@ -9,7 +9,7 @@ describe("Admin Banner Management", () => {
 
 	beforeEach(() => {
 		cy.viewport("macbook-11");
-		cy.visit(Cypress.env("adminMY"));
+		cy.pageVisit(Cypress.env("adminMY"));
 		LoginPage.adminLoginMY(
 			Cypress.env("adminUsernameMY"),
 			Cypress.env("adminPassMY")

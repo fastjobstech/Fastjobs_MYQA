@@ -13,7 +13,7 @@ describe("SG | Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit(Cypress.env("employerSG"));
+		cy.pageVisit(Cypress.env("employerSG"));
 		LoginPage.loginEmployer(
 			Cypress.env("SG_DE_Username"),
 			Cypress.env("SG_DE_Password")

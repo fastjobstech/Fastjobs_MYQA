@@ -9,7 +9,7 @@ describe("Parking lot - Job Posting", () => {
 
 	beforeEach(() => {
 		cy.viewport("macbook-15");
-		cy.visit("/");
+		cy.pageVisit("/");
 		LoginPage.loginEmployer(
 			Cypress.env("pl_username"),
 			Cypress.env("pl_password")

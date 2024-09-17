@@ -11,7 +11,7 @@ describe("SG Job Posting DE", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit(Cypress.env("employerSG"));
+		cy.pageVisit(Cypress.env("employerSG"));
 		LoginPage.loginEmployer(
 			Cypress.env("ra_username"),
 			Cypress.env("ra_password")

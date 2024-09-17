@@ -7,7 +7,7 @@ describe("SG Job Posting", () => {
 	});
 
 	beforeEach(() => {
-		cy.visit(Cypress.env("adminSG"));
+		cy.pageVisit(Cypress.env("adminSG"));
 		LoginPage.adminLoginSG(
 			Cypress.env("adminUserSG"),
 			Cypress.env("adminPassSG")
