@@ -1,12 +1,8 @@
 class LoginPage {
 	elements = {
 		// login elements
-		// usernameField: () => cy.get("#loginform-username"),
-		// passwordField: () => cy.get("#loginform-password"),
-		// loginButton: () => cy.get("[name=login-button]"),
 		usernameField: () => cy.get('input[name="LoginForm[username]"]'),
 		passwordField: () => cy.get('input[name="LoginForm[password]"]'),
-		// loginButton: () => cy.get(".button").contains("Login"),
 		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
 		loginErrorMessage: () => cy.get(".help-block-error"),
 		employerLoginBtn: () => cy.contains("Employer Login"),

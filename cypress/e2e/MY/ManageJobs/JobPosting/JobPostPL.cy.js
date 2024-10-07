@@ -10,10 +10,7 @@ describe("Parking lot - Job Posting", () => {
 	beforeEach(() => {
 		cy.viewport("macbook-15");
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(
-			Cypress.env("pl_username"),
-			Cypress.env("pl_password")
-		);
+		LoginPage.loginEmployer(Cypress.env("pl_username"), Cypress.env("pl_password"));
 
 		// Tour - close the tour
 		cy.get("#tg-dialog-close-btn").should("be.visible");
@@ -51,8 +48,9 @@ describe("Parking lot - Job Posting", () => {
 		JobPostPage.GoToPostNewJobForm();
 		JobPostPage.FillPostNewJobForm("", false);
 		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifyJobPostingFeedbackModal();
+
 		JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		// Copy the same job
 		JobPostPage.CopyTheJob();
 		JobPostPage.ClickPostNewJobBtn();

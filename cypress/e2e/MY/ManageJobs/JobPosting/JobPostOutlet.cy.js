@@ -9,10 +9,7 @@ describe("Outlet - Job Posting", () => {
 
 	beforeEach(() => {
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(
-			Cypress.env("outlet_username"),
-			Cypress.env("outlet_password")
-		);
+		LoginPage.loginEmployer(Cypress.env("outlet_username"), Cypress.env("outlet_password"));
 
 		// Tour - close the tour
 		cy.get("#tg-dialog-close-btn").should("be.visible");
@@ -37,8 +34,9 @@ describe("Outlet - Job Posting", () => {
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifySuccessMsg();
 
+		JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyJobPostingFeedbackModal();
 		// Edit the Job
 		JobPostPage.EditTheJob();
 
