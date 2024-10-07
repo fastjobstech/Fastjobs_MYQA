@@ -1,9 +1,13 @@
 class LoginPage {
 	elements = {
 		// login elements
-		usernameField: () => cy.get("#loginform-username"),
-		passwordField: () => cy.get("#loginform-password"),
-		loginButton: () => cy.get("[name=login-button]"),
+		// usernameField: () => cy.get("#loginform-username"),
+		// passwordField: () => cy.get("#loginform-password"),
+		// loginButton: () => cy.get("[name=login-button]"),
+		usernameField: () => cy.get('input[name="LoginForm[username]"]'),
+		passwordField: () => cy.get('input[name="LoginForm[password]"]'),
+		// loginButton: () => cy.get(".button").contains("Login"),
+		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
 		loginErrorMessage: () => cy.get(".help-block-error"),
 		employerLoginBtn: () => cy.contains("Employer Login"),
 
@@ -22,6 +26,7 @@ class LoginPage {
 
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);
+		this.elements.loginButton().should("be.visible");
 		this.elements.loginButton().click();
 
 		cy.location("pathname").should("equal", "/p/my-activity/dashboard");
