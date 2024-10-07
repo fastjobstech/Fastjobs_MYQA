@@ -8,10 +8,7 @@ describe("SG Job Posting", () => {
 
 	beforeEach(() => {
 		cy.pageVisit(Cypress.env("adminSG"));
-		LoginPage.adminLoginSG(
-			Cypress.env("adminUserSG"),
-			Cypress.env("adminPassSG")
-		);
+		LoginPage.adminLoginSG(Cypress.env("adminUserSG"), Cypress.env("adminPassSG"));
 	});
 
 	it("Verify able to Create, Update and Delete Banner", () => {

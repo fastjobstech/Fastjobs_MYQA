@@ -2,9 +2,12 @@ class LoginPage {
 	elements = {
 		// employer login elements
 		employerLoginBtn: () => cy.get(":nth-child(6) > .btn"),
-		usernameField: () => cy.get("#loginform-username"),
-		passwordField: () => cy.get("#loginform-password"),
-		loginButton: () => cy.get(".col-sm-6 > .btn"),
+		// usernameField: () => cy.get("#loginform-username"),
+		// passwordField: () => cy.get("#loginform-password"),
+
+		usernameField: () => cy.get('input[name="IDToken1"]'),
+		passwordField: () => cy.get('input[name="IDToken2"]'),
+		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
 
 		// admin login elements
 		adminUsernameField: () => cy.get("#loginform-username"),
@@ -48,7 +51,7 @@ class LoginPage {
 				cy.get("#otp_code").type(otp);
 			});
 
-		cy.get(".btn").click();
+		cy.get(".btn").contains("Verify").click();
 		cy.url().should("contain", "/index");
 	};
 }
