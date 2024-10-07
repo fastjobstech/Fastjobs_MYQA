@@ -1,12 +1,11 @@
 class BannerMY {
 	elements = {
 		myAccountBtn: () => cy.get(":nth-child(1) > .user-menu"),
-		myAccountBannerListing: () =>
-			cy.get(":nth-child(9) > ul > :nth-child(1) > a"),
+		myAccountBannerListing: () => cy.get(":nth-child(9) > ul > :nth-child(1) > a"),
 		bannerListingTable: () => cy.get(".table"),
 
 		// create button
-		bannerCreateBtn: () => cy.get(".btn"),
+		bannerCreateBtn: () => cy.get(".btn").contains("Create Banner"),
 
 		//uploadBanner
 		uploadBanner: () => cy.get("#tmpbanner"),
@@ -85,7 +84,7 @@ class BannerMY {
 		cy.contains("table.table tbody tr", bannerTitle).should("be.visible");
 		cy.contains("table.table tbody tr", bannerTitle).as("bannerRow");
 		cy.get("@bannerRow").find("a").eq(actionType).should("be.visible");
-		cy.get("@bannerRow").find("a").eq(actionType).click();
+		cy.get("@bannerRow").find("a").eq(actionType).click({ force: true });
 	};
 }
 

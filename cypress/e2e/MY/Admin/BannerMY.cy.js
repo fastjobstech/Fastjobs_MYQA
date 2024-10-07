@@ -10,10 +10,7 @@ describe("Admin Banner Management", () => {
 	beforeEach(() => {
 		cy.viewport("macbook-11");
 		cy.pageVisit(Cypress.env("adminMY"));
-		LoginPage.adminLoginMY(
-			Cypress.env("adminUsernameMY"),
-			Cypress.env("adminPassMY")
-		);
+		LoginPage.adminLoginMY(Cypress.env("adminUsernameMY"), Cypress.env("adminPassMY"));
 	});
 
 	it("Verify able to create the Banner", () => {
