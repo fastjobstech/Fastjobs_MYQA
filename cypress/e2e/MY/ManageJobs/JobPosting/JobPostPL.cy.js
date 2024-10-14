@@ -12,10 +12,6 @@ describe("Parking lot - Job Posting", () => {
 		cy.pageVisit("/");
 		LoginPage.loginEmployer(Cypress.env("pl_username"), Cypress.env("pl_password"));
 
-		// Tour - close the tour
-		cy.get("#tg-dialog-close-btn").should("be.visible");
-		cy.get("#tg-dialog-close-btn").click();
-
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
 	});

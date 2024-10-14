@@ -9,14 +9,7 @@ describe("Recruitment Agency - Job Posting", () => {
 
 	beforeEach(() => {
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(
-			Cypress.env("ra_username"),
-			Cypress.env("ra_password")
-		);
-
-		// Tour - close the tour
-		cy.get("#tg-dialog-close-btn").should("be.visible");
-		cy.get("#tg-dialog-close-btn").click();
+		LoginPage.loginEmployer(Cypress.env("ra_username"), Cypress.env("ra_password"));
 
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		JobPostPage.VerifyPostedJobAd();
