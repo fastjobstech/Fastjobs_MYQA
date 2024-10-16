@@ -13,11 +13,7 @@ describe("SG Job Posting", () => {
 	beforeEach(() => {
 		cy.viewport("macbook-15");
 		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(
-			Cypress.env("SG_DE_Username"),
-			Cypress.env("SG_DE_Password")
-		);
-		SGJobPostPage.CloseToolTips();
+		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 	});
 

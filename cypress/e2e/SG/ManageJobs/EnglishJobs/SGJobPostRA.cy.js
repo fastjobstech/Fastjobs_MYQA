@@ -12,11 +12,7 @@ describe("SG Job Posting DE", () => {
 
 	beforeEach(() => {
 		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(
-			Cypress.env("ra_username"),
-			Cypress.env("ra_password")
-		);
-		SGJobPostPage.CloseToolTips();
+		LoginPage.loginEmployer(Cypress.env("ra_username"), Cypress.env("ra_password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();
 	});

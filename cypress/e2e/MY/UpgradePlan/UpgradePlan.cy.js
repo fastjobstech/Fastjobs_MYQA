@@ -9,14 +9,7 @@ describe("Upgrade Plan", () => {
 
 	beforeEach(() => {
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(
-			Cypress.env("de_username"),
-			Cypress.env("de_password")
-		);
-
-		// Tour - close the tour
-		cy.get("#tg-dialog-close-btn").should("be.visible");
-		cy.get("#tg-dialog-close-btn").click();
+		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
 	});
 
 	it("Verify checkout required fields", () => {

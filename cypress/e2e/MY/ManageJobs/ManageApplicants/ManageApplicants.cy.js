@@ -11,10 +11,6 @@ describe("Manage Applicants", () => {
 	beforeEach(() => {
 		cy.pageVisit("/");
 		LoginPage.loginEmployer(Cypress.env("manageApplicantUsername"), Cypress.env("manageApplicantPassword"));
-
-		// Tour - close the tour
-		cy.get("#tg-dialog-close-btn").should("be.visible");
-		cy.get("#tg-dialog-close-btn").click();
 	});
 
 	it.skip("Moves the Jobseeker to each folders (Rejected, KIV, Hire, Shortlisted)", () => {

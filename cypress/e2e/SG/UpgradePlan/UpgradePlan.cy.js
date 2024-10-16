@@ -10,11 +10,7 @@ describe("Upgrade Plan", () => {
 
 	beforeEach(() => {
 		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(
-			Cypress.env("SG_DE_Username"),
-			Cypress.env("SG_DE_Password")
-		);
-		SGJobPostPage.CloseToolTips();
+		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
 	});
 
 	it("Upgrade plan and Download the invoice without error", () => {

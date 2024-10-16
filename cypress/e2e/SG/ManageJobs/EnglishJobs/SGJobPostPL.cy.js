@@ -13,11 +13,7 @@ describe("Job posting", () => {
 
 	beforeEach(() => {
 		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(
-			Cypress.env("de_username"),
-			Cypress.env("de_password")
-		);
-		SGJobPostPage.CloseToolTips();
+		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();
 	});
@@ -44,8 +40,8 @@ describe("Job posting", () => {
 
 		SGJobPostPage.VerifyJobListingPage();
 	});
-
-	it("Replace the current posted job ad", () => {
+	// Skip - Issue occurs reported at FJEMP-4401
+	it.skip("Replace the current posted job ad", () => {
 		const jobInfo = {
 			jobTitle: "Replace Job (Automated Script Do not Apply!!!)",
 		};

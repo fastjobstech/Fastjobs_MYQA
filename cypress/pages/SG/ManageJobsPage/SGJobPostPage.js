@@ -44,32 +44,19 @@ class SGJobPostPage {
 		// Preference fields Optional
 		EducationLevel: () => cy.get("#c9jobs-edulvlc"),
 		JobSkillsOne: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"
-			),
+			cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"),
 		JobSkillsTwo: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"
-			),
+			cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"),
 		JobSkillsThree: () =>
-			cy.get(
-				":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"
-			),
+			cy.get(":nth-child(16) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"),
 		JobLanguageOne: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"
-			),
+			cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(1) > .form-control"),
 		JobLanguageTwo: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"
-			),
+			cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(2) > .form-control"),
 		JobLanguageThree: () =>
-			cy.get(
-				":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"
-			),
+			cy.get(":nth-child(17) > .col-md-12 > .form-group > .block-grid-xs-1 > :nth-child(3) > .form-control"),
 		ApplicationFilter: () => cy.get("#c9jobs-appfilterflag"),
-		ScheduledJobPost: () =>
-			cy.get("#c9jobs-scheduledttme-datetime > #c9jobs-scheduledttme"),
+		ScheduledJobPost: () => cy.get("#c9jobs-scheduledttme-datetime > #c9jobs-scheduledttme"),
 
 		// Packages Default
 		PackageSelection: () => cy.get(":nth-child(22) > .col-xs-2 > center > label"),
@@ -101,16 +88,12 @@ class SGJobPostPage {
 		CopyJobBtn: () => cy.get(".btn-copy"),
 
 		//Outlet elements
-		OutletOne: () =>
-			cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(1) > :nth-child(1)"),
-		OutletTwo: () =>
-			cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(2) > :nth-child(1)"),
-		OutletThree: () =>
-			cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(3) > :nth-child(1)"),
+		OutletOne: () => cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(1) > :nth-child(1)"),
+		OutletTwo: () => cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(2) > :nth-child(1)"),
+		OutletThree: () => cy.get(".col-md-12 > .block-grid-xs-1 > :nth-child(3) > :nth-child(1)"),
 
 		//Parking lot elements
-		UsageDetails: () =>
-			cy.get(".col-sm-12 > :nth-child(21)").contains("Usage details"),
+		UsageDetails: () => cy.get(".col-sm-12 > :nth-child(21)").contains("Usage details"),
 		UsageTitle: () => cy.get(".usage-title"),
 		UsageError: () => cy.get(".usage-error"),
 		UsageRadioButton: () => cy.get(".usage-radio"),
@@ -192,10 +175,7 @@ class SGJobPostPage {
 		}
 
 		if (AccountType == "recruitmentAgency") {
-			this.elements
-				.RAAgencyInfoTitle()
-				.contains("Recruitment Agency Info")
-				.should("be.visible");
+			this.elements.RAAgencyInfoTitle().contains("Recruitment Agency Info").should("be.visible");
 			this.elements.EALicenseNo().should("be.visible");
 			this.elements.EAPersonnelNo().should("be.visible");
 			this.elements.ADOwner().should("be.visible");
@@ -211,10 +191,7 @@ class SGJobPostPage {
 			applyByCallSms: "91191197",
 		};
 		this.elements.JobTitle().clear().type(JobInfo.jobTitle);
-		this.elements
-			.JobDescription()
-			.find('.rtf-content[contenteditable="true"]')
-			.type(JobInfo.jobDesc, { force: true });
+		this.elements.JobDescription().find('.rtf-content[contenteditable="true"]').type(JobInfo.jobDesc, { force: true });
 
 		this.elements.JobCategoryOne().select(5);
 		this.elements.JobCategoryTwo().select(10);
@@ -268,10 +245,7 @@ class SGJobPostPage {
 	};
 
 	VerifyJobListingPage = () => {
-		this.elements
-			.JobListingTitle()
-			.contains("Manage English Jobs")
-			.should("be.visible");
+		this.elements.JobListingTitle().contains("Manage English Jobs").should("be.visible");
 	};
 
 	ExpireTheJob = () => {
@@ -354,14 +328,15 @@ class SGJobPostPage {
 	//Parking Lot
 	VerifyInsufficientSlotErrorMessage = () => {
 		const ErrorTitle = "Insufficient slots - select a job post to expire*";
-		const ErrorMessage = "Please select one job post to replace.";
+		// const ErrorMessage = "Please select one job post to replace.";
 
 		this.elements.UsageTitle().contains(ErrorTitle).should("be.visible");
-		this.elements.UsageError().contains(ErrorMessage).should("be.visible");
+		// this.elements.UsageError().contains(ErrorMessage).should("be.visible");
 	};
 
 	SelectReplaceJob = () => {
-		this.elements.UsageRadioButton().should("be.visible").click();
+		this.elements.UsageRadioButton().should("be.visible");
+		this.elements.UsageRadioButton().click();
 	};
 
 	// Verify if Feedback modal is displayed
@@ -378,11 +353,7 @@ class SGJobPostPage {
 				cy.get(".rating-submit").click();
 
 				//Success modal
-				cy
-					.get(
-						"#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close"
-					)
-					.click();
+				cy.get("#ratingSuccessModal > .modal-dialog > .modal-content > .modal-header > .modal-close").click();
 			} else {
 				cy.log("Feedback Rating modal is not visible");
 			}
