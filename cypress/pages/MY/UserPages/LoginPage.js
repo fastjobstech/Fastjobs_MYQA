@@ -4,7 +4,7 @@ class LoginPage {
 		usernameField: () => cy.get('input[name="LoginForm[username]"]'),
 		passwordField: () => cy.get('input[name="LoginForm[password]"]'),
 		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
-		loginErrorMessage: () => cy.get(".help-block-error"),
+		loginErrorMessage: () => cy.get(".sc-fast-alert-h"),
 		employerLoginBtn: () => cy.contains("Employer Login"),
 
 		// admin login elements

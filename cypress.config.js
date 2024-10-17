@@ -31,6 +31,7 @@ module.exports = defineConfig({
 
 	env: {
 		employerSG: "https://employer-qa.fastjobs.sg/site/login",
+		employerMainSG: "https://employer-qa.fastjobs.sg/",
 		adminMY: "https://admin-qa.fastjobs.my/",
 		adminSG: "https://admin-qa.fastjobs.sg/",
 		adminUsernameMY: "admin@fastjobs.sg",
