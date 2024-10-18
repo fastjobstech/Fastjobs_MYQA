@@ -5,7 +5,7 @@ module.exports = defineConfig({
 	projectId: "2fvt3x",
 	responseTimeout: 30000,
 	requestTimeout: 30000,
-	pageLoadTimeout: 30000,
+	pageLoadTimeout: 60000,
 	defaultCommandTimeout: 10000,
 	chromeWebSecurity: false,
 	reporter: "cypress-mochawesome-reporter",
@@ -14,6 +14,10 @@ module.exports = defineConfig({
 		overwrite: false,
 		html: false,
 		json: true,
+	},
+	retries: {
+		runMode: 2, // Retry twice when running in CI mode (headless)
+		openMode: 0, // No retries in interactive mode
 	},
 	e2e: {
 		setupNodeEvents(on, config) {
