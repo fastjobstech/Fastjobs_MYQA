@@ -8,6 +8,8 @@ describe("Admin Banner Management", () => {
 	});
 
 	beforeEach(() => {
+		// const adminUrl = "https://httpstat.us/500"; Can use to test the 500 error
+
 		cy.viewport("macbook-11");
 		const adminUrl = Cypress.env("adminMY");
 		cy.checkWebsiteAvailability(adminUrl);
@@ -42,6 +44,13 @@ describe("Admin Banner Management", () => {
 	});
 
 	it("Verify able to update the Banner", () => {
+		//Navigate to the Banner form
+		BannerPage.navigateToBannerListing();
+		BannerPage.navigateToCreateBanner();
+
+		// Verify the form
+		BannerPage.verifyBannerFormElement();
+
 		const bannerData = {
 			descrition:
 				"Find Your Dream Job Today! 🚀 Explore top opportunities in your field. Apply now and take the next step in your career!",
@@ -50,23 +59,16 @@ describe("Admin Banner Management", () => {
 			coyID: 20320,
 		};
 
+		// Fill the form
+		BannerPage.fillBannerForm(bannerData, false);
+		BannerPage.verifyAlertDisplayed("alert-success");
+
 		const newBannerData = {
 			descrition: "(Update) Find Your Dream Job Today!",
 			buttonText: "(Update) Apply Now!",
 			title: "(Update) Exciting Career Opportunities!",
 			coyID: 20320,
 		};
-
-		//Navigate to the Banner form
-		BannerPage.navigateToBannerListing();
-		BannerPage.navigateToCreateBanner();
-
-		// Verify the form
-		BannerPage.verifyBannerFormElement();
-
-		// Fill the form
-		BannerPage.fillBannerForm(bannerData, false);
-		BannerPage.verifyAlertDisplayed("alert-success");
 
 		//Update Banner data
 		BannerPage.actionBanner(0, bannerData.title);

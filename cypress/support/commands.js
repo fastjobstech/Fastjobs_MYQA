@@ -23,10 +23,12 @@ Cypress.Commands.add("checkWebsiteAvailability", (url) => {
 	cy
 		.request({
 			url: url,
-			failOnStatusCode: false, // Prevents Cypress from failing the test automatically
+			failOnStatusCode: false, // Prevents automatic Cypress failure; we'll handle it manually
 		})
 		.then((response) => {
+			// Check if the response status code is 200 (OK)
 			if (response.status !== 200) {
+				// Throw an error to fail the test and stop further execution
 				throw new Error(`Website is down with status code: ${response.status}`);
 			}
 		});

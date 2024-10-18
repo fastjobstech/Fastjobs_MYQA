@@ -1,7 +1,7 @@
 class BannerMY {
 	elements = {
 		myAccountBtn: () => cy.get(":nth-child(1) > .user-menu"),
-		myAccountBannerListing: () => cy.get(":nth-child(9) > ul > :nth-child(1) > a"),
+		myAccountBannerListing: () => cy.get("ul > :nth-child(1) > a").contains("Banner Listing"),
 		bannerListingTable: () => cy.get(".table"),
 
 		// create button
