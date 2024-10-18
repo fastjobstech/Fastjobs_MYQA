@@ -11,6 +11,7 @@ describe("SG Job Posting", () => {
 
 	beforeEach(() => {
 		const employerSGUrl = Cypress.env("employerMainSG");
+		cy.checkWebsiteAvailability(employerSGUrl);
 		cy.visit(`${employerSGUrl}/site/pricing`);
 	});
 

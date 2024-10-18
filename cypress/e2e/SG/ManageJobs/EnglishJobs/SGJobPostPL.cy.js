@@ -12,7 +12,9 @@ describe("Job posting", () => {
 	});
 
 	beforeEach(() => {
-		cy.pageVisit(Cypress.env("employerSG"));
+		const employerUrlSG = Cypress.env("employerSG");
+		cy.checkWebsiteAvailability(employerUrlSG);
+		cy.pageVisit(employerUrlSG);
 		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();

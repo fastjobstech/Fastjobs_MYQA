@@ -3,14 +3,15 @@ import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
 describe("SG Job Posting", () => {
 	const AccountType = "directEmployer";
-
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
 	});
 
 	beforeEach(() => {
-		cy.pageVisit(Cypress.env("employerSG"));
+		const employerUrlSG = Cypress.env("employerSG");
+		cy.checkWebsiteAvailability(employerUrlSG);
+		cy.pageVisit(employerUrlSG);
 		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.VerifyPostedJobAd();

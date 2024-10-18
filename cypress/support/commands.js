@@ -19,7 +19,19 @@ Cypress.Commands.add("insertDataRequest", () => {
 			expect(result.affectedRows).to.equal(4);
 		});
 });
+Cypress.Commands.add("checkWebsiteAvailability", (url) => {
+	cy
+		.request({
+			url: url,
+			failOnStatusCode: false, // Prevents Cypress from failing the test automatically
+		})
+		.then((response) => {
+			if (response.status !== 200) {
+				throw new Error(`Website is down with status code: ${response.status}`);
+			}
+		});
+});
 
-Cypress.Commands.add("pageVisit", (url, timeout = 30000) => {
-	cy.visit(url, { timeout });
+Cypress.Commands.add("pageVisit", (url) => {
+	cy.visit(url);
 });

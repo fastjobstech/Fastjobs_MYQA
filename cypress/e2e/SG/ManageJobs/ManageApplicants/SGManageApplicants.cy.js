@@ -13,11 +13,10 @@ describe("SG | Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
-		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(
-			Cypress.env("SG_DE_Username"),
-			Cypress.env("SG_DE_Password")
-		);
+		const employerUrlSG = Cypress.env("employerSG");
+		cy.checkWebsiteAvailability(employerUrlSG);
+		cy.pageVisit(employerUrlSG);
+		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
 	});
 
 	it.skip("Post a Job and Jobseeker applied to the Job", () => {

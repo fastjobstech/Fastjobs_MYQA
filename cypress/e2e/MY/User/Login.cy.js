@@ -7,16 +7,14 @@ describe("Login", () => {
 	});
 
 	beforeEach(() => {
+		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
 		// cy.sendDeleteRequestDB();
 		//cy.insertDataRequest();
 	});
 
 	it("Verify successfully login to the Employer page", () => {
-		LoginPage.loginEmployer(
-			Cypress.env("de_username"),
-			Cypress.env("de_password")
-		);
+		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
 	});
 
 	it("Verify unable to login with empty form", () => {

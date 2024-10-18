@@ -7,7 +7,9 @@ describe("SG Job Posting", () => {
 	});
 
 	beforeEach(() => {
-		cy.pageVisit(Cypress.env("adminSG"));
+		const adminUrlSG = Cypress.env("adminSG");
+		cy.checkWebsiteAvailability(adminUrlSG);
+		cy.pageVisit(adminUrlSG);
 		LoginPage.adminLoginSG(Cypress.env("adminUserSG"), Cypress.env("adminPassSG"));
 	});
 

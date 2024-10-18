@@ -8,6 +8,7 @@ describe("Upgrade Plan", () => {
 	});
 
 	beforeEach(() => {
+		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
 		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
 	});

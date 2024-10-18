@@ -8,6 +8,7 @@ describe("Recruitment Agency - Job Posting", () => {
 	});
 
 	beforeEach(() => {
+		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
 		LoginPage.loginEmployer(Cypress.env("ra_username"), Cypress.env("ra_password"));
 

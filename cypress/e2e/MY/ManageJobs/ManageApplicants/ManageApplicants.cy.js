@@ -9,6 +9,7 @@ describe("Manage Applicants", () => {
 	});
 
 	beforeEach(() => {
+		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
 		LoginPage.loginEmployer(Cypress.env("manageApplicantUsername"), Cypress.env("manageApplicantPassword"));
 	});
