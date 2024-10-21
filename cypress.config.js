@@ -15,10 +15,6 @@ module.exports = defineConfig({
 		html: false,
 		json: true,
 	},
-	retries: {
-		runMode: 2, // Retry twice when running in CI mode (headless)
-		openMode: 0, // No retries in interactive mode
-	},
 	e2e: {
 		setupNodeEvents(on, config) {
 			require("cypress-mochawesome-reporter/plugin")(on);
@@ -51,6 +47,7 @@ module.exports = defineConfig({
 			// SG_DE_Password: "Password123",
 			manageApplicantUsername: "repear.leaf@gmail.com",
 			manageApplicantPassword: "Password1234",
+			API_KEY: "b0f595d5e170f4e4bcaf2eee55cbb4e4aad34a473ed1e5d2c9170b64d048c2d8",
 		},
 		baseUrl: "https://employer-qa.fastjobs.my/site/login",
 		viewportWidth: 1920,

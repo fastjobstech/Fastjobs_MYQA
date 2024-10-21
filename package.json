@@ -9,7 +9,8 @@
     "test:par": "cypress-parallel -s test:run -t 3 -d 'cypress/e2e/'",
     "sg:pr": "cypress-parallel -s test:run -t 3 -d 'cypress/e2e/SG/'",
     "my:pr": "cypress-parallel -s test:run -t 3 -d 'cypress/e2e/MY/'",
-    "cy:open": "cypress run open",
+    "test-ui": "cypress open",
+    "test-only": "cypress run",
     "cy:run": "cypress run --record --key d91c1180-c2ac-4d35-9e2f-60151e046a73 --parallel",
     "test:run": "cypress run --record --key d91c1180-c2ac-4d35-9e2f-60151e046a73 --parallel --ci-build-id GITHUB_RUN_ID"
   },
@@ -28,6 +29,7 @@
   "dependencies": {
     "cypress-parallel": "^0.14.0",
     "git": "^0.1.5",
+    "mailslurp-client": "^15.20.2",
     "mysql": "^2.18.1"
   }
 }

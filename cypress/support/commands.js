@@ -1,5 +1,6 @@
 import "cypress-iframe";
 import "cypress-file-upload";
+const { MailSlurp } = require("mailslurp-client");
 
 Cypress.Commands.add("sendDeleteRequestDB", () => {
 	cy.task("queryDb", `DELETE FROM Persons;`);
@@ -36,4 +37,17 @@ Cypress.Commands.add("checkWebsiteAvailability", (url) => {
 
 Cypress.Commands.add("pageVisit", (url) => {
 	cy.visit(url);
+});
+
+// Mail Slurp
+const apiKey = Cypress.env("API_KEY");
+const mailslurp = new MailSlurp({ apiKey });
+
+Cypress.Commands.add("createInbox", () => {
+	return mailslurp.createInbox();
+});
+
+Cypress.Commands.add("waitForLatestEmail", (inboxId) => {
+	const timeoutMillis = 30_000;
+	return mailslurp.waitForLatestEmail(inboxId, timeoutMillis);
 });
