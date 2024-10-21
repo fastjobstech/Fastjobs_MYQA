@@ -8,6 +8,7 @@ module.exports = defineConfig({
 	pageLoadTimeout: 60000,
 	defaultCommandTimeout: 10000,
 	chromeWebSecurity: false,
+	numTestsKeptInMemory: 0,
 	reporter: "cypress-mochawesome-reporter",
 	reporterOptions: {
 		reportDir: "cypress/reports",
@@ -52,6 +53,6 @@ module.exports = defineConfig({
 		// SG_DE_Password: "Password123",
 		manageApplicantUsername: "repear.leaf@gmail.com",
 		manageApplicantPassword: "Password1234",
-		API_KEY: "b0f595d5e170f4e4bcaf2eee55cbb4e4aad34a473ed1e5d2c9170b64d048c2d8",
+		// API_KEY: "b0f595d5e170f4e4bcaf2eee55cbb4e4aad34a473ed1e5d2c9170b64d048c2d8",
 	},
 });
