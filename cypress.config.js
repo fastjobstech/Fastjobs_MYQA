@@ -25,16 +25,16 @@ module.exports = defineConfig({
 				},
 			});
 		},
-		baseUrl: "https://employer-qa.fastjobs.my/site/login",
+		baseUrl: "https://employer-test.fastjobs.my/site/login",
 		viewportWidth: 1920,
 		viewportHeight: 1080,
 	},
 
 	env: {
-		employerSG: "https://employer-qa.fastjobs.sg/site/login",
-		employerMainSG: "https://employer-qa.fastjobs.sg/",
-		adminMY: "https://admin-qa.fastjobs.my/",
-		adminSG: "https://admin-qa.fastjobs.sg/",
+		employerSG: "https://employer-test.fastjobs.sg/site/login",
+		employerMainSG: "https://employer-test.fastjobs.sg/",
+		adminMY: "https://admin-test.fastjobs.my/",
+		adminSG: "https://admin-test.fastjobs.sg/",
 		adminUsernameMY: "admin@fastjobs.sg",
 		adminPassMY: "123qwerty88",
 		adminUserSG: "kimjayluta0721@gmail.com",
