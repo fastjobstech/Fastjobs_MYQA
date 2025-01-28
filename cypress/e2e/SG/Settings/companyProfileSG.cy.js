@@ -1,4 +1,3 @@
-import LoginPage from "../../../pages/SG/User/LoginPage";
 import SGJobPostPage from "../../../pages/SG/ManageJobsPage/SGJobPostPage";
 import companyProfilePage from "../../../pages/SG/Settings/companyProfilePageSG";
 
@@ -14,9 +13,11 @@ describe("SG Job Posting", () => {
 		cy.viewport("macbook-15");
 		const employerSGUrl = Cypress.env("employerMainSG");
 		cy.checkWebsiteAvailability(employerSGUrl);
-		cy.pageVisit(employerSGUrl);
 
-		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
+		cy.pageVisit(employerSGUrl);
+		cy.areYouLookingForJobPopUp();
+
+		cy.employerLogin(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"))
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 	});
 

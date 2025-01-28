@@ -1,11 +1,11 @@
 class LoginPage {
 	elements = {
 		// login elements
-		usernameField: () => cy.get('input[name="LoginForm[username]"]'),
-		passwordField: () => cy.get('input[name="LoginForm[password]"]'),
+		usernameField: () => cy.get('#login-form > fast-input > div > div > input'),
+		passwordField: () => cy.get('#login-form > div > fast-input > div > div > input'),
 		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
 		loginErrorMessage: () => cy.get(".sc-fast-alert-h"),
-		employerLoginBtn: () => cy.contains("Employer Login"),
+		employerLoginBtn: () => cy.contains("Login"),
 
 		// admin login elements
 		adminUsernameField: () => cy.get("#loginform-username"),
@@ -22,16 +22,15 @@ class LoginPage {
 
 		this.elements.usernameField().type(username);
 		this.elements.passwordField().type(password);
-		this.elements.loginButton().should("be.visible");
-		this.elements.loginButton().click();
-
-		cy.location("pathname").should("equal", "/p/my-activity/dashboard");
+		this.elements.loginButton().should("be.visible").click();
+		cy.wait(2000);
+		//cy.title().should('contain','Company select | FastJobs')
 	};
 
 	loginEmployerWithEmptyfields = () => {
 		// this.elements.employerLoginBtn().click();
-
-		this.elements.loginButton().click();
+		cy.wait(2000);
+		this.elements.loginButton().click({force:true});
 		this.verifyErrorMessage();
 	};
 

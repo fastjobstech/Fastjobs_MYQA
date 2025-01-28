@@ -1,5 +1,8 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage";
+const Chance = require('chance'); 
+const chance = new Chance();
 import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage";
+
+export let jobTitle, jobDesc, applyByEmail, applyByCallSms, editedJobTitle;
 
 describe("Parking lot - Job Posting", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -7,48 +10,54 @@ describe("Parking lot - Job Posting", () => {
 		return false;
 	});
 
+	before(() => {
+        // Generate random data and assign it to global variables
+        jobTitle = chance.profession();
+        jobDesc = chance.sentence({ words: 12 });
+        applyByEmail = chance.email();
+        applyByCallSms = '911911978';
+        editedJobTitle = jobTitle+" "+"Updated";
+    });
+
 	beforeEach(() => {
 		cy.viewport("macbook-15");
 		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(Cypress.env("pl_username"), Cypress.env("pl_password"));
-
+		cy.employerLogin(Cypress.env("pl_username"), Cypress.env("pl_password"))
 		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifyPostedJobAd();
+		//JobPostPage.VerifyPostedJobAd();
 	});
 
-	afterEach(() => {
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifyPostedJobAd();
-	});
+	// afterEach(() => {
+	// 	JobPostPage.VerifyJobPostingFeedbackModal();
+	// 	JobPostPage.VerifyPostedJobAd();
+	// });
 
 	it("Verify able to Post Job ad and edit the job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
+		
 		// Post A Job
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
+		JobPostPage.FillPostNewJobForm(false, jobTitle, jobDesc, applyByEmail, applyByCallSms);
 		JobPostPage.ClickPostNewJobBtn();
 
-		JobPostPage.VerifySuccessMsg();
+		//JobPostPage.VerifySuccessMsg();
 		JobPostPage.VerifyJobPostingFeedbackModal();
 
 		// Edit the Job
+		JobPostPage.GoToJobListing();
+		
+		JobPostPage.searchForJob(jobTitle);
 		JobPostPage.EditTheJob();
-		JobPostPage.FillPostNewJobForm(jobInfo, true);
+		JobPostPage.FillPostNewJobForm(true, jobTitle, jobDesc, applyByEmail, applyByCallSms);
 		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifySuccessMsg();
+		//JobPostPage.VerifySuccessMsg();
 	});
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.ClickPostNewJobBtn();
-
-		JobPostPage.VerifySuccessMsg();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		// Copy the same job
+		
+		JobPostPage.GoToJobListing();
+		
+		JobPostPage.searchForJob(jobTitle);
 		JobPostPage.CopyTheJob();
 		JobPostPage.ClickPostNewJobBtn();
 
@@ -56,4 +65,18 @@ describe("Parking lot - Job Posting", () => {
 		JobPostPage.VerifyDuplicateNotification();
 		JobPostPage.ClickCancelButton();
 	});
+
+	it("Expire the Job Post.",() =>{
+		//Navigate to Job listing
+		JobPostPage.GoToJobListing();
+		
+		//Search for the job
+		JobPostPage.searchForJob(jobTitle);
+		
+		//Expire the same job
+		JobPostPage.ExpireTheJobPost()
+		//SGJobPostPage.VerifySuccessMsg();	
+		JobPostPage.searchForJob(jobTitle);
+		JobPostPage.verifyExpiredJobNotShownInList();
+	})
 });

@@ -1,6 +1,8 @@
-/// <reference types = "Cypress" />
-import LoginPage from "../../../../pages/SG/User/LoginPage";
+const Chance = require('chance'); 
+const chance = new Chance();
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
+
+let jobData;
 
 describe("SG Job Posting DE", () => {
 	const AccountType = "recruitmentAgency";
@@ -10,28 +12,35 @@ describe("SG Job Posting DE", () => {
 		return false;
 	});
 
+	before(() => {
+        // Generate random data and assign it to jobData
+        jobData = {
+            jobTitle: chance.profession(),
+            jobDesc: chance.sentence({ words: 12 }) + " " + 'Updated',
+            applyByEmail: chance.email(),
+            applyByCallSms: '85556278',
+            editedJobTitle: chance.profession() + " " + 'Updated',
+        };
+    });
+
 	beforeEach(() => {
 		const employerUrlSG = Cypress.env("employerSG");
 		cy.checkWebsiteAvailability(employerUrlSG);
 		cy.pageVisit(employerUrlSG);
-		LoginPage.loginEmployer(Cypress.env("ra_username"), Cypress.env("ra_password"));
+		cy.employerLogin(Cypress.env("ra_username"), Cypress.env("ra_password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
-		SGJobPostPage.VerifyPostedJobAd();
 	});
 
-	afterEach(() => {
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
-		SGJobPostPage.VerifyPostedJobAd();
-	});
+	// afterEach(() => {
+	// 	SGJobPostPage.VerifyJobPostingFeedbackModal();
+	// 	SGJobPostPage.VerifyPostedJobAd();
+	// });
 
 	it("Post new job ad and Edit with Agency information included", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
 
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
+		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false);
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();
@@ -40,8 +49,10 @@ describe("SG Job Posting DE", () => {
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
 
 		//Edit the Job
+		SGJobPostPage.searchForJob(jobData);
+		
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobInfo, AccountType, true);
+		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true);
 
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
@@ -50,14 +61,10 @@ describe("SG Job Posting DE", () => {
 
 	// Issue reported - FJEMP-3904 NOT FIXED
 	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
-		SGJobPostPage.GotoPostNewJobForm();
-
-		SGJobPostPage.FillPostNewJobForm("", AccountType, false);
-		SGJobPostPage.ClickPostNewJobBtn();
-
-		SGJobPostPage.RAClickProceedButton();
-		SGJobPostPage.ConfirmSubmit();
-		SGJobPostPage.VerifyJobPostingFeedbackModal();
+		SGJobPostPage.GoToJobListing();
+		
+		//search for the job
+		SGJobPostPage.searchForJob(jobData);
 
 		//Copy the same job
 		SGJobPostPage.CopyTheJob();
@@ -70,4 +77,20 @@ describe("SG Job Posting DE", () => {
 		SGJobPostPage.ClickCancelButton();
 		SGJobPostPage.VerifyJobListingPage();
 	});
+
+	it("Expire the Job Post.",() =>{
+			//Navigate to Job listing
+			SGJobPostPage.GoToJobListing();
+	
+			//Search for the job
+			SGJobPostPage.searchForJob(jobData);
+	
+			//Expire the same job
+			SGJobPostPage.expireJobPost()
+			//SGJobPostPage.VerifySuccessMsg();	
+			SGJobPostPage.searchForJob(jobData);
+			SGJobPostPage.verifyExpiredJobNotShownInList();
+	})
 });
+
+

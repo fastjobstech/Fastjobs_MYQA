@@ -1,4 +1,3 @@
-import LoginPage from "../../../pages/MY/UserPages/LoginPage";
 import UpgradePlan from "../../../pages/MY/UpgradePlanPage/CheckoutPage";
 
 describe("Upgrade Plan", () => {
@@ -10,7 +9,7 @@ describe("Upgrade Plan", () => {
 	beforeEach(() => {
 		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
+		cy.employerLogin(Cypress.env("de_username"), Cypress.env("de_password"))
 	});
 
 	it("Verify checkout required fields", () => {
@@ -28,14 +27,14 @@ describe("Upgrade Plan", () => {
 	it("2C2P Checkout | Verify unable to Upgrage plan when there are invalid card details", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
-		UpgradePlan.ClickCheckoutButton();
+		UpgradePlan.ClickConfirmAndPayButton();
 		UpgradePlan.CheckoutWithInvalidDetails();
 	});
 
 	it("2C2P Checkout | Verify able to Upgrage plan with valid Card details", () => {
 		UpgradePlan.ClickUpgradePlanLink();
 		UpgradePlan.SelectPackage();
-		UpgradePlan.ClickCheckoutButton();
+		UpgradePlan.ClickConfirmAndPayButton();
 		UpgradePlan.CheckoutWithValidDetails();
 	});
 });

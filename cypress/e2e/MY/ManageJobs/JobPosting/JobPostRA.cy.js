@@ -1,56 +1,94 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage";
-import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage";
+const Chance = require('chance'); 
+const chance = new Chance();
+import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
-describe("Recruitment Agency - Job Posting", () => {
+let jobData;
+
+describe("SG Job Posting DE", () => {
+	const AccountType = "recruitmentAgency";
+
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
 	});
 
+	before(() => {
+        // Generate random data and assign it to jobData
+        jobData = {
+            jobTitle: chance.profession(),
+            jobDesc: chance.sentence({ words: 12 }) + " " + 'Updated',
+            applyByEmail: chance.email(),
+            applyByCallSms: '85556278',
+            editedJobTitle: chance.profession() + " " + 'Updated',
+        };
+    });
+
 	beforeEach(() => {
-		cy.checkWebsiteAvailability("/");
-		cy.pageVisit("/");
-		LoginPage.loginEmployer(Cypress.env("ra_username"), Cypress.env("ra_password"));
-
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifyPostedJobAd();
+		const employerUrlSG = Cypress.env("employerSG");
+		cy.checkWebsiteAvailability(employerUrlSG);
+		cy.pageVisit(employerUrlSG);
+		cy.employerLogin(Cypress.env("ra_username"), Cypress.env("ra_password"));
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
 	});
 
-	it("Verify able to Post Job ad and edit the job", () => {
-		const jobInfo = {
-			jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		};
-		// Post A Job
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(2);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifySuccessMsg();
-		JobPostPage.VerifyJobPostingFeedbackModal();
+	// afterEach(() => {
+	// 	SGJobPostPage.VerifyJobPostingFeedbackModal();
+	// 	SGJobPostPage.VerifyPostedJobAd();
+	// });
 
-		// Edit the Job
-		JobPostPage.EditTheJob();
-		JobPostPage.FillPostNewJobForm(jobInfo, true);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.VerifySuccessMsg();
+	it("Post new job ad and Edit with Agency information included", () => {
+
+		SGJobPostPage.GotoPostNewJobForm();
+
+		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false);
+		SGJobPostPage.ClickPostNewJobBtn();
+
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.ConfirmSubmit();
+		SGJobPostPage.VerifyJobListingPage();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+
+		//Edit the Job
+		SGJobPostPage.searchForJob(jobData);
+		
+		SGJobPostPage.EditTheJob();
+		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true);
+
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.VerifyJobListingPage();
 	});
 
-	it("Verify error notification appears when submitted a job that was already posted.", () => {
-		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillPostNewJobForm("", false);
-		JobPostPage.SelectPackage(2);
-		JobPostPage.ClickPostNewJobBtn();
-		JobPostPage.ConfirmSubmit();
-		JobPostPage.VerifyJobPostingFeedbackModal();
-		JobPostPage.VerifySuccessMsg();
+	// Issue reported - FJEMP-3904 NOT FIXED
+	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
+		SGJobPostPage.GoToJobListing();
+		
+		//search for the job
+		SGJobPostPage.searchForJob(jobData);
 
-		// Copy the same job
-		JobPostPage.CopyTheJob();
-		JobPostPage.ClickPostNewJobBtn();
+		//Copy the same job
+		SGJobPostPage.CopyTheJob();
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.ConfirmSubmit();
 
-		//Verify the notification
-		JobPostPage.VerifyDuplicateNotification();
-		JobPostPage.ClickCancelButton();
+		//Duplicate Job Error
+		SGJobPostPage.VerifyDuplicateNotification();
+		SGJobPostPage.ClickCancelButton();
+		SGJobPostPage.VerifyJobListingPage();
 	});
+
+	it("Expire the Job Post.",() =>{
+			//Navigate to Job listing
+			SGJobPostPage.GoToJobListing();
+	
+			//Search for the job
+			SGJobPostPage.searchForJob(jobData);
+	
+			//Expire the same job
+			SGJobPostPage.expireJobPost()
+			//SGJobPostPage.VerifySuccessMsg();	
+			SGJobPostPage.searchForJob(jobData);
+			SGJobPostPage.verifyExpiredJobNotShownInList();
+	})
 });

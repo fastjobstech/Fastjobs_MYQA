@@ -1,22 +1,23 @@
+import Chance from 'chance';
+const chance = new Chance();
+
 class JobPostPage {
 	elements = {
 		// Elements not related inside of Posting job form
 		ManageJobsNavlink: () =>
-			cy.get(".container > .row > .col-sm-12 > .nav > :nth-child(2) > a"),
-		ManageJobsPostNewJobBtn: () => cy.get(".pull-right > .btn"),
+			cy.contains("Manage Jobs"),
+		postNewJobBtn: () => cy.get("[data-event='job_posting_initiated']"),
 
 		// EDIT JOB
-		EditJobBtn: () => cy.get(".btn-edit"),
+		EditJobBtn: () => cy.get('[data-cy="Edit job"]'),
 
 		// Copy elements
-		CopyJobBtn: () => cy.get(".btn-copy"),
+		CopyJobBtn: () => cy.get('a[data-cy="Copy job post"]'),
 
 		//Expire elements
-		ExpireJobBtn: () => cy.get(".btn-expire"),
-		ConfirmExpireJob: () =>
-			cy.get(
-				"#modal-confirm-expire > .modal-dialog > .modal-content > form > .modal-active-buttons > .modal-active-submit"
-			),
+		ExpireJobBtn: () => cy.get('a[data-cy="Expire job post"]').first(),
+		ConfirmExpireJob: () => cy.get('[data-event="expire_job_confirmed"]'),
+			
 
 		//Job form elements
 		JobTitle: () => cy.get("#jobTitleInput"),
@@ -82,8 +83,8 @@ class JobPostPage {
 			),
 
 		//Success message
-		SuccessMsg: () => cy.get(".iziToast-body"),
-
+		SuccessMsg: () => cy.get("div.iziToast-message",{timeout: 30000}),
+		
 		//Rating modal
 		RatingModal: () => cy.get("#ratingModal"),
 
@@ -104,15 +105,20 @@ class JobPostPage {
 			),
 		OutletConfirmButton: () => cy.get("#btnSelectOutlet"),
 		OutletCloseIcon: () => cy.get('[aria-hidden="true"] > .fa'),
+
+		//Jobs listing Page elements
+		searchBoxForJobName: () => cy.get('#keyword',{timeout: 40000}),
+		moreActionsButton: () => cy.get('[data-cy="More actions"]').first(),
 	};
 
 	GoToJobListing = () => {
-		this.elements.ManageJobsNavlink().click();
+		this.elements.ManageJobsNavlink().click({force:true});
+		cy.wait(2000);
 	};
 
 	GoToPostNewJobForm = () => {
 		// this.elements.ManageJobsNavlink().click()
-		this.elements.ManageJobsPostNewJobBtn().click();
+		this.elements.postNewJobBtn().click();
 	};
 
 	ClickCancelButton = () => {
@@ -122,6 +128,7 @@ class JobPostPage {
 
 	ClickPostNewJobBtn = () => {
 		this.elements.PostNewJobBtn().click();
+		cy.wait(2000)
 	};
 
 	ConfirmSubmit = () => {
@@ -129,12 +136,15 @@ class JobPostPage {
 	};
 
 	VerifySuccessMsg = () => {
+		
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
-	ExpireTheJob = () => {
-		this.elements.ExpireJobBtn().should("be.visible");
-		this.elements.ExpireJobBtn().click();
+	ExpireTheJobPost = () => {
+		this.elements.moreActionsButton().first().should('be.visible').click({force:true});
+		cy.wait(2000)
+		this.elements.ExpireJobBtn().invoke('show').click({force:true});
+		cy.wait(100);
 		this.elements.ConfirmExpireJob().click();
 	};
 
@@ -142,12 +152,22 @@ class JobPostPage {
 		this.elements.PackageType(packageType).click();
 	};
 
+	searchForJob = (jobTitle) => {
+		this.elements.searchBoxForJobName().should('exist')
+		.and('be.visible')
+		.clear()
+		.type(jobTitle+ '{enter}');
+		cy.wait(3000)
+	}
+
 	EditTheJob = () => {
-		this.elements.EditJobBtn().click();
+		this.elements.EditJobBtn().first().click();
 	};
 
 	CopyTheJob = () => {
-		this.elements.CopyJobBtn().should("be.visible").click();
+		this.elements.moreActionsButton().click({force:true});
+		cy.wait(1000);
+		this.elements.CopyJobBtn().first().invoke('show').click({force:true});
 	};
 
 	VerifyDuplicateNotification = () => {
@@ -181,53 +201,71 @@ class JobPostPage {
 			this.elements.NewJobFormRequiredErrMsg().contains(errText);
 		});
 	};
+	
+	FillPostNewJobForm = (isEdit, 
+		jobTitle,
+		jobDesc,
+		applyByEmail,
+		applyByCallSms) => {
 
-	FillPostNewJobForm = (newJobInfo, isEdit) => {
-		const JobInfo = {
-			jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-			jobDesc: "This is a automated testing, DO NOT APPLY!",
-			applyByEmail: "kimjay.luta@fastco.asia",
-			applyByCallSms: "911911978",
-		};
-
-		this.elements.JobTitle().clear().type(JobInfo.jobTitle);
-		this.elements
-			.JobDescription()
-			.find('.rtf-content[contenteditable="true"]')
-			.type(JobInfo.jobDesc, { force: true });
-
+		if (isEdit == false) {
+			this.elements.JobTitle().clear().type(jobTitle);
+			this.elements
+				.JobDescription()
+				.find('.rtf-content[contenteditable="true"]')
+				.type(jobDesc, { force: true });
+		} else {
+			var editedJobTitle = jobTitle+""+"Updated";
+			this.elements.JobTitle().clear({ force: true }).type(editedJobTitle,{ force: true });
+			this.elements
+				.JobDescription()
+				.find('.rtf-content[contenteditable="true"]')
+				.type('Updated'+" ", { force: true });
+		}
+		
 		// this.elements.Location().select(8);
 		// this.elements.SubLocation().select(10);
-
+	
 		if (isEdit == false) {
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
 			this.elements.SearchLocation().type("Citta");
-			this.elements.LocationItem().eq(0).click();
-			this.elements.AddWorkAddressBtn().click();
+			cy.wait(500);
+			this.elements.LocationItem().eq(0).click({force:true});
+			cy.wait(500);
+			this.elements.AddWorkAddressBtn().should('be.visible').should('not.be.disabled').click({force:true});
 		}
-
+	
 		this.elements.JobCategory().select(5);
 		this.elements.JobCategoryTwo().select(10);
 		this.elements.JobTypePartTime().click();
 		this.elements.JobTypeFullTime().click();
-
-		this.elements.ApplyByEmail().clear().type(JobInfo.applyByEmail);
-		this.elements.ApplyByCallSms().clear().type(JobInfo.applyByCallSms);
+	
+		this.elements.ApplyByEmail().clear().type(applyByEmail);
+		this.elements.ApplyByCallSms().clear().type(applyByCallSms);
 	};
+	
 
-	FillOutletPostjobForm = (newJobInfo, isEdit) => {
-		const JobInfo = {
-			jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-			jobDesc: "This is a automated testing, DO NOT APPLY!",
-			applyByEmail: "kimjay.luta@fastco.asia",
-			applyByCallSms: "911911978",
-		};
-		this.elements.JobTitle().clear().type(JobInfo.jobTitle);
-		this.elements
-			.JobDescription()
-			.find('.rtf-content[contenteditable="true"]')
-			.type(JobInfo.jobDesc, { force: true });
+	FillOutletPostjobForm = (isEdit, 
+		jobTitle,
+		jobDesc,
+		applyByEmail,
+		applyByCallSms) => {
+		
+			if (isEdit == false) {
+				this.elements.JobTitle().clear().type(jobTitle);
+				this.elements
+					.JobDescription()
+					.find('.rtf-content[contenteditable="true"]')
+					.type(jobDesc, { force: true });
+			} else {
+				var editedJobTitle = 'Updated ' + jobTitle;
+				this.elements.JobTitle().clear().type(editedJobTitle);
+				this.elements
+					.JobDescription()
+					.find('.rtf-content[contenteditable="true"]')
+					.type('Updated' +" ", { force: true });
+			}
 
 		//Outlet selection
 		// this.elements.OutletField().click();
@@ -246,8 +284,8 @@ class JobPostPage {
 		this.elements.JobCategoryTwo().select(10);
 		this.elements.JobTypePartTime().click();
 		this.elements.JobTypeFullTime().click();
-		this.elements.ApplyByEmail().clear().type(JobInfo.applyByEmail);
-		this.elements.ApplyByCallSms().clear().type(JobInfo.applyByCallSms);
+		this.elements.ApplyByEmail().clear().type(applyByEmail);
+		this.elements.ApplyByCallSms().clear().type(applyByCallSms);
 	};
 
 	EditletPostjobForm = (newJobInfo) => {
@@ -271,10 +309,23 @@ class JobPostPage {
 		this.elements.ApplyByCallSms().clear().type(JobInfo.applyByCallSms);
 	};
 
+	verifyWelcomePromptDisplayed = () => { 
+		cy.wait(1000)
+		cy.get('body').then(($el) =>{
+			const welcomePrompt = $el.find('div.prompt-icon');
+			if(welcomePrompt.length > 0 && welcomePrompt.is(':visible')){
+				cy.log('Welcome prompt is displayed');
+				cy.get('div [data-action="explore"]').click();
+			}else{
+				cy.log('Welcome prompt is not displayed');
+			}
+		})
+	};
+
 	// Verify if Feedback modal is displayed
 	VerifyJobPostingFeedbackModal = () => {
 		cy.get("body").then(($el) => {
-			cy.wait(200);
+			cy.wait(3000);
 			const feedbackModalElement = $el.find("#ratingModal");
 
 			if (feedbackModalElement.length > 0 && feedbackModalElement.is(":visible")) {
@@ -296,25 +347,28 @@ class JobPostPage {
 		});
 	};
 
+	verifyExpiredJobNotShownInList = () =>{
+		cy.get('#jobsList').should('exist').and('contain.text','No jobs found.')
+	}
 	// Verify if there's a posted job and expire it
-	VerifyPostedJobAd = () => {
-		this.GoToJobListing();
-		cy.wait(200);
+	// VerifyPostedJobAd = () => {
+	// 	this.GoToJobListing();
+	// 	cy.wait(200);
 
-		cy.get("#jobsList").then(($jobAdElement) => {
-			const findJobCardElement = $jobAdElement.find(".panel-body");
+	// 	cy.get("#jobsList").then(($jobAdElement) => {
+	// 		const findJobCardElement = $jobAdElement.find(".panel-body");
 
-			if (findJobCardElement.length > 0) {
-				cy.log("Have a posted job!");
-				findJobCardElement.each(($el) => {
-					this.elements.ExpireJobBtn().eq($el).click();
-					this.elements.ConfirmExpireJob().click();
-				});
-			} else {
-				cy.log("No Posted job!");
-			}
-		});
-	};
+	// 		if (findJobCardElement.length > 0) {
+	// 			cy.log("Have a posted job!");
+	// 			findJobCardElement.each(() => {
+	// 				this.elements.ExpireJobBtn().first().click({force:true});
+	// 				this.elements.ConfirmExpireJob().click();
+	// 			});
+	// 		} else {
+	// 			cy.log("No Posted job!");
+	// 		}
+	// 	});
+	//};
 }
 
 module.exports = new JobPostPage();
