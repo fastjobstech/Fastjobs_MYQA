@@ -78,11 +78,11 @@ class SGJobPostPage {
 		DuplicateMsg: () => cy.get(".panel-body > :nth-child(1) > .col-xs-12"),
 
 		//More actions
-		MoreActionsBtn: () => cy.get('[data-cy="More actions"]').first(),
+		MoreActionsBtn: () => cy.get('[data-cy="More actions"]'),
 
 
 		//Expire job elements
-		ExpireJobBtn: () => cy.get('[data-cy="Expire job post"]').first(),
+		ExpireJobBtn: () => cy.get('[data-cy="Expire job post"]'),
 		ConfirmExpireJob: () =>
 			cy.get(
 				"[data-event='expire_job_confirmed']"
@@ -119,6 +119,15 @@ class SGJobPostPage {
 
 		//Success message
 		SuccessMsg: () => cy.get("div.iziToast-message",{timeout: 30000}),
+
+		//Schedule Job
+		ScheduleJobTxtBx: () => cy.get("div#c9jobs-scheduledttme-datetime"),
+		PostNowBtn: () => cy.get('[data-cy="Post now"]',{timeout:20000}),
+		ConfirmPostNow: () => cy.get('form div button.modal-active-submit').first(),
+		
+		//Navigate Throgh Tabs
+		NavigateToOtherTab: (dynamicValue) => cy.get(`[data-value="${dynamicValue}"]`)
+
 	};
 
 	GoToJobListing = () => {
@@ -201,11 +210,11 @@ class SGJobPostPage {
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
-	FillPostNewJobForm = (jobData, AccountType, isUpdated) => {
+	FillPostNewJobForm = (jobData, AccountType, isUpdated, jobType) => {
 
-		if (isUpdated == true) {
+		if (isUpdated) {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle+" "+"Updated",{force:true});	
-			this.elements.JobDescription().find('.rtf-content[contenteditable="true"]').clear().type('Updated'+" "+jobData.jobDesc, { force: true });
+			//this.elements.JobDescription().find('.rtf-content[contenteditable="true"]').clear().type('Updated'+" "+jobData.jobDesc, { force: true });
 		}
 		else {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle,{force:true});
@@ -224,9 +233,13 @@ class SGJobPostPage {
 			this.elements.ApplyByEmail().clear().type(jobData.applyByEmail);
 			this.elements.ApplyBySMS().clear().type(jobData.applyByCallSms);
 			cy.get('[name="Sms"]').shadow().find('input').click({force:true});
-			cy.wait(4000)
+			cy.wait(200)
 		}
 
+		if(jobType == 'Scheduled'&& isUpdated == false) {
+			const formattedDate = this.getFutureDateWithinDays(5, 1);
+  			this.elements.ScheduledJobPost().type(formattedDate, { force: true });
+		}
 		if (AccountType == "outlet" && isUpdated == false) {
 
 			// New Job posting - Location
@@ -238,7 +251,6 @@ class SGJobPostPage {
 		}
 
 		if (AccountType != "outlet" && isUpdated == false) {
-			// this.elements.NearestMRT().select(8);
 
 			// New Job posting - Location
 			this.elements.AddWorkLocation().click();
@@ -250,18 +262,35 @@ class SGJobPostPage {
 			this.elements.AddWorkAddressBtn().should('be.visible').should('not.be.disabled').click();
 		}
 		
-		// cy.log("Verify Posted job exists")
-		// if(isUpdated == false){
-		// 	this.elements.JoblistingEl().eq(0).should("be.visible").and('contain', jobData.jobTitle);
-		// 	}else{
-		// 		this.elements.JoblistingEl().eq(0).should("be.visible").and('contain', jobData.editedJobTitle);
-		// 	}
-		//This logic can be used when copying a job
-		// if (isUpdated == true) {
-		// 	this.elements.PartTimeJobType().click();
-		// 	this.elements.FullTimeJobType().click();
-		// }
 	};
+	
+	getFutureDateWithinDays(daysFromNow, hoursFromNow) {
+		const currentDate = new Date();
+		console.log('Current date:', currentDate.toString());
+	  
+		const totalMilliseconds =
+		  daysFromNow * 24 * 60 * 60 * 1000 + // Days to milliseconds
+		  hoursFromNow * 60 * 60 * 1000;      // Hours to milliseconds
+		console.log('Total milliseconds to add:', totalMilliseconds);
+	  
+		const futureDate = new Date(currentDate.getTime() + totalMilliseconds);
+		console.log('Future date:', futureDate.toString());
+	  
+		const year = futureDate.getFullYear();
+		const month = futureDate.toLocaleString('en-US', { month: 'short' });
+		const day = (`0${futureDate.getDate()}`).slice(-2);
+		const hours = (`0${futureDate.getHours()}`).slice(-2);
+		const minutes = (`0${futureDate.getMinutes()}`).slice(-2);
+	  
+		console.log('Formatted date components:', { day, month, year, hours, minutes });
+	  
+		return `${day}-${month}-${year} ${hours}:${minutes}`;
+	  }
+
+	NavigateToOtherTabsInManangeJobs = (tabNo) => {
+		this.elements.NavigateToOtherTab(tabNo).click();
+		cy.wait(2000);
+	}
 
 	ClickCancelButton = () => {
 		this.elements.CancelBtn().click();
@@ -273,6 +302,7 @@ class SGJobPostPage {
 
 	ConfirmSubmit = () => {
 		this.elements.ConfirmSubmitJob().click();
+		cy.wait(2000);
 	};
 
 	VerifyJobListingPage = () => {
@@ -387,48 +417,49 @@ class SGJobPostPage {
 		});
 	};
 
-	searchForJob = (jobData) => {
+	searchForJob = (jobData) => {	
 		this.elements.searchBoxForJobName().should('exist').and('be.visible')
 		.clear()
 		.type(jobData.jobTitle + '{enter}');
-		cy.wait(2000)
+		cy.wait(1000)
 	}
 
 	expireJobPost = () =>{
-		this.elements.MoreActionsBtn().should("be.visible").click({force:true});
+		this.elements.MoreActionsBtn().first().should("be.visible").click({force:true});
 		cy.wait(500)
-		this.elements.ExpireJobBtn().invoke('show').click({force:true});
+		this.elements.ExpireJobBtn().first().invoke('show').click({force:true});
 		cy.wait(100);
 		this.elements.ConfirmExpireJob().click();
+	}
+
+	RepostJob = () => {
+		this.elements.PostNowBtn().click();
+		this.elements.ConfirmPostNow().click();
 	}
 
 	verifyExpiredJobNotShownInList = () =>{
 		cy.get('div.job-list-empty').should('exist').and('be.visible')
 	}
-	// // Check if there's a posted job and expire it
-	// VerifyPostedJobAd = () => {
-	// 	this.GoToJobListing();
-	// 	cy.wait(1000);
 
-	// 	this.elements
-	// 		.JoblistingEl()
-	// 		.should("be.visible")
-	// 		.then(($jobAdElement) => {
-	// 			const findJobCardElement = $jobAdElement.find(".panel-body");
+	// Check if there's a posted job and expire it
+	VerifyPostedJobAd = (jobData) => {
+		//this.GoToJobListing();
+		cy.wait(1000);
 
-	// 			if (findJobCardElement.length > 0) {
-	// 				cy.log("Have a posted job!");
-	// 				findJobCardElement.each(($el) => {
-	// 					this.elements.MoreActionsBtn().eq($el).click({force:true});
-	// 					this.elements.ExpireJobBtn().eq($el).click({force:true});
-	// 					cy.wait(100);
-	// 					this.elements.ConfirmExpireJob().click();
-	// 				});
-	// 			} else {
-	// 				cy.log("No Posted job!");
-	// 			}
-	// 		});
-	// };
+		this.elements
+			.JoblistingEl()
+			.should("be.visible")
+			.then(($jobAdElement) => {
+				const findJobCardElement = $jobAdElement.find(".panel-body");
+
+				if (findJobCardElement.length > 0) {
+					this.searchForJob(jobData)
+					this.expireJobPost();
+				} else {
+					cy.log("No Posted job!");
+				}
+			});
+	};
 }
 
 module.exports = new SGJobPostPage();

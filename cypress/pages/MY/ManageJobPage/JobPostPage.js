@@ -5,7 +5,7 @@ class JobPostPage {
 	elements = {
 		// Elements not related inside of Posting job form
 		ManageJobsNavlink: () =>
-			cy.contains("Manage Jobs"),
+			cy.get(".col-sm-12 > .nav > :nth-child(2) > a").first(),
 		postNewJobBtn: () => cy.get("[data-event='job_posting_initiated']"),
 
 		// EDIT JOB
@@ -20,7 +20,7 @@ class JobPostPage {
 			
 
 		//Job form elements
-		JobTitle: () => cy.get("#jobTitleInput"),
+		JobTitle: () => cy.get("#jobTitleInput",{timeout:20000}),
 
 		SalaryFlag: () => cy.get("#salflag-dt > .btn"),
 		SalaryFlagDropdown: () => cy.get(":nth-child(2) > .dropdown-sal-flag"),
@@ -109,16 +109,25 @@ class JobPostPage {
 		//Jobs listing Page elements
 		searchBoxForJobName: () => cy.get('#keyword',{timeout: 40000}),
 		moreActionsButton: () => cy.get('[data-cy="More actions"]').first(),
+
+		//Schedule Job
+		ScheduleJobTxtBx: () => cy.get("div#c9jobs-scheduledttme-datetime input"),
+		PostNowBtn: () => cy.get('[data-cy="Post now"]',{timeout:20000}),
+		ConfirmPostNow: () => cy.get('form div button.modal-active-submit').last(),
+
+		//Extend Job
+		extendJobBtn: () => cy.get('[data-cy="Extend job post"]'),
+		noOfMonthsDropdown: () => cy.get('monthSelect'),
 	};
 
 	GoToJobListing = () => {
 		this.elements.ManageJobsNavlink().click({force:true});
-		cy.wait(2000);
+		//cy.wait(2000);
 	};
 
 	GoToPostNewJobForm = () => {
 		// this.elements.ManageJobsNavlink().click()
-		this.elements.postNewJobBtn().click();
+		this.elements.postNewJobBtn().first().click();
 	};
 
 	ClickCancelButton = () => {
@@ -141,9 +150,9 @@ class JobPostPage {
 	};
 
 	ExpireTheJobPost = () => {
-		this.elements.moreActionsButton().first().should('be.visible').click({force:true});
-		cy.wait(2000)
-		this.elements.ExpireJobBtn().invoke('show').click({force:true});
+		this.elements.moreActionsButton().should('be.visible').click({force:true});
+		cy.wait(500)
+		this.elements.ExpireJobBtn().first().invoke('show').click({force:true});
 		cy.wait(100);
 		this.elements.ConfirmExpireJob().click();
 	};
@@ -152,12 +161,12 @@ class JobPostPage {
 		this.elements.PackageType(packageType).click();
 	};
 
-	searchForJob = (jobTitle) => {
+	searchForJob = (jobData) => {
 		this.elements.searchBoxForJobName().should('exist')
 		.and('be.visible')
 		.clear()
-		.type(jobTitle+ '{enter}');
-		cy.wait(3000)
+		.type(jobData.jobTitle+ '{enter}');
+		cy.wait(1000)
 	}
 
 	EditTheJob = () => {
@@ -166,7 +175,7 @@ class JobPostPage {
 
 	CopyTheJob = () => {
 		this.elements.moreActionsButton().click({force:true});
-		cy.wait(1000);
+		cy.wait(500);
 		this.elements.CopyJobBtn().first().invoke('show').click({force:true});
 	};
 
@@ -202,31 +211,38 @@ class JobPostPage {
 		});
 	};
 	
-	FillPostNewJobForm = (isEdit, 
-		jobTitle,
-		jobDesc,
-		applyByEmail,
-		applyByCallSms) => {
-
+	FillPostNewJobForm = (isEdit, jobData , jobType, accountType) => {
 		if (isEdit == false) {
-			this.elements.JobTitle().clear().type(jobTitle);
+			this.elements.JobTitle().clear().type(jobData.jobTitle);
 			this.elements
 				.JobDescription()
 				.find('.rtf-content[contenteditable="true"]')
-				.type(jobDesc, { force: true });
+				.type(jobData.jobDesc, { force: true });
+				this.elements.JobCategory().select(5);
+				this.elements.JobCategoryTwo().select(10);
+				this.elements.JobTypePartTime().click();
+				this.elements.JobTypeFullTime().click();
+	
+				this.elements.ApplyByEmail().clear().type(jobData.applyByEmail);
+				this.elements.ApplyByCallSms().clear().type(jobData.applyByCallSms);
+				
 		} else {
-			var editedJobTitle = jobTitle+""+"Updated";
-			this.elements.JobTitle().clear({ force: true }).type(editedJobTitle,{ force: true });
+			this.elements.JobTitle().clear({ force: true }).type(jobData.jobTitle+" "+"Updated",{ force: true });
 			this.elements
 				.JobDescription()
 				.find('.rtf-content[contenteditable="true"]')
 				.type('Updated'+" ", { force: true });
 		}
-		
+		//Scedule a job
+		if (isEdit == false && jobType == 'Scheduled') {
+			const daysFromNow = Math.floor(Math.random() * 6) + 1; // Random number between 1 and 6
+			const formattedDate = this.getFutureDateWithinDays(daysFromNow, 1);
+			this.elements.ScheduleJobTxtBx().type(formattedDate, { force: true });
+		}
 		// this.elements.Location().select(8);
 		// this.elements.SubLocation().select(10);
 	
-		if (isEdit == false) {
+		if (isEdit == false && accountType != 'Outlet') {
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
 			this.elements.SearchLocation().type("Citta");
@@ -234,79 +250,12 @@ class JobPostPage {
 			this.elements.LocationItem().eq(0).click({force:true});
 			cy.wait(500);
 			this.elements.AddWorkAddressBtn().should('be.visible').should('not.be.disabled').click({force:true});
-		}
-	
-		this.elements.JobCategory().select(5);
-		this.elements.JobCategoryTwo().select(10);
-		this.elements.JobTypePartTime().click();
-		this.elements.JobTypeFullTime().click();
-	
-		this.elements.ApplyByEmail().clear().type(applyByEmail);
-		this.elements.ApplyByCallSms().clear().type(applyByCallSms);
-	};
-	
-
-	FillOutletPostjobForm = (isEdit, 
-		jobTitle,
-		jobDesc,
-		applyByEmail,
-		applyByCallSms) => {
-		
-			if (isEdit == false) {
-				this.elements.JobTitle().clear().type(jobTitle);
-				this.elements
-					.JobDescription()
-					.find('.rtf-content[contenteditable="true"]')
-					.type(jobDesc, { force: true });
-			} else {
-				var editedJobTitle = 'Updated ' + jobTitle;
-				this.elements.JobTitle().clear().type(editedJobTitle);
-				this.elements
-					.JobDescription()
-					.find('.rtf-content[contenteditable="true"]')
-					.type('Updated' +" ", { force: true });
-			}
-
-		//Outlet selection
-		// this.elements.OutletField().click();
-		// this.elements.OutletSelectionOne().click();
-		// this.elements.OutletSelectionTwo().click();
-		// this.elements.OutletConfirmButton().click();
-
-		if (isEdit == false) {
+		} else if(isEdit == false && accountType == 'Outlet') {
 			this.elements.AddWorkLocation().click();
 			cy.wait(500);
 			this.elements.LocationItem().eq(0).click();
 			cy.contains("Confirm selection").click();
 		}
-
-		this.elements.JobCategory().select(5);
-		this.elements.JobCategoryTwo().select(10);
-		this.elements.JobTypePartTime().click();
-		this.elements.JobTypeFullTime().click();
-		this.elements.ApplyByEmail().clear().type(applyByEmail);
-		this.elements.ApplyByCallSms().clear().type(applyByCallSms);
-	};
-
-	EditletPostjobForm = (newJobInfo) => {
-		const JobInfo = {
-			jobTitle: newJobInfo.jobTitle || "AUTOMATED JOB POST (DO NOT APPLY!!!)",
-			jobDesc: "This is a automated testing, DO NOT APPLY!",
-			applyByEmail: "kimjay.luta@fastco.asia",
-			applyByCallSms: "911911978",
-		};
-		this.elements.JobTitle().clear().type(JobInfo.jobTitle);
-		this.elements
-			.JobDescription()
-			.find('.rtf-content[contenteditable="true"]')
-			.type(JobInfo.jobDesc, { force: true });
-
-		this.elements.JobCategory().select(5);
-		this.elements.JobCategoryTwo().select(10);
-		this.elements.JobTypePartTime().click();
-		this.elements.JobTypeFullTime().click();
-		this.elements.ApplyByEmail().clear().type(JobInfo.applyByEmail);
-		this.elements.ApplyByCallSms().clear().type(JobInfo.applyByCallSms);
 	};
 
 	verifyWelcomePromptDisplayed = () => { 
@@ -350,25 +299,53 @@ class JobPostPage {
 	verifyExpiredJobNotShownInList = () =>{
 		cy.get('#jobsList').should('exist').and('contain.text','No jobs found.')
 	}
-	// Verify if there's a posted job and expire it
-	// VerifyPostedJobAd = () => {
-	// 	this.GoToJobListing();
-	// 	cy.wait(200);
 
-	// 	cy.get("#jobsList").then(($jobAdElement) => {
-	// 		const findJobCardElement = $jobAdElement.find(".panel-body");
+	RepostJob = () => {
+		this.elements.PostNowBtn().click();
+		this.elements.ConfirmPostNow().click();
+	}
 
-	// 		if (findJobCardElement.length > 0) {
-	// 			cy.log("Have a posted job!");
-	// 			findJobCardElement.each(() => {
-	// 				this.elements.ExpireJobBtn().first().click({force:true});
-	// 				this.elements.ConfirmExpireJob().click();
-	// 			});
-	// 		} else {
-	// 			cy.log("No Posted job!");
-	// 		}
-	// 	});
-	//};
+	getFutureDateWithinDays(daysFromNow, hoursFromNow) {
+		const currentDate = new Date();
+		console.log('Current date:', currentDate.toString());
+	  
+		const totalMilliseconds =
+			daysFromNow * 24 * 60 * 60 * 1000 + // Days to milliseconds
+			hoursFromNow * 60 * 60 * 1000;      // Hours to milliseconds
+		console.log('Total milliseconds to add:', totalMilliseconds);
+	  
+		const futureDate = new Date(currentDate.getTime() + totalMilliseconds);
+		console.log('Future date:', futureDate.toString());
+	  
+		const year = futureDate.getFullYear();
+		const month = (`0${futureDate.getMonth() + 1}`).slice(-2); // Months are 0-based, so add 1
+		const day = (`0${futureDate.getDate()}`).slice(-2);
+		const hours = (`0${futureDate.getHours()}`).slice(-2);
+		const minutes = (`0${futureDate.getMinutes()}`).slice(-2);
+	  
+		console.log('Formatted date components:', { day, month, year, hours, minutes });
+	  
+		return `${year}-${month}-${day} ${hours}:${minutes}`;
+	}
+	  
+	//Verify if there's a posted job and expire it
+	VerifyPostedJobAd = (jobData) => {
+		this.GoToJobListing();
+		cy.wait(200);
+
+		cy.get("#jobsList").then(($jobAdElement) => {
+			const findJobCardElement = $jobAdElement.find(".panel-body");
+
+			if (findJobCardElement.length > 0) {
+				cy.log("Have a posted job!");
+				this.searchForJob(jobData);
+				this.ExpireTheJobPost();
+				
+			} else {
+				cy.log("No Posted job!");
+			}
+		});
+	};
 }
 
 module.exports = new JobPostPage();

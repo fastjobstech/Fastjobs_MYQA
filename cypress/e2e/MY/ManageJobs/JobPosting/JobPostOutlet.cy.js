@@ -1,40 +1,44 @@
 const Chance = require('chance'); 
 const chance = new Chance();
 import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage";
-let jobTitle, jobDesc, applyByEmail, applyByCallSms, editedJobTitle;
+export let jobData;
+
 
 describe("Outlet - Job Posting", () => {
+	const accountType = "Outlet";
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
 	});
 
-	before(() => {
-        // Generate random data and assign it to global variables
-        jobTitle = chance.profession();
-        jobDesc = chance.sentence({ words: 12 });
-        applyByEmail = chance.email();
-        applyByCallSms = '911911978';
-        editedJobTitle = jobTitle+" "+' Updated';
-    });
-
 	beforeEach(() => {
+		jobData = {
+            jobTitle: chance.profession(),
+            jobDesc: chance.sentence({ words: 12 }),
+            applyByEmail: chance.email(),
+            applyByCallSms: '85556278',
+            editedJobTitle: chance.profession() + " " + 'Updated',
+        };
 		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
 		cy.employerLogin(Cypress.env("outlet_username"), Cypress.env("outlet_password"))
 		JobPostPage.VerifyJobPostingFeedbackModal();
+		JobPostPage.GoToJobListing();
+		
 		//JobPostPage.VerifyPostedJobAd();
 	});
 
-	// afterEach(() => {
-	// 	JobPostPage.VerifyJobPostingFeedbackModal();
-	// 	JobPostPage.VerifyPostedJobAd();
-	// });
+	afterEach(() => {
+         //JobPostPage.VerifyJobPostingFeedbackModal();
+         JobPostPage.VerifyPostedJobAd(jobData);
+     });
 
 	it("Verify able to Post Job ad and edit the job", () => {
 		// Post A Job
+		const jobType = 'Active'
+
 		JobPostPage.GoToPostNewJobForm();
-		JobPostPage.FillOutletPostjobForm(false, jobTitle, jobDesc, applyByEmail, applyByCallSms);
+		JobPostPage.FillPostNewJobForm(false, jobData, jobType, accountType);
 		JobPostPage.SelectPackage(2);
 		JobPostPage.ClickPostNewJobBtn();
 		JobPostPage.ConfirmSubmit();
@@ -42,19 +46,30 @@ describe("Outlet - Job Posting", () => {
 		//JobPostPage.VerifySuccessMsg();
 		JobPostPage.VerifyJobPostingFeedbackModal();
 		// Edit the Job
-		JobPostPage.searchForJob(jobTitle);
+		JobPostPage.searchForJob(jobData);
 		JobPostPage.EditTheJob();
 
 		// JobPostPage.EditletPostjobForm(jobInfo);
-		JobPostPage.FillOutletPostjobForm(true, jobTitle, jobDesc, applyByEmail, applyByCallSms);
+		JobPostPage.FillPostNewJobForm(true, jobData, jobType, accountType);
 		JobPostPage.ClickPostNewJobBtn();
 		//JobPostPage.VerifySuccessMsg();
 	});
 
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
+		// Post A Job
+		const jobType = 'Active'
+
+		JobPostPage.GoToPostNewJobForm();
+		JobPostPage.FillPostNewJobForm(false, jobData, jobType, accountType);
+		JobPostPage.SelectPackage(2);
+		JobPostPage.ClickPostNewJobBtn();
+		JobPostPage.ConfirmSubmit();
 		
+		//JobPostPage.VerifySuccessMsg();
+		JobPostPage.VerifyJobPostingFeedbackModal();
+		// Edit the Job
 		JobPostPage.GoToJobListing();
-		JobPostPage.searchForJob(jobTitle);
+		JobPostPage.searchForJob(jobData);
 
 		// Copy the same job
 		JobPostPage.CopyTheJob();
@@ -65,17 +80,22 @@ describe("Outlet - Job Posting", () => {
 		JobPostPage.ClickCancelButton();
 	});
 
-	it("Expire the Job Post.",() =>{
-		//Navigate to Job listing
-		JobPostPage.GoToJobListing();
+	 it('Verify Scheduled Job functionality',() => {
+        const jobType = 'Scheduled'
+        JobPostPage.GoToPostNewJobForm();
+        JobPostPage.FillPostNewJobForm(false, jobData, jobType, accountType);
+        JobPostPage.SelectPackage(2);
+        JobPostPage.ClickPostNewJobBtn();
+        JobPostPage.ConfirmSubmit();
+        JobPostPage.VerifyJobPostingFeedbackModal();
+        //JobPostPage.VerifySuccessMsg();
+        // JobPostPage.searchForJob(jobData);
+        // JobPostPage.EditTheJob();
+        // JobPostPage.FillPostNewJobForm(true, jobData , jobType, accountType);
+        // JobPostPage.ClickPostNewJobBtn();
 
-		//Search for the job
-		JobPostPage.searchForJob(jobTitle);
-
-		//Expire the same job
-		JobPostPage.ExpireTheJobPost();
-		//SGJobPostPage.VerifySuccessMsg();	
-		JobPostPage.searchForJob(jobTitle);
-		JobPostPage.verifyExpiredJobNotShownInList();
-	})
+        //Repost the job
+        JobPostPage.searchForJob(jobData);
+        JobPostPage.RepostJob();
+    })
 });

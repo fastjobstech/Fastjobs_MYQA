@@ -1,8 +1,8 @@
 const Chance = require('chance'); 
-const chance = new Chance();
+export const chance = new Chance();
 import SGJobPostPage from "../../../../pages/SG/ManageJobsPage/SGJobPostPage";
 
-let jobData;
+export let jobData;
 
 describe("SG Job Posting", () => {
 	const AccountType = "directEmployer";
@@ -11,55 +11,38 @@ describe("SG Job Posting", () => {
 		return false;
 	});
 
-	before(() => {
-        // Generate random data and assign it to jobData
-        jobData = {
+	beforeEach(() => {
+		jobData = {
             jobTitle: chance.profession(),
             jobDesc: chance.sentence({ words: 12 }) + " " + 'Updated',
             applyByEmail: chance.email(),
             applyByCallSms: '85556278',
             editedJobTitle: chance.profession() + " " + 'Updated',
         };
-    });
-
-	// const jobData = {
-    //     jobTitle: chance.profession(),
-    //     jobDesc: chance.sentence({ words: 12 })+" "+'Updated',
-    //     applyByEmail: chance.email(),
-    //     applyByCallSms: '85556278',
-    //     editedJobTitle: chance.profession()+" "+'Updated',
-    // };
-
-	// before(() => {
-    //     // Generate random data and assign it to global variables
-    //     jobTitle = chance.profession();
-    //     jobDesc = chance.sentence({ words: 12 });
-    //     applyByEmail = chance.email();
-    //     applyByCallSms = '911911978';
-    //     editedJobTitle = 'Updated ' + jobTitle;
-    // });
-
-	beforeEach(() => {
 		const employerUrlSG = Cypress.env("employerSG");
 		cy.checkWebsiteAvailability(employerUrlSG);
 		cy.pageVisit(employerUrlSG);
 		cy.employerLogin(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
-
+		SGJobPostPage.GoToJobListing();
 	});
 
+	afterEach(() => {
+		//Expire the job after each testcase
+		SGJobPostPage.GoToJobListing();
+		cy.log('Expire Job')
+		SGJobPostPage.VerifyPostedJobAd(jobData)
+	})
+	
 	//afterEach(() => {
 	// 	SGJobPostPage.VerifyJobPostingFeedbackModal();
 	// 	SGJobPostPage.VerifyPostedJobAd();
 	// });
 
 	it("Verify able to Post a new job and edit the job details", () => {
-		// const jobInfo = {
-		// 	jobTitle: "This is the Updated Title (Automated Script Do not Apply!!!)",
-		// };
-
+		const jobType = "Active";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false);
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		//SGJobPostPage.VerifySuccessMsg();
@@ -68,25 +51,49 @@ describe("SG Job Posting", () => {
 		// Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true);
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		//SGJobPostPage.FillTheForm(jobData, AccountType, true);
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.GoToJobListing();
 		//SGJobPostPage.VerifySuccessMsg();
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
+	it("Verify schedule job functionality", () => {
+		cy.log("Scheduling a job");
+		const jobType = "Scheduled";
+		SGJobPostPage.GotoPostNewJobForm();
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.ConfirmSubmit();
+		//SGJobPostPage.VerifySuccessMsg();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+
+		// Edit the Job
+		SGJobPostPage.searchForJob(jobData);
+		SGJobPostPage.EditTheJob();
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.searchForJob(jobData)
+		SGJobPostPage.RepostJob();
+		SGJobPostPage.GoToJobListing();
+		//SGJobPostPage.VerifySuccessMsg();
+		SGJobPostPage.VerifyJobListingPage();
+	});
+
 	it("Verify error notification appears when submitted a job that was already posted.", () => {
-		// SGJobPostPage.GotoPostNewJobForm();
-		// SGJobPostPage.FillPostNewJobForm("", AccountType, false);
-		// SGJobPostPage.ClickPostNewJobBtn();
-		// SGJobPostPage.ConfirmSubmit();
-		// SGJobPostPage.VerifyJobPostingFeedbackModal();
+		const jobType = 'Active'
+		SGJobPostPage.GotoPostNewJobForm();
+		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, false, jobType);
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.ConfirmSubmit();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
 
 		//Navigate to Job listing
 		SGJobPostPage.GoToJobListing();
 
 		//Search for the job
-		SGJobPostPage.searchForJob(jobData);
+		SGJobPostPage.searchForJob(jobData, jobType);
 
 		//Copy the same job
 		SGJobPostPage.CopyTheJob();
@@ -98,17 +105,4 @@ describe("SG Job Posting", () => {
 		//SGJobPostPage.VerifyJobListingPage();
 	});
 
-	it("Expire the Job Post.",() =>{
-		//Navigate to Job listing
-		SGJobPostPage.GoToJobListing();
-
-		//Search for the job
-		SGJobPostPage.searchForJob(jobData);
-
-		//Expire the same job
-		SGJobPostPage.expireJobPost()
-		//SGJobPostPage.VerifySuccessMsg();	
-		SGJobPostPage.searchForJob(jobData);
-		SGJobPostPage.verifyExpiredJobNotShownInList();
-	})
 });

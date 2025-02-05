@@ -12,35 +12,35 @@ describe("SG Job Posting DE", () => {
 		return false;
 	});
 
-	before(() => {
-        // Generate random data and assign it to jobData
-        jobData = {
+	beforeEach(() => {
+		jobData = {
             jobTitle: chance.profession(),
             jobDesc: chance.sentence({ words: 12 }) + " " + 'Updated',
             applyByEmail: chance.email(),
             applyByCallSms: '85556278',
             editedJobTitle: chance.profession() + " " + 'Updated',
         };
-    });
-
-	beforeEach(() => {
 		const employerUrlSG = Cypress.env("employerSG");
 		cy.checkWebsiteAvailability(employerUrlSG);
 		cy.pageVisit(employerUrlSG);
 		cy.employerLogin(Cypress.env("ra_username"), Cypress.env("ra_password"));
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
+		SGJobPostPage.GoToJobListing();
 	});
 
-	// afterEach(() => {
-	// 	SGJobPostPage.VerifyJobPostingFeedbackModal();
-	// 	SGJobPostPage.VerifyPostedJobAd();
-	// });
+	afterEach(() => {
+		//Expire the job after each testcase
+		SGJobPostPage.GoToJobListing();
+		cy.log('Expire Job')
+		SGJobPostPage.VerifyPostedJobAd(jobData)
+	})	
 
 	it("Post new job ad and Edit with Agency information included", () => {
+		const jobType = 'Active'
 
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false);
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();
@@ -52,15 +52,48 @@ describe("SG Job Posting DE", () => {
 		SGJobPostPage.searchForJob(jobData);
 		
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true);
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
 
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.VerifyJobListingPage();
 	});
 
-	// Issue reported - FJEMP-3904 NOT FIXED
-	it.skip("Verify error notification appears when submitted a job that was already posted.", () => {
+	it("Verify schedule job functionality", () => {
+		cy.log("Scheduling a job");
+		const jobType = "Scheduled";
+		SGJobPostPage.GotoPostNewJobForm();
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.ConfirmSubmit();
+		//SGJobPostPage.VerifySuccessMsg();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
+
+		// Edit the Job
+		SGJobPostPage.searchForJob(jobData);
+		SGJobPostPage.EditTheJob();
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.ClickPostNewJobBtn();
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.searchForJob(jobData)
+		SGJobPostPage.RepostJob();
+		SGJobPostPage.GoToJobListing();
+		//SGJobPostPage.VerifySuccessMsg();
+		SGJobPostPage.VerifyJobListingPage();
+	});
+
+	it("Verify error notification appears when submitted a job that was already posted.", () => {
+		const jobType = 'Active'
+		SGJobPostPage.GotoPostNewJobForm();
+
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.ClickPostNewJobBtn();
+
+		SGJobPostPage.RAClickProceedButton();
+		SGJobPostPage.ConfirmSubmit();
+		SGJobPostPage.VerifyJobListingPage();
+		SGJobPostPage.VerifyJobPostingFeedbackModal();
 		SGJobPostPage.GoToJobListing();
 		
 		//search for the job
@@ -69,28 +102,12 @@ describe("SG Job Posting DE", () => {
 		//Copy the same job
 		SGJobPostPage.CopyTheJob();
 		SGJobPostPage.ClickPostNewJobBtn();
-		SGJobPostPage.RAClickProceedButton();
-		SGJobPostPage.ConfirmSubmit();
 
 		//Duplicate Job Error
 		SGJobPostPage.VerifyDuplicateNotification();
 		SGJobPostPage.ClickCancelButton();
 		SGJobPostPage.VerifyJobListingPage();
 	});
-
-	it("Expire the Job Post.",() =>{
-			//Navigate to Job listing
-			SGJobPostPage.GoToJobListing();
-	
-			//Search for the job
-			SGJobPostPage.searchForJob(jobData);
-	
-			//Expire the same job
-			SGJobPostPage.expireJobPost()
-			//SGJobPostPage.VerifySuccessMsg();	
-			SGJobPostPage.searchForJob(jobData);
-			SGJobPostPage.verifyExpiredJobNotShownInList();
-	})
 });
 
 
