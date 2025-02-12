@@ -1,4 +1,3 @@
-import LoginPage from "../../../pages/MY/UserPages/LoginPage";
 import JobPostPage from "../../../pages/MY/ManageJobPage/JobPostPage";
 import companyProfilePage from "../../../pages/MY/Settings/companyProfilePageMY";
 
@@ -11,7 +10,10 @@ describe("Update Company profile", () => {
 	beforeEach(() => {
 		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(Cypress.env("de_username"), Cypress.env("de_password"));
+
+		//cy.areYouLookingForJobPopUp();
+
+		cy.employerLogin(Cypress.env("de_username"), Cypress.env("de_password"))
 
 		JobPostPage.VerifyJobPostingFeedbackModal();
 	});

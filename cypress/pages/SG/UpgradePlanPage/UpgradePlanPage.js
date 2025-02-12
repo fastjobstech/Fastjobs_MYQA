@@ -126,7 +126,7 @@ class SGUpgradePlan {
 
 	ClickDownloadInvoice = () => {
 		this.elements.confirmPaymentButton().click();
-		this.elements.downloadInvoiceButton().click();
+		this.elements.downloadInvoiceButton().invoke('removeAttr','target').click();
 	};
 }
 

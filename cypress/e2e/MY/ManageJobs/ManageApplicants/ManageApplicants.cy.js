@@ -1,8 +1,7 @@
-import LoginPage from "../../../../pages/MY/UserPages/LoginPage";
 import JobPostPage from "../../../../pages/MY/ManageJobPage/JobPostPage";
 import ManageApplicant from "../../../../pages/MY/ManageJobPage/ManageApplicants";
 
-describe("Manage Applicants", () => {
+describe.skip("Manage Applicants", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
 		console.log(err);
 		return false;
@@ -11,11 +10,12 @@ describe("Manage Applicants", () => {
 	beforeEach(() => {
 		cy.checkWebsiteAvailability("/");
 		cy.pageVisit("/");
-		LoginPage.loginEmployer(Cypress.env("manageApplicantUsername"), Cypress.env("manageApplicantPassword"));
+		cy.employerLogin(Cypress.env("de_username"), Cypress.env("de_password"));
 	});
 
-	it.skip("Moves the Jobseeker to each folders (Rejected, KIV, Hire, Shortlisted)", () => {
+	it("Moves the Jobseeker to each folders (Rejected, KIV, Hire, Shortlisted)", () => {
 		JobPostPage.GoToJobListing();
+		JobPostPage.searchForJob('chef');
 		ManageApplicant.GoToManageApplicant();
 
 		// Shortlisted to Rejected

@@ -1,5 +1,3 @@
-import LoginPage from "../../../pages/SG/User/LoginPage";
-import SGJobPostPage from "../../../pages/SG/ManageJobsPage/SGJobPostPage";
 import UpgradePlan from "../../../pages/SG/UpgradePlanPage/UpgradePlanPage";
 
 describe("Upgrade Plan", () => {
@@ -10,7 +8,7 @@ describe("Upgrade Plan", () => {
 
 	beforeEach(() => {
 		cy.pageVisit(Cypress.env("employerSG"));
-		LoginPage.loginEmployer(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"));
+		cy.employerLogin(Cypress.env("SG_DE_Username"), Cypress.env("SG_DE_Password"))
 	});
 
 	it("Upgrade plan and Download the invoice without error", () => {

@@ -5,14 +5,14 @@ class LoginPage {
 		// usernameField: () => cy.get("#loginform-username"),
 		// passwordField: () => cy.get("#loginform-password"),
 
-		usernameField: () => cy.get('input[name="IDToken1"]'),
-		passwordField: () => cy.get('input[name="IDToken2"]'),
+		usernameField: () => cy.get('#login-form > fast-input > div > div > input'),
+		passwordField: () => cy.get('#login-form > div > fast-input > div > div > input'),
 		loginButton: () => cy.get("#login-form > .sc-fast-button-h > .button"),
 
 		// admin login elements
 		adminUsernameField: () => cy.get("#loginform-username"),
 		adminPasswordField: () => cy.get("#loginform-password"),
-		adminLoginBtn: () => cy.get(".btn"),
+		adminLoginBtn: () => cy.get(".btn").first(),
 	};
 
 	loginEmployer = (username, password) => {
@@ -27,33 +27,32 @@ class LoginPage {
 	};
 
 	adminLoginSG = (username, password) => {
-		this.elements.adminUsernameField().type(username);
-		this.elements.adminPasswordField().type(password);
-		this.elements.adminLoginBtn().click();
-
-		cy.url().should("contain", "/site/otp");
-
-		cy.visit("https://admin-qa.fastjobs.sg/p/site/showotp");
-		cy.url().should("contain", "/showotp");
-
-		cy
-			.get(".otp-code")
-			.invoke("text")
-			.then((otp) => {
-				// Log the OTP code
-				cy.log(`OTP Code: ${otp}`);
-
-				// Goes back to OTP verification
-				cy.visit("https://admin-qa.fastjobs.sg/p/site/otp");
-				cy.url().should("contain", "/site/otp");
-
-				// Enter the OTP
-				cy.get("#otp_code").type(otp);
-			});
-
-		cy.get(".btn").contains("Verify").click();
-		cy.url().should("contain", "/index");
+		cy.visit("https://admin-test.fastjobs.sg/");
+	
+		cy.get("#loginform-username").type(username); 
+		cy.get("#loginform-password").type(password); 
+		cy.get('[name="login-button"]').contains("Login").click();
+		cy.wait(1000);
+	
+		cy.url().should("contain", "/p/site/otp"); 
+	
+		cy.visit("https://admin-test.fastjobs.sg/p/site/showotp", { failOnStatusCode: false, force: true });
+	
+		cy.url().should("contain", "/p/site/showotp");
+	
+		cy.get(".otp-code").should("be.visible").invoke("text").then((otp) => {
+			cy.log(`OTP Code: ${otp}`);
+	
+			cy.visit("https://admin-test.fastjobs.sg/p/site/otp", { failOnStatusCode: false, force: true });
+	
+			cy.url().should("contain", "/p/site/otp");
+	
+			cy.get("#otp_code").type(otp);  
+			cy.get("button.btn").contains("Verify").click();
+	
+			// Step 9: Verify successful login
+			cy.url().should("include", "/index");
+		});
 	};
-}
-
+}	
 module.exports = new LoginPage();

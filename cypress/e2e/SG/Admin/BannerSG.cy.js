@@ -1,4 +1,8 @@
 import LoginPage from "../../../pages/SG/User/LoginPage";
+import BannerPage from "../../../pages/SG/Admin/BannerSGPage";
+
+const Chance = require('chance');
+const chance = new Chance();
 
 describe("SG Job Posting", () => {
 	Cypress.on("uncaught:exception", (err, runnable) => {
@@ -22,50 +26,21 @@ describe("SG Job Posting", () => {
 			url: "AutomatedBanner",
 		};
 
-		const fileName = "cypress/fixtures/banner.jpeg";
+		const actionDelete = 2;
+		//Navigate to the Banner form
+		BannerPage.navigateToBannerListing();
+		BannerPage.navigateToCreateBanner();
 
-		// Navigate to Banner listing
-		cy.visit("https://admin-qa.fastjobs.sg/p/banner/index");
+		// Verify the form
+		BannerPage.verifyBannerFormElement();
 
-		// Creates the banner
-		// Navigate to create banner
-		cy.get(".btn-success").contains("Create Banner").click();
+		// Fill the form
+		BannerPage.fillBannerForm(bannerData, false);
+		BannerPage.verifyAlertDisplayed("alert-success");
 
-		// Verify elements
-		cy.url().should("contain", "/create");
-		cy.get(".banner-form").should("be.visible");
-
-		// Fills out the form
-		cy.get("#platform > :nth-child(2)").click();
-		cy.get("#title").type(bannerData.title);
-
-		cy.get("#tmpbanner").should("exist");
-		cy.get("#tmpbanner").selectFile(fileName, { force: true });
-
-		cy.get("#postedfrom").should("be.visible").type("2024-08-31");
-
-		cy.get("#postedto").should("be.visible").type("2024-12-31");
-
-		cy.get("#postedfrom").click();
-		cy.get("#urltitle").type(bannerData.url);
-		cy.get("#url").type(bannerData.url);
-
-		// cy
-		// 	.get("#processing-btn")
-		// 	.contains("CREATE BANNER")
-		// 	.should("be.visible")
-		// 	.click();
-
-		//// Verify the banner is created successfully
-		// cy
-		// 	.get("#alertdiv")
-		// 	.should("be.visible")
-		// 	.and("contain", "Banner has been created.");
-
-		// Locate and update the banner
-		// verify the banner is updated succesfully
-
-		// Locate and deletes the banner
-		// verify the banner is deleted successfully
+		// Remove the added Banner
+		BannerPage.actionBanner(actionDelete, bannerData.title);
+		BannerPage.verifyAlertDisplayed("alert-success");
+		
 	});
 });

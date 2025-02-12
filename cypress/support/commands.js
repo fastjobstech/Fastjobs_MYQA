@@ -1,5 +1,6 @@
 import "cypress-iframe";
 import "cypress-file-upload";
+import 'cypress-shadow-dom';
 
 Cypress.Commands.add("sendDeleteRequestDB", () => {
 	cy.task("queryDb", `DELETE FROM Persons;`);
@@ -37,6 +38,51 @@ Cypress.Commands.add("checkWebsiteAvailability", (url) => {
 Cypress.Commands.add("pageVisit", (url) => {
 	cy.visit(url);
 });
+
+Cypress.Commands.add('selectCompany', () => {
+	cy.wait(2000)
+	cy.get('body').then(($body) => {
+		if ($body.find('div.account-options').length > 0) {
+			cy.get('a.stretched-link').first().click({force:true});
+			cy.wait(2000)
+		} else {
+			cy.log('This User does not have multiple companies')
+		}
+	})
+	
+})
+
+
+Cypress.Commands.add('employerLogin', (email , password) => {
+
+	cy.contains('Login').click({force:true});
+	cy.get('#login-form > fast-input > div > div > input',{timeout:30000}).type(email);
+	cy.get('#login-form > div > fast-input > div > div > input').type(password)
+	cy.get("#login-form > .sc-fast-button-h > .button").click({force:true});
+		cy.wait(2000);
+})
+
+Cypress.Commands.add('employerSessionLogin',(email,password,url)=> {
+	cy.session([email, password, url], () => {
+		cy.visit(url)
+        cy.contains('Login').click({force: true});
+        cy.get('#login-form > fast-input > div > div > input', {timeout: 30000}).type(email);
+        cy.get('#login-form > div > fast-input > div > div > input').type(password);
+        cy.get("#login-form > .sc-fast-button-h > .button").click({force: true});
+        cy.wait(2000);
+    });
+})
+
+Cypress.Commands.add('areYouLookingForJobPopUp', () => {
+	cy.get('body').then(($body) => {
+		if ($body.find('div.modal-header').length > 0) {
+			cy.contains('Stay on FastJobs Employer').click();
+		} else {
+			cy.log('No pop up shown')
+		}
+	})
+
+})
 
 // Mail Slurp
 

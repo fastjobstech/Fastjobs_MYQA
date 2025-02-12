@@ -3,16 +3,18 @@ class UpgradePlan {
 		// Upgrade plan elements
 		upgradePlanNavlink: () => cy.get(".nav > .plan-upgrade-nav > a"),
 		packagePlan: () =>
-			cy.get(":nth-child(1) > .plan-box > .form-get-plan > .btn"),
+			cy.get("input.package__btn").first(),
 		checkoutButton: () => cy.get(".col-sm-8 > .btn"),
 		SubmitButton: () => cy.get("#btnCCSubmit"),
+
+		confirmAndPayBtn: () => cy.get('button div[part="content"]'),
 
 		fullNameField: () => cy.get("#c9billinfo-fullm"),
 		emailNameField: () => cy.get("#c9billinfo-eml"),
 		mobileNameField: () => cy.get("#c9billinfo-mobn"),
 		compNameField: () => cy.get("#c9billinfo-coym"),
 
-		checkoutRequiredErrMsg: () => cy.get(".form-group > .help-block"),
+		checkoutRequiredErrMsg: () => cy.get("#checkout-billing-form").find('div.help-block'),
 
 		//2pcp Elements
 		CardNumberErrorMessage: () => cy.get("#err_credit_card_number"),
@@ -32,8 +34,8 @@ class UpgradePlan {
 		cy.location("pathname").should("contains", "/p/buy/checkout");
 	};
 
-	ClickCheckoutButton = () => {
-		this.elements.checkoutButton().click();
+	ClickConfirmAndPayButton = () => {
+		this.elements.confirmAndPayBtn().click();
 	};
 
 	//FastJobs checkout flow
@@ -42,7 +44,7 @@ class UpgradePlan {
 		this.elements.emailNameField().clear();
 		this.elements.mobileNameField().clear();
 		this.elements.compNameField().clear();
-		this.ClickCheckoutButton();
+		this.ClickConfirmAndPayButton();
 		this.elements.checkoutRequiredErrMsg().should("be.visible");
 	};
 
@@ -51,7 +53,7 @@ class UpgradePlan {
 		this.elements.emailNameField().clear().type("invalid email");
 		this.elements.mobileNameField().clear().type("123ABC");
 		this.elements.compNameField().clear();
-		this.ClickCheckoutButton();
+		this.ClickConfirmAndPayButton();
 		this.elements.checkoutRequiredErrMsg().should("be.visible");
 	};
 
