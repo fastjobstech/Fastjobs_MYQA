@@ -31,6 +31,11 @@ module.exports = defineConfig({
 		viewportHeight: 1080,
 	},
 
+	retries: {
+        runMode: 1, // Number of times to retry a test in `cypress run`
+        openMode: 1, // Number of times to retry a test in `cypress open`
+    },
+
 	env: {
 		employerSG: "https://employer-test.fastjobs.sg/site/login",
 		employerMainSG: "https://employer-test.fastjobs.sg/",

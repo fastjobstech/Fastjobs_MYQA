@@ -24,7 +24,7 @@ class SGJobPostPage {
 		NearestMRT: () => cy.get("#c9jobs-regionc"),
 		WorkingPlace: () => cy.get("#c9jobs-building"),
 
-		JobCategoryOne: () => cy.get("#c9jobs-category"),
+		JobCategoryOne: () => cy.get("#c9jobs-category div input"),
 		JobCategoryTwo: () => cy.get("#c9jobs-category2"),
 
 		Timing: () => cy.get("#c9jobs-timingc"),
@@ -231,7 +231,7 @@ class SGJobPostPage {
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
-	FillPostNewJobForm = (jobData, AccountType, isUpdated, jobType) => {
+	FillPostNewJobForm = (jobData, AccountType, isUpdated, jobType, jobLanguage) => {
 
 		if (isUpdated) {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle+" "+"Updated",{force:true});	
@@ -240,15 +240,21 @@ class SGJobPostPage {
 		else {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle,{force:true});
 			this.elements.JobDescription().find('.rtf-content[contenteditable="true"]').type(jobData.jobDesc, { force: true });
-			//this.elements.JobClassification().clear({force:true}).type(jobData.jobTitle);
+			this.elements.JobClassification().clear({force:true}).type(jobData.jobTitle);
 
-			this.elements.JobCategoryOne().click().within(()=>{
-				cy.get('[value="6"]').parent().click({force:true})
-				//cy.contains('Call Centres / Telemarketing').click();
-			})
+			this.elements.JobCategoryOne().first().scrollIntoView().click({force:true})//.within(()=>{
+				//cy.get('fast-select-option[name="C9jobs[CATEGORY]"]').first().click({force:true})
+				//cy.wait(200)
+				//cy.find('[value="1"]').first().scrollIntoView().click({force:true})
+				if(jobLanguage == 'Chinese'){
+					cy.contains('临时员工').click({force:true})
+				} else {
+					cy.contains('Accounting / Finance').click({force:true});
+				}
+			//})
 			this.elements.JobCategoryTwo().click().within(() =>{
 				
-				cy.get('input[value="20"]').parent().click({force:true})
+				cy.get('input[value="20"]').parent().first().click({force:true})
 				//cy.contains('Education / Training').scrollIntoView().click({force:true});
 			})
 			this.elements.JobClassification().scrollIntoView().click({force:true}).type(jobData.jobTitle,{force:true});
@@ -336,7 +342,7 @@ class SGJobPostPage {
 	CopyTheJob = () => {
 		this.elements.MoreActionsBtn().first().should("be.visible").click({force:true});
 		cy.wait(500)
-		this.elements.CopyJobBtn().invoke('show').click({force:true});
+		this.elements.CopyJobBtn().first().invoke('show').click({force:true});
 	};
 
 	EditTheJob = () => {
@@ -471,8 +477,8 @@ class SGJobPostPage {
 	}
 
 	RepostJob = () => {
-		this.elements.PostNowBtn().click();
-		this.elements.ConfirmPostNow().click();
+		this.elements.PostNowBtn().click({force:true});
+		this.elements.ConfirmPostNow().click({force:true});
 	}
 
 	verifyExpiredJobNotShownInList = () =>{

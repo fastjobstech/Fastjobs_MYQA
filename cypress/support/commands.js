@@ -40,7 +40,7 @@ Cypress.Commands.add("pageVisit", (url) => {
 });
 
 Cypress.Commands.add('selectCompany', () => {
-	cy.wait(2000)
+	cy.wait(500);
 	cy.get('body').then(($body) => {
 		if ($body.find('div.account-options').length > 0) {
 			cy.get('a.stretched-link').first().click({force:true});
@@ -59,7 +59,7 @@ Cypress.Commands.add('employerLogin', (email , password) => {
 	cy.get('#login-form > fast-input > div > div > input',{timeout:30000}).type(email);
 	cy.get('#login-form > div > fast-input > div > div > input').type(password)
 	cy.get("#login-form > .sc-fast-button-h > .button").click({force:true});
-		cy.wait(2000);
+		//cy.wait(2000);
 })
 
 Cypress.Commands.add('employerSessionLogin',(email,password,url)=> {

@@ -101,7 +101,7 @@ class SGUpgradePlan {
 	};
 
 	SubmitPaymentWithValidDetails = () => {
-		this.elements.cardNameField().type("Kim Jay");
+		this.elements.cardNameField().type("QA User");
 		this.elements.cardNumberField().type("4111111111111111");
 		this.elements.expDateField().type("122030");
 		this.elements.securityCodeField().type("123");
