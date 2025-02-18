@@ -14,7 +14,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        container: [cypress/base:14, cypress/base:15]
+        container: 
+          - cypress/base:14
+          - cypress/base:15
         # You can add more container versions for parallelization
 
     steps:
@@ -28,7 +30,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -44,10 +45,4 @@ jobs:
         run: npx wait-on http://localhost:3000
 
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          record: true
-          parallel: true
-          group: 'Cypress GitHub Action'
-          # You might need to provide your Cypress dashboard record key here
-          # recordKey: ${{ secrets.CYPRESS_RECORD_KEY }}
+        run: npx cypress run --headless
