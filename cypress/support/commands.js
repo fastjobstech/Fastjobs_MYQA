@@ -58,8 +58,8 @@ Cypress.Commands.add('employerLogin', (email , password) => {
 	cy.contains('Login').click({force:true});
 	cy.get('#login-form > fast-input > div > div > input',{timeout:30000}).type(email);
 	cy.get('#login-form > div > fast-input > div > div > input').type(password)
-	cy.get("#login-form > .sc-fast-button-h > .button").click({force:true});
-		//cy.wait(2000);
+	cy.get("#login-form > fast-button > button").click({force:true});
+		cy.wait(2000);
 })
 
 Cypress.Commands.add('employerSessionLogin',(email,password,url)=> {
