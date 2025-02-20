@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Wait for Test Server
+        run: npx wait-on https://employer-test.fastjobs.my/site/login 
+
       - name: Run Cypress tests for MY
         run: npx cypress run --headless --spec 'cypress/e2e/MY/**/*.js'
 
@@ -49,7 +52,7 @@ jobs:
 
   cypress-run-folder2:
     runs-on: ubuntu-latest
-    container: cypress/base:15
+    container: cypress/base:14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -69,6 +72,9 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Wait for Test Server
+        run: npx wait-on https://employer-test.fastjobs.sg/ 
 
       - name: Run Cypress tests for SG
         run: npx cypress run --headless --spec 'cypress/e2e/SG/**/*.js'

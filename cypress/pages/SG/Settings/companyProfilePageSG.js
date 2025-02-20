@@ -3,19 +3,19 @@ class companyProfilePageSG {
 		navSetting: () => cy.get(".menu-setting > a"),
 		companyProfileSettings: () => cy.get(":nth-child(6) > :nth-child(1) > a"),
 
-		companyName: () => cy.get("[name='C9coy[DISPM]']").find('input.sc-fast-input',{timeout:30000}),
+		companyName: () => cy.get("[name='C9coy[DISPM]']").find('input.input-content',{timeout:30000}),
 		companyDesc: () => cy.get("textarea[name='C9coy[DSC]']"),
 
-		floorNo: () => cy.get("[name='C9coy[FLRN]']").find('input.sc-fast-input'),
-		unitNo: () => cy.get("[name='C9coy[UNTN]']").find('input.sc-fast-input'),
-		streetName: () => cy.get("[name='C9coy[STREETM]']").find('input.sc-fast-input'),
-		building: () => cy.get("[name='C9coy[BLDG]']").find('input.sc-fast-input'),
-		state: () => cy.get("[name='C9coy[BLDG]']").find('input.sc-fast-input'),
+		floorNo: () => cy.get("[name='C9coy[FLRN]']").find('input.input-content'),
+		unitNo: () => cy.get("[name='C9coy[UNTN]']").find('input.input-content'),
+		streetName: () => cy.get("[name='C9coy[STREETM]']").find('input.input-content'),
+		building: () => cy.get("[name='C9coy[BLDG]']").find('input.input-content'),
+		state: () => cy.get("[name='C9coy[BLDG]']").find('input.input-content'),
 		state: () => cy.get("[placeholder='Select State']"),
 		city: () => cy.get("[placeholder='Select City']"),
 		//postalCode: () => cy.get('[name="C9coy[PSTC]"]').find('input.sc-fast-input'),
 		
-		updateSubmitButton: () => cy.get("#company-form-submit > .button"),
+		updateSubmitButton: () => cy.get("#company-form-submit > button"),
 	};
 	goToSetting = () => {
 		this.elements.navSetting().click();

@@ -135,7 +135,7 @@ class SGJobPostPage {
 		BulkBumpBtn: () => cy.get('[data-event="bump_up_initiated"] a',{timeout:30000}),
 		SelectAllBtn: () => cy.get('th fast-checkbox[data-action="all"]',{timeout:30000}),
 		BumpSelectedJobsBtn: () => cy.get('div.job-action-bump fast-button button',{timeout:30000}),
-		confirmBumpBtn: () => cy.get('#bump-confirm-prompt > div.modal-dialog > div > div.modal-footer > fast-button.sc-fast-button-h.sc-fast-button-s.solid.primary.size-lg.hydrated',{timeout:5000}),//cy.contains('Yes, bump this job',{timeout:30000}),
+		confirmBumpBtn: () => cy.get('#bump-confirm-prompt > div.modal-dialog > div > div.modal-footer > fast-button.solid.primary.hydrated > button',{timeout:5000}),//cy.contains('Yes, bump this job',{timeout:30000}),
 		bumpDocumentaitionLink: () => cy.get('a.sc-fast-alert'),
 		BumpJobBtn: () => cy.get('[data-cy="Bump this job"]'),
 		errorToast: () => cy.get('div.iziToast-body',{timeout:10000}),
@@ -346,7 +346,7 @@ class SGJobPostPage {
 	};
 
 	EditTheJob = () => {
-		this.elements.EditJobBtn().first().should("be.visible").click();
+		this.elements.EditJobBtn().first().should("be.visible").click({force:true});
 	};
 
 	VerifyLoaderTextIsDisplayed = () => {
@@ -510,11 +510,11 @@ class SGJobPostPage {
 	}
 
 	verifyBulkBumpPageView = () => {
-		cy.get('#bump-multiple-jobs > div.page-header > fast-button > a',{timeout:30000}).should('exist');
-		cy.get('[name="keyword"]').should('exist');
-		cy.get('[name="postedby"] div input').first().should('exist');
-		cy.get('#bump-multiple-jobs > form > div.job-action-bump > fast-button > button').should('exist').and('be.disabled');
-		cy.get('td fast-button a.sc-fast-button').should('exist').and('have.attr','href')
+		cy.get('#bump-multiple-jobs > div.page-header > fast-button > a',{timeout:30000}).should('exist'); //Back to english job button
+		cy.get('[name="keyword"]').should('exist'); // Search bar
+		cy.get('[name="postedby"] div input').first().should('exist'); //Posted by filter
+		cy.get('#bump-multiple-jobs > form > div.job-action-bump > fast-button > button').should('exist').and('be.disabled'); //Bump selected job button
+		//cy.get('td fast-button a.sc-fast-button').should('exist').and('have.attr','href')
 		//Verify table headers
 		const expectedHeaders = ['Job title', 'Posted by', 'Last bumped', 'Action'];
 

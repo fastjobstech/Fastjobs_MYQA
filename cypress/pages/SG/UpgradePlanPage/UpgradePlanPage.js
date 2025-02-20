@@ -37,7 +37,7 @@ class SGUpgradePlan {
 		confirmPaymentButton: () => cy.get("#pay"),
 
 		//Invoice
-		downloadInvoiceButton: () => cy.get(".pull-right > .button"),
+		downloadInvoiceButton: () => cy.get(".pull-right a"),
 	};
 
 	ClickUpgradePlanLink = () => {
