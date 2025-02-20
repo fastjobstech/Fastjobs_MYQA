@@ -9,16 +9,9 @@ on:
       - main
 
 jobs:
-  cypress-run:
+  cypress-run-folder1:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        container: 
-          - cypress/base:14
-          - cypress/base:15
-        # You can add more container versions for parallelization
-
+    container: cypress/base:14
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,19 +23,64 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '14' # Specify the node version you need
+          node-version: '14'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Start the application
-        run: npm start &
+      - name: Run Cypress tests for MY
+        run: npx cypress run --headless --spec 'cypress/e2e/MY/**/*.js'
 
-      - name: Wait for application to be available
-        run: npx wait-on http://localhost:3000
+      - name: Generate Allure report
+        run: |
+          npm install -g allure-commandline --save-dev
+          allure generate --clean
+          allure open
 
-      - name: Run Cypress tests
-        run: npx cypress run --headless
+      - name: Publish Allure report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
+
+  cypress-run-folder2:
+    runs-on: ubuntu-latest
+    container: cypress/base:15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '15'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Cypress tests for SG
+        run: npx cypress run --headless --spec 'cypress/e2e/SG/**/*.js'
+
+      - name: Generate Allure report
+        run: |
+          npm install -g allure-commandline --save-dev
+          allure generate --clean
+          allure open
+
+      - name: Publish Allure report
+        uses: actions/upload-artifact@v2
+        with:
+          name: allure-report
+          path: allure-report
