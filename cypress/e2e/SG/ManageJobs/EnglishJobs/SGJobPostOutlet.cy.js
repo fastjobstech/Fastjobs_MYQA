@@ -41,7 +41,7 @@ describe("SG Job Posting", () => {
 		const jobType = "Active";
 
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false, "");
+		SGJobPostPage.FillPostNewJobForm(jobData , AccountType, false, "","");
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
@@ -49,7 +49,7 @@ describe("SG Job Posting", () => {
 		//Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true,"");
+		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, true,"","");
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.GoToJobListing();
 		SGJobPostPage.VerifyJobListingPage();
@@ -59,7 +59,7 @@ describe("SG Job Posting", () => {
 		cy.log("Scheduling a job");
 		const jobType = "Scheduled";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		//SGJobPostPage.VerifySuccessMsg();
@@ -83,7 +83,7 @@ describe("SG Job Posting", () => {
 		const jobType = "Active";
 
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, false, "");
+		SGJobPostPage.FillPostNewJobForm(jobData, AccountType, false, "","");
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.ConfirmSubmit();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();

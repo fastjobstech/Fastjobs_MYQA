@@ -38,7 +38,7 @@ describe("Job posting", () => {
 	it("Verify able to post and edit the job", () => {
 		const jobType = "Active";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		//SGJobPostPage.ConfirmSubmit();
 		
@@ -48,7 +48,7 @@ describe("Job posting", () => {
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
 
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		//Verify error notification appears when submitted a job that was already posted.
@@ -71,7 +71,7 @@ describe("Job posting", () => {
 		cy.log("Scheduling a job");
 		const jobType = "Scheduled";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		//SGJobPostPage.VerifySuccessMsg();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
@@ -79,7 +79,7 @@ describe("Job posting", () => {
 		// Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.searchForJob(jobData)
 		SGJobPostPage.RepostJob();
@@ -154,7 +154,7 @@ describe('Chinese Job functionality',() => {
 	it("Verify able to post and edit the chinese job", () => {
 		const jobType = "Active";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 		//SGJobPostPage.ConfirmSubmit();
 		
@@ -164,7 +164,7 @@ describe('Chinese Job functionality',() => {
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
 
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType, "Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		//Verify error notification appears when submitted a job that was already posted.
@@ -187,7 +187,7 @@ describe('Chinese Job functionality',() => {
 		cy.log("Scheduling a job");
 		const jobType = "Scheduled";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 		//SGJobPostPage.VerifySuccessMsg();
 		SGJobPostPage.VerifyJobPostingFeedbackModal();
@@ -195,7 +195,7 @@ describe('Chinese Job functionality',() => {
 		// Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.searchForJob(jobData)
 		SGJobPostPage.RepostJob();

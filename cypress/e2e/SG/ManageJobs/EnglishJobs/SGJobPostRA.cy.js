@@ -40,7 +40,7 @@ describe("SG Job Posting DE", () => {
 
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();
@@ -52,7 +52,7 @@ describe("SG Job Posting DE", () => {
 		SGJobPostPage.searchForJob(jobData);
 		
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"")
 
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
@@ -84,7 +84,7 @@ describe("SG Job Posting DE", () => {
 		cy.log("Scheduling a job");
 		const jobType = "Scheduled";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.ConfirmSubmit();
@@ -94,7 +94,7 @@ describe("SG Job Posting DE", () => {
 		// Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.searchForJob(jobData)
@@ -150,7 +150,7 @@ describe('Verify Chines Job functionality',()=>{
 
 		SGJobPostPage.GotoPostNewJobForm();
 
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 
 		SGJobPostPage.RAClickProceedButton();
@@ -162,7 +162,7 @@ describe('Verify Chines Job functionality',()=>{
 		SGJobPostPage.searchForJob(jobData);
 		
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"Chinese")
 
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
@@ -186,7 +186,7 @@ describe('Verify Chines Job functionality',()=>{
 		cy.log("Scheduling a job");
 		const jobType = "Scheduled";
 		SGJobPostPage.GotoPostNewJobForm();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,false, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.ConfirmSubmit();
@@ -196,7 +196,7 @@ describe('Verify Chines Job functionality',()=>{
 		// Edit the Job
 		SGJobPostPage.searchForJob(jobData);
 		SGJobPostPage.EditTheJob();
-		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType)
+		SGJobPostPage.FillPostNewJobForm(jobData,AccountType,true, jobType,"Chinese")
 		SGJobPostPage.ClickPostNewJobBtn();
 		SGJobPostPage.RAClickProceedButton();
 		SGJobPostPage.searchForJob(jobData)

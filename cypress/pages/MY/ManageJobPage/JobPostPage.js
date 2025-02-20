@@ -301,8 +301,8 @@ class JobPostPage {
 	}
 
 	RepostJob = () => {
-		this.elements.PostNowBtn().click();
-		this.elements.ConfirmPostNow().click();
+		this.elements.PostNowBtn().click({force:true});
+		this.elements.ConfirmPostNow().click({force:true});
 	}
 
 	getFutureDateWithinDays(daysFromNow, hoursFromNow) {

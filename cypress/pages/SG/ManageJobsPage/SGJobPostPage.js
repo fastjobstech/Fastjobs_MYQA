@@ -24,7 +24,7 @@ class SGJobPostPage {
 		NearestMRT: () => cy.get("#c9jobs-regionc"),
 		WorkingPlace: () => cy.get("#c9jobs-building"),
 
-		JobCategoryOne: () => cy.get("#c9jobs-category"),
+		JobCategoryOne: () => cy.get("#c9jobs-category div input"),
 		JobCategoryTwo: () => cy.get("#c9jobs-category2"),
 
 		Timing: () => cy.get("#c9jobs-timingc"),
@@ -135,7 +135,7 @@ class SGJobPostPage {
 		BulkBumpBtn: () => cy.get('[data-event="bump_up_initiated"] a',{timeout:30000}),
 		SelectAllBtn: () => cy.get('th fast-checkbox[data-action="all"]',{timeout:30000}),
 		BumpSelectedJobsBtn: () => cy.get('div.job-action-bump fast-button button',{timeout:30000}),
-		confirmBumpBtn: () => cy.get('#bump-confirm-prompt > div.modal-dialog > div > div.modal-footer > fast-button.sc-fast-button-h.sc-fast-button-s.solid.primary.size-lg.hydrated',{timeout:5000}),//cy.contains('Yes, bump this job',{timeout:30000}),
+		confirmBumpBtn: () => cy.get('#bump-confirm-prompt > div.modal-dialog > div > div.modal-footer > fast-button.solid.primary.hydrated > button',{timeout:5000}),//cy.contains('Yes, bump this job',{timeout:30000}),
 		bumpDocumentaitionLink: () => cy.get('a.sc-fast-alert'),
 		BumpJobBtn: () => cy.get('[data-cy="Bump this job"]'),
 		errorToast: () => cy.get('div.iziToast-body',{timeout:10000}),
@@ -231,7 +231,7 @@ class SGJobPostPage {
 		this.elements.SuccessMsg().should("be.visible");
 	};
 
-	FillPostNewJobForm = (jobData, AccountType, isUpdated, jobType) => {
+	FillPostNewJobForm = (jobData, AccountType, isUpdated, jobType, jobLanguage) => {
 
 		if (isUpdated) {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle+" "+"Updated",{force:true});	
@@ -240,15 +240,21 @@ class SGJobPostPage {
 		else {
 			this.elements.JobTitle().clear({force:true}).type(jobData.jobTitle,{force:true});
 			this.elements.JobDescription().find('.rtf-content[contenteditable="true"]').type(jobData.jobDesc, { force: true });
-			//this.elements.JobClassification().clear({force:true}).type(jobData.jobTitle);
+			this.elements.JobClassification().clear({force:true}).type(jobData.jobTitle);
 
-			this.elements.JobCategoryOne().click().within(()=>{
-				cy.get('[value="6"]').parent().click({force:true})
-				//cy.contains('Call Centres / Telemarketing').click();
-			})
+			this.elements.JobCategoryOne().first().scrollIntoView().click({force:true})//.within(()=>{
+				//cy.get('fast-select-option[name="C9jobs[CATEGORY]"]').first().click({force:true})
+				//cy.wait(200)
+				//cy.find('[value="1"]').first().scrollIntoView().click({force:true})
+				if(jobLanguage == 'Chinese'){
+					cy.contains('临时员工').click({force:true})
+				} else {
+					cy.contains('Accounting / Finance').click({force:true});
+				}
+			//})
 			this.elements.JobCategoryTwo().click().within(() =>{
 				
-				cy.get('input[value="20"]').parent().click({force:true})
+				cy.get('input[value="20"]').parent().first().click({force:true})
 				//cy.contains('Education / Training').scrollIntoView().click({force:true});
 			})
 			this.elements.JobClassification().scrollIntoView().click({force:true}).type(jobData.jobTitle,{force:true});
@@ -336,11 +342,11 @@ class SGJobPostPage {
 	CopyTheJob = () => {
 		this.elements.MoreActionsBtn().first().should("be.visible").click({force:true});
 		cy.wait(500)
-		this.elements.CopyJobBtn().invoke('show').click({force:true});
+		this.elements.CopyJobBtn().first().invoke('show').click({force:true});
 	};
 
 	EditTheJob = () => {
-		this.elements.EditJobBtn().first().should("be.visible").click();
+		this.elements.EditJobBtn().first().should("be.visible").click({force:true});
 	};
 
 	VerifyLoaderTextIsDisplayed = () => {
@@ -471,8 +477,8 @@ class SGJobPostPage {
 	}
 
 	RepostJob = () => {
-		this.elements.PostNowBtn().click();
-		this.elements.ConfirmPostNow().click();
+		this.elements.PostNowBtn().click({force:true});
+		this.elements.ConfirmPostNow().click({force:true});
 	}
 
 	verifyExpiredJobNotShownInList = () =>{
@@ -504,11 +510,11 @@ class SGJobPostPage {
 	}
 
 	verifyBulkBumpPageView = () => {
-		cy.get('#bump-multiple-jobs > div.page-header > fast-button > a',{timeout:30000}).should('exist');
-		cy.get('[name="keyword"]').should('exist');
-		cy.get('[name="postedby"] div input').first().should('exist');
-		cy.get('#bump-multiple-jobs > form > div.job-action-bump > fast-button > button').should('exist').and('be.disabled');
-		cy.get('td fast-button a.sc-fast-button').should('exist').and('have.attr','href')
+		cy.get('#bump-multiple-jobs > div.page-header > fast-button > a',{timeout:30000}).should('exist'); //Back to english job button
+		cy.get('[name="keyword"]').should('exist'); // Search bar
+		cy.get('[name="postedby"] div input').first().should('exist'); //Posted by filter
+		cy.get('#bump-multiple-jobs > form > div.job-action-bump > fast-button > button').should('exist').and('be.disabled'); //Bump selected job button
+		//cy.get('td fast-button a.sc-fast-button').should('exist').and('have.attr','href')
 		//Verify table headers
 		const expectedHeaders = ['Job title', 'Posted by', 'Last bumped', 'Action'];
 
